@@ -11,6 +11,10 @@
   --energy-dark: #047857;
   --energy-light: #10B981;
   --energy-xlight: #D1FAE5;
+  
+  --solar-blue: #0EA5E9;
+  --solar-blue-dark: #1D4ED8;
+  --solar-cyan: #22D3EE;
 
   /* --- Neutrals --- */
   --white: #FFFFFF;
@@ -53,30 +57,134 @@
   --shadow-amber: 0 8px 30px rgba(245,158,11,0.25);
   --shadow-glow: 0 0 40px rgba(5,150,105,0.3), 0 0 80px rgba(245,158,11,0.1);
 
-  /* --- Transitions --- */
-  --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  --transition-fast: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
-  --transition-slow: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-  --transition-bounce: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  /* --- Level Up Shadows --- */
+  --shadow-diffuse: 0 10px 50px -12px rgba(0, 0, 0, 0.25);
+  --shadow-inner-glow: inset 0 1px 1px 0 rgba(255, 255, 255, 0.1);
+  --shadow-premium: 0 50px 100px -20px rgba(0,0,0,0.25), 0 30px 60px -30px rgba(0,0,0,0.3);
+  --shadow-solar-beam: 0 0 80px rgba(245, 158, 11, 0.2);
+}
+
+@keyframes slow-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.animate-slow-spin {
+  animation: slow-spin 8s linear infinite;
 }
 
 /* =============================================
-   GRADIENTS
+   ULTRA-PREMIUM UTILITIES
    ============================================= */
+.luxury-text-reveal {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: top;
+}
+.luxury-text-reveal span {
+  display: inline-block;
+  animation: luxuryReveal 1.2s cubic-bezier(0.19, 1, 0.22, 1) both;
+}
+@keyframes luxuryReveal {
+  from { transform: translateY(110%); }
+  to { transform: translateY(0); }
+}
+
+.glow-orb {
+  position: absolute;
+  border-radius: 100%;
+  filter: blur(120px);
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.15;
+}
+
+.glass-morphism {
+  background: rgba(255, 255, 255, 0.03);
+  -webkit-backdrop-filter: blur(24px);
+  backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: var(--shadow-inner-glow);
+}
+
+.mega-gradient-text {
+  background: linear-gradient(135deg, #fff 0%, #a1a1aa 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* =============================================
+   GRADIENTS — Sun Rising → Eco Green Journey
+   CONCEPT: Dawn (gold) → Solar Energy (amber) → Sustainable Future (green)
+   This mirrors the sun rising, converting to clean power.
+   ============================================= */
+
+/* Main website primary gradient — eco green */
 .bg-gradient-primary {
-  background: linear-gradient(135deg, #047857 0%, #059669 50%, #10B981 100%);
+  background: linear-gradient(135deg, #1D4ED8 0%, #059669 50%, #10B981 100%);
 }
 
 .bg-gradient-secondary {
   background: linear-gradient(135deg, #D97706 0%, #F59E0B 50%, #FBBF24 100%);
 }
 
+/* Hero: Deep sunrise sky → rich eco green */
 .bg-gradient-hero {
-  background: linear-gradient(135deg, #0A0F1E 0%, #0F2744 30%, #064E3B 70%, #047857 100%);
+  background: linear-gradient(160deg,
+    #0A0710 0%,     /* deep predawn */
+    #1a0f2e 15%,    /* midnight indigo */
+    #2d1b00 30%,    /* first warmth on horizon */
+    #7C3A00 45%,    /* sunrise orange-brown */
+    #B85C00 55%,    /* golden amber sunrise */
+    #064E3B 75%,    /* solar → eco green transition */
+    #022C22 100%    /* deep earthy green */
+  );
 }
 
-.bg-gradient-solar {
-  background: linear-gradient(135deg, #F59E0B 0%, #EF4444 50%, #DC2626 100%);
+/* Products page hero: pure sunrise  */
+.products-hero {
+  min-height: 40vh;
+  display: flex;
+  align-items: center;
+}
+.products-hero-grad {
+  background: linear-gradient(160deg,
+    #0D0A03 0%,
+    #3D1F00 25%,
+    #8B4500 45%,
+    #D97706 60%,
+    #047857 80%,
+    #022C22 100%
+  );
+  opacity: 0.92;
+}
+
+/* Calculator page hero */
+.calc-hero {
+  min-height: 30vh;
+  display: flex;
+  align-items: center;
+}
+.calc-hero-grad {
+  background: linear-gradient(160deg,
+    #0A0710 0%,
+    #1a0f2e 20%,
+    #3D1F00 40%,
+    #047857 70%,
+    #022C22 100%
+  );
+  opacity: 0.92;
+}
+
+/* Footer CTA strip — sunrise horizon */
+.footer-cta-strip {
+  background: linear-gradient(135deg,
+    #064E3B 0%,
+    #047857 40%,
+    #059669 70%,
+    #10B981 100%
+  );
 }
 
 .bg-gradient-card {
@@ -119,22 +227,22 @@
    ============================================= */
 .glass {
   background: rgba(255, 255, 255, 0.85);
-  backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
   border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
 .glass-dark {
   background: rgba(10, 15, 30, 0.75);
-  backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
   border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .glass-green {
   background: rgba(5, 150, 105, 0.12);
-  backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
   border: 1px solid rgba(5, 150, 105, 0.2);
 }
 
@@ -211,6 +319,7 @@
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
+  -webkit-backdrop-filter: blur(8px);
   backdrop-filter: blur(8px);
 }
 .btn-outline:hover {
@@ -495,6 +604,99 @@
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
   gap: 1.5rem;
+}
+
+/* =============================================
+   PRODUCT CARD — Clean, not cluttered
+   ============================================= */
+.product-card {
+  background: var(--white);
+  border-radius: var(--radius-lg);
+  border: 1.5px solid var(--gray-100);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: var(--transition);
+  box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+}
+.product-card:hover {
+  border-color: #10B981;
+  box-shadow: 0 8px 32px rgba(5,150,105,0.15), 0 2px 8px rgba(0,0,0,0.06);
+  transform: translateY(-5px);
+}
+
+/* Scrollbar hide for filter bar */
+.scrollbar-none::-webkit-scrollbar { display: none; }
+.scrollbar-none { -ms-overflow-style: none; }
+
+/* Technical Partner badge */
+.tech-partner-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: 0.75rem;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.08);
+  transition: all 0.3s ease;
+}
+.tech-partner-badge:hover {
+  background: rgba(5,150,105,0.1);
+  border-color: rgba(5,150,105,0.3);
+  transform: translateY(-1px);
+}
+
+/* Samsung-style shop card */
+.shop-card {
+  background: var(--white);
+  border-radius: var(--radius-lg);
+  border: 1.5px solid var(--gray-100);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+}
+.shop-card:hover {
+  border-color: #10B981;
+  box-shadow: 0 12px 40px rgba(5,150,105,0.12), 0 4px 12px rgba(0,0,0,0.04);
+  transform: translateY(-6px);
+}
+.shop-card .shop-card-img {
+  background: #f8fafc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  min-height: 200px;
+}
+.shop-card .shop-card-img img {
+  max-height: 160px;
+  object-fit: contain;
+  transition: transform 0.5s ease;
+}
+.shop-card:hover .shop-card-img img {
+  transform: scale(1.08);
+}
+
+/* Admin notification dropdown */
+.notif-dropdown {
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  right: 0;
+  width: 360px;
+  max-height: 420px;
+  background: white;
+  border-radius: 1rem;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.15), 0 8px 20px rgba(0,0,0,0.08);
+  border: 1px solid #f1f5f9;
+  overflow: hidden;
+  z-index: 200;
+  animation: slideDown 0.2s ease;
+}
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 /* =============================================

@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import { Menu, X, Sun, Phone, ChevronDown, Zap } from 'lucide-react';
+import { Menu, X, Phone, ChevronDown, Zap, Calculator as CalculatorIcon } from 'lucide-react';
 import { COMPANY_INFO, NAVIGATION_MENU } from './utils/constants';
 import { getPhoneLink, getWhatsAppLink } from './utils/helpers';
 
@@ -9,14 +9,18 @@ import SolarSolutions from './pages/SolarSolutions';
 import SolarProducts from './pages/SolarProducts';
 import SolarPackages from './pages/SolarPackages';
 import GovernmentSchemes from './pages/GovernmentSchemes';
-import KisanUrja from './pages/KisanUrja';
+import PMKusumYojana from './pages/PMKusumYojana';
 import VendorPartner from './pages/VendorPartner';
 import TrainingInternship from './pages/TrainingInternship';
 import Careers from './pages/Careers';
 import SolarProjects from './pages/SolarProjects';
 import KnowledgeHub from './pages/KnowledgeHub';
 import Contact from './pages/Contact';
+import Calculator from './pages/Calculator';
+import Shop from './pages/Shop';
+import Logo from './components/Logo';
 import Footer from './components/Footer';
+import AdminLayout from './pages/admin/AdminLayout';
 
 // Group nav items for mega-menu
 const NAV_GROUPS = [
@@ -25,12 +29,13 @@ const NAV_GROUPS = [
     items: [
       { name: 'Solar Solutions', path: '/solar-solutions', desc: 'Residential, commercial & industrial' },
       { name: 'Solar Packages', path: '/solar-packages', desc: 'Ready-to-install bundles' },
-      { name: 'Kisan Urja', path: '/kisan-urja', desc: 'Solar for farmers & agriculture' },
+      { name: 'PM Kusum Yojana', path: '/pm-kusum-yojana', desc: 'Solar for farmers & agriculture' },
     ]
   },
   {
     label: 'Products',
     items: [
+      { name: 'Solar Shop', path: '/shop', desc: 'Buy solar products online' },
       { name: 'Solar Products', path: '/solar-products', desc: 'Panels, inverters, batteries & more' },
       { name: 'Solar Projects', path: '/solar-projects', desc: 'Our completed installations' },
       { name: 'Government Schemes', path: '/government-schemes', desc: 'Subsidies & incentives' },
@@ -55,13 +60,14 @@ const NAV_GROUPS = [
 ];
 
 const App = () => {
-  const [currentPage, setCurrentPage] = useState('/');
+  const [currentPage, setCurrentPage] = useState(window.location.pathname || '/');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const [mobileExpanded, setMobileExpanded] = useState<string | null>(null);
 
   const navigate = useCallback((path: string) => {
+    window.history.pushState(null, '', path);
     setCurrentPage(path);
     setMobileMenuOpen(false);
     setActiveDropdown(null);
@@ -71,7 +77,14 @@ const App = () => {
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
+    
+    const handlePopState = () => setCurrentPage(window.location.pathname);
+    window.addEventListener('popstate', handlePopState);
+    
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('popstate', handlePopState);
+    };
   }, []);
 
   // Close dropdown on outside click
@@ -91,16 +104,23 @@ const App = () => {
       case '/solar-products': return <SolarProducts />;
       case '/solar-packages': return <SolarPackages />;
       case '/government-schemes': return <GovernmentSchemes />;
-      case '/kisan-urja': return <KisanUrja />;
+      case '/pm-kusum-yojana': return <PMKusumYojana />;
       case '/vendor-partner': return <VendorPartner />;
       case '/training-internship': return <TrainingInternship />;
       case '/careers': return <Careers />;
       case '/solar-projects': return <SolarProjects />;
       case '/knowledge-hub': return <KnowledgeHub />;
       case '/contact': return <Contact />;
+      case '/calculator': return <Calculator />;
+      case '/shop': return <Shop />;
       default: return <Home onNavigate={navigate} />;
     }
   };
+
+  // If we are on an admin route, completely bypass the public layout
+  if (currentPage.startsWith('/admin')) {
+    return <AdminLayout currentPage={currentPage} onNavigate={navigate} />;
+  }
 
   return (
     <div className="min-h-screen bg-white">
@@ -128,11 +148,10 @@ const App = () => {
 
       {/* ─── MAIN NAVBAR ─── */}
       <nav
-        className={`sticky top-0 z-50 transition-all duration-300 ${
-          scrolled
+        className={`sticky top-0 z-50 transition-all duration-300 ${scrolled
             ? 'bg-white/95 backdrop-blur-xl shadow-lg border-b border-gray-100'
             : 'bg-white border-b border-gray-100'
-        }`}
+          }`}
       >
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between h-16 md:h-18">
@@ -140,20 +159,10 @@ const App = () => {
             {/* LOGO */}
             <button
               onClick={() => navigate('/')}
-              className="flex items-center gap-2.5 group flex-shrink-0"
+              className="flex-shrink-0"
+              title="Urja Vision Home"
             >
-              <div className="relative">
-                <div className="w-10 h-10 bg-gradient-primary rounded-xl flex items-center justify-center shadow-lg group-hover:scale-105 transition-transform">
-                  <Sun className="text-white animate-solar-spin" size={20} style={{ animationDuration: '25s' }} />
-                </div>
-                <div className="absolute -top-0.5 -right-0.5 w-3 h-3 bg-amber-400 rounded-full border-2 border-white"></div>
-              </div>
-              <div className="text-left">
-                <div className="font-extrabold text-gray-900 text-lg leading-tight tracking-tight" style={{ fontFamily: 'Outfit, sans-serif' }}>
-                  URJA <span className="gradient-text-primary">VISION</span>
-                </div>
-                <div className="text-[10px] font-bold text-gray-400 uppercase tracking-widest leading-tight">Solar Energy Solutions</div>
-              </div>
+              <Logo className="h-10 md:h-11" />
             </button>
 
             {/* DESKTOP NAV */}
@@ -165,11 +174,10 @@ const App = () => {
                       e.stopPropagation();
                       setActiveDropdown(activeDropdown === group.label ? null : group.label);
                     }}
-                    className={`flex items-center gap-1 px-3 py-2 text-sm font-semibold rounded-lg transition-all ${
-                      activeDropdown === group.label
+                    className={`flex items-center gap-1 px-3 py-2 text-sm font-semibold rounded-lg transition-all ${activeDropdown === group.label
                         ? 'bg-green-50 text-emerald-700'
                         : 'text-gray-700 hover:text-emerald-700 hover:bg-green-50'
-                    }`}
+                      }`}
                   >
                     {group.label}
                     <ChevronDown
@@ -186,9 +194,8 @@ const App = () => {
                         <button
                           key={item.path}
                           onClick={() => navigate(item.path)}
-                          className={`w-full text-left px-4 py-3 hover:bg-green-50 transition-colors group/item ${
-                            currentPage === item.path ? 'bg-green-50' : ''
-                          }`}
+                          className={`w-full text-left px-4 py-3 hover:bg-green-50 transition-colors group/item ${currentPage === item.path ? 'bg-green-50' : ''
+                            }`}
                         >
                           <div className={`text-sm font-semibold ${currentPage === item.path ? 'text-emerald-700' : 'text-gray-800 group-hover/item:text-emerald-700'}`}>
                             {item.name}
@@ -202,8 +209,20 @@ const App = () => {
               ))}
 
               <button
+                onClick={() => navigate('/calculator')}
+                className={`ml-3 p-2.5 rounded-xl transition-all hover:scale-105 shadow-md flex items-center justify-center gap-2 group ${currentPage === '/calculator'
+                    ? 'bg-amber-100 text-amber-700'
+                    : 'bg-amber-400 text-white hover:bg-amber-500'
+                  }`}
+                title="Solar Calculator"
+              >
+                <CalculatorIcon size={20} className={currentPage === '/calculator' ? '' : 'group-hover:rotate-12 transition-transform'} />
+                <span className="text-sm font-bold">Calculator</span>
+              </button>
+
+              <button
                 onClick={() => navigate('/contact')}
-                className="ml-3 btn-primary text-sm px-5 py-2.5"
+                className="ml-2 btn-primary text-sm px-5 py-2.5"
               >
                 Get Free Quote
               </button>
@@ -214,8 +233,8 @@ const App = () => {
                 className="ml-2 flex items-center gap-1.5 bg-green-500 hover:bg-green-600 text-white text-sm font-semibold px-4 py-2.5 rounded-xl transition-all hover:scale-105 shadow-md"
               >
                 <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
-                  <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
-                  <path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.554 4.118 1.528 5.849L0 24l6.335-1.508A11.93 11.93 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.885 0-3.648-.502-5.164-1.38l-.37-.22-3.758.895.942-3.651-.241-.386A9.96 9.96 0 012 12C2 6.486 6.486 2 12 2s10 4.486 10 10-4.486 10-10 10z"/>
+                  <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z" />
+                  <path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.554 4.118 1.528 5.849L0 24l6.335-1.508A11.93 11.93 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.885 0-3.648-.502-5.164-1.38l-.37-.22-3.758.895.942-3.651-.241-.386A9.96 9.96 0 012 12C2 6.486 6.486 2 12 2s10 4.486 10 10-4.486 10-10 10z" />
                 </svg>
                 WhatsApp
               </a>
@@ -250,8 +269,8 @@ const App = () => {
                   className="flex-1 flex items-center justify-center gap-2 bg-green-500 text-white py-2.5 rounded-xl text-sm font-semibold"
                 >
                   <svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor">
-                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
-                    <path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.554 4.118 1.528 5.849L0 24l6.335-1.508A11.93 11.93 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.885 0-3.648-.502-5.164-1.38l-.37-.22-3.758.895.942-3.651-.241-.386A9.96 9.96 0 012 12C2 6.486 6.486 2 12 2s10 4.486 10 10-4.486 10-10 10z"/>
+                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z" />
+                    <path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.554 4.118 1.528 5.849L0 24l6.335-1.508A11.93 11.93 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.885 0-3.648-.502-5.164-1.38l-.37-.22-3.758.895.942-3.651-.241-.386A9.96 9.96 0 012 12C2 6.486 6.486 2 12 2s10 4.486 10 10-4.486 10-10 10z" />
                   </svg>
                   WhatsApp
                 </a>
@@ -275,11 +294,10 @@ const App = () => {
                         <button
                           key={item.path}
                           onClick={() => navigate(item.path)}
-                          className={`w-full text-left px-3 py-2.5 rounded-xl text-sm transition-colors ${
-                            currentPage === item.path
+                          className={`w-full text-left px-3 py-2.5 rounded-xl text-sm transition-colors ${currentPage === item.path
                               ? 'bg-green-50 text-emerald-700 font-semibold'
                               : 'text-gray-600 hover:bg-gray-50 hover:text-emerald-700'
-                          }`}
+                            }`}
                         >
                           {item.name}
                         </button>
@@ -289,12 +307,18 @@ const App = () => {
                 </div>
               ))}
 
-              <div className="pt-3 border-t border-gray-100 mt-3">
+              <div className="pt-3 border-t border-gray-100 mt-3 grid grid-cols-2 gap-2">
+                <button
+                  onClick={() => navigate('/calculator')}
+                  className="flex items-center justify-center gap-2 bg-amber-400 text-white py-3 rounded-xl text-sm font-bold shadow-sm"
+                >
+                  <CalculatorIcon size={18} /> Calculator
+                </button>
                 <button
                   onClick={() => navigate('/contact')}
-                  className="w-full btn-primary py-3"
+                  className="btn-primary py-3"
                 >
-                  Get Free Solar Quote
+                  Get Quote
                 </button>
               </div>
             </div>
@@ -320,8 +344,8 @@ const App = () => {
         title="Chat with us on WhatsApp"
       >
         <svg viewBox="0 0 24 24" width="28" height="28" fill="white">
-          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
-          <path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.554 4.118 1.528 5.849L0 24l6.335-1.508A11.93 11.93 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.885 0-3.648-.502-5.164-1.38l-.37-.22-3.758.895.942-3.651-.241-.386A9.96 9.96 0 012 12C2 6.486 6.486 2 12 2s10 4.486 10 10-4.486 10-10 10z"/>
+          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z" />
+          <path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.554 4.118 1.528 5.849L0 24l6.335-1.508A11.93 11.93 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.885 0-3.648-.502-5.164-1.38l-.37-.22-3.758.895.942-3.651-.241-.386A9.96 9.96 0 012 12C2 6.486 6.486 2 12 2s10 4.486 10 10-4.486 10-10 10z" />
         </svg>
       </a>
     </div>

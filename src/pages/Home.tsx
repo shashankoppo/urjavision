@@ -1,34 +1,18 @@
 import { useState, useEffect, useRef } from 'react';
 import {
   ArrowRight, Zap, Sun, Leaf, TrendingUp, CheckCircle, Star,
-  Home as HomeIcon, Building2, Factory, Settings, Phone, MessageCircle,
-  Award, Shield, Clock, ChevronRight, Play
+  Home as HomeIcon, Building2, Factory, Settings, MessageCircle,
+  Award, Shield, Clock, ChevronRight, IndianRupee
 } from 'lucide-react';
 import { SERVICES, STATS, SOLAR_PACKAGES, TESTIMONIALS } from '../utils/constants';
 import { solarProducts, solarProjects, blogArticles } from '../utils/data';
-import { getWhatsAppLink } from '../utils/helpers';
+import { getWhatsAppLink, calculateSolarSystem } from '../utils/helpers';
 import { COMPANY_INFO } from '../utils/constants';
+import Logo from '../components/Logo';
 
 interface HomeProps {
   onNavigate?: (path: string) => void;
 }
-
-// Hook for number Counter animation
-const useCounter = (end: number, duration = 2000, trigger = false) => {
-  const [count, setCount] = useState(0);
-  useEffect(() => {
-    if (!trigger) return;
-    let startTime: number;
-    const step = (timestamp: number) => {
-      if (!startTime) startTime = timestamp;
-      const progress = Math.min((timestamp - startTime) / duration, 1);
-      setCount(Math.floor(progress * end));
-      if (progress < 1) requestAnimationFrame(step);
-    };
-    requestAnimationFrame(step);
-  }, [end, duration, trigger]);
-  return count;
-};
 
 // Intersection observer hook
 const useInView = () => {
@@ -56,8 +40,22 @@ const serviceIcons: Record<string, React.ElementType> = {
 
 const Home = ({ onNavigate }: HomeProps) => {
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
-  const { ref: statsRef, inView: statsInView } = useInView();
+  const { ref: statsRef } = useInView();
   const [showVideo, setShowVideo] = useState(false);
+  const [settings, setSettings] = useState<any>({
+    hero_title: 'The New Era of Solar Intelligence',
+    hero_subtitle: 'Architecting luxury-grade solar infrastructure for homes, industries, and a sustainable legacy across Central India.',
+    hero_banner: 'https://images.pexels.com/photos/9875441/pexels-photo-9875441.jpeg?auto=compress&cs=tinysrgb&w=1920'
+  });
+
+  useEffect(() => {
+    fetch('/api/settings')
+      .then(res => res.json())
+      .then(data => {
+        if (data.hero_title) setSettings(data);
+      })
+      .catch(err => console.error('Failed to fetch settings', err));
+  }, []);
 
   useEffect(() => {
     const timer = setInterval(() => setCurrentTestimonial((p) => (p + 1) % TESTIMONIALS.length), 4000);
@@ -67,116 +65,80 @@ const Home = ({ onNavigate }: HomeProps) => {
   const whatsappLink = getWhatsAppLink(COMPANY_INFO.contact.phone, 'Hi! I would like a free solar consultation.');
 
   return (
-    <div>
-      {/* ================================================
-          HERO SECTION
-          ================================================ */}
-      <section className="relative min-h-screen flex items-center overflow-hidden bg-gradient-hero noise-overlay">
-        {/* Animated background orbs */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute -top-32 -left-32 w-96 h-96 bg-emerald-500 rounded-full opacity-10 blur-3xl animate-float" />
-          <div className="absolute top-1/3 right-0 w-80 h-80 bg-amber-400 rounded-full opacity-10 blur-3xl animate-float delay-300" />
-          <div className="absolute bottom-0 left-1/3 w-64 h-64 bg-teal-500 rounded-full opacity-8 blur-3xl animate-float delay-500" />
-        </div>
-
-        {/* Hero background image */}
-        <div className="absolute inset-0">
+    <div className="bg-[#0A0F1E]">
+      <section className="relative min-h-screen flex items-center overflow-hidden bg-[#0A0F1E] noise-overlay">
+        {/* Cinematic Video/Image Background */}
+        <div className="absolute inset-0 z-0">
+          <div className="absolute inset-0 bg-gradient-to-b from-[#0A0F1E]/80 via-[#0A0F1E]/40 to-[#0A0F1E] z-10" />
           <img
-            src="https://images.pexels.com/photos/9875441/pexels-photo-9875441.jpeg?auto=compress&cs=tinysrgb&w=1920"
-            alt="Solar panels powering the future"
-            className="w-full h-full object-cover opacity-25"
+            src={settings.hero_banner}
+            alt="Solar Horizon"
+            className="w-full h-full object-cover scale-110 opacity-60"
           />
-          <div className="absolute inset-0 bg-gradient-hero opacity-90" />
         </div>
 
-        {/* Grid pattern overlay */}
-        <div
-          className="absolute inset-0 opacity-5"
-          style={{
-            backgroundImage: 'linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)',
-            backgroundSize: '60px 60px'
-          }}
-        />
+        {/* Global Glow Orbs */}
+        <div className="absolute inset-0 pointer-events-none z-10">
+          <div className="glow-orb w-[600px] h-[600px] -top-20 -left-20 bg-emerald-500/10" />
+          <div className="glow-orb w-[500px] h-[500px] top-1/2 -right-20 bg-amber-500/10" />
+        </div>
 
-        <div className="container relative z-10 py-24 md:py-32">
+        <div className="container relative z-20 pt-20">
           <div className="max-w-5xl">
-            {/* Tag */}
-            <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm text-white border border-white/20 px-4 py-2 rounded-full text-xs font-bold uppercase tracking-widest mb-6 animate-fade-up">
-              <span className="w-2 h-2 bg-amber-400 rounded-full animate-pulse"></span>
-              India's Trusted Solar Partner · Jabalpur, MP
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-morphism mb-8 animate-fade-up">
+              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+              <span className="text-emerald-400 text-[10px] font-black uppercase tracking-[0.2em]">Pioneering Energy Independence</span>
             </div>
-
-            {/* Headline */}
-            <h1 className="text-white mb-6 animate-fade-up delay-100" style={{ fontFamily: 'Outfit, sans-serif', lineHeight: '1.08' }}>
-              Power Your Future<br />
-              with <span className="gradient-text-gold">Clean Solar</span><br />
-              <span className="text-emerald-300">Energy</span>
+            
+            <h1 className="text-white text-5xl md:text-8xl font-black tracking-tighter leading-[0.9] mb-8 animate-fade-up delay-100">
+              <span className="mega-gradient-text uppercase tracking-tighter">{settings.hero_title}</span>
             </h1>
 
-            <p className="text-white/85 text-lg md:text-xl mb-8 max-w-2xl animate-fade-up delay-200 leading-relaxed">
-              Urja Vision Technologies delivers complete solar installations for homes, industries &amp; farms across Madhya Pradesh — backed by government subsidies up to 60%.
+            <p className="text-gray-400 text-lg md:text-2xl max-w-2xl leading-relaxed mb-10 animate-fade-up delay-200">
+              {settings.hero_subtitle}
             </p>
 
-            {/* Key Props */}
-            <div className="flex flex-wrap gap-3 mb-10 animate-fade-up delay-300">
-              {['90% Bill Reduction', '25yr Warranty', '4-5yr ROI', 'Free Installation Survey'].map((tag) => (
-                <span key={tag} className="flex items-center gap-1.5 bg-white/10 backdrop-blur-sm text-white text-sm font-semibold px-3 py-1.5 rounded-full border border-white/20">
-                  <CheckCircle size={13} className="text-emerald-400" />
-                  {tag}
-                </span>
-              ))}
-            </div>
-
-            {/* CTA Buttons */}
-            <div className="flex flex-col sm:flex-row gap-4 animate-fade-up delay-400">
-              <button
-                onClick={() => onNavigate?.('/contact')}
-                className="btn-secondary text-base px-8 py-4 rounded-xl font-bold shadow-2xl"
+            <div className="flex flex-col sm:flex-row items-center gap-6 animate-fade-up delay-300">
+              <button 
+                onClick={() => onNavigate?.('/calculator')}
+                className="group relative px-10 py-5 bg-white text-black font-black rounded-full overflow-hidden transition-all hover:scale-105 active:scale-95 shadow-[0_0_40px_rgba(255,255,255,0.15)]"
               >
-                Get Free Consultation <ArrowRight size={18} />
+                <div className="absolute inset-0 bg-emerald-500 translate-y-full group-hover:translate-y-0 transition-transform duration-500" />
+                <span className="relative z-10 flex items-center gap-3 group-hover:text-white transition-colors">
+                  Design Your System <ArrowRight size={20} />
+                </span>
               </button>
-              <a
-                href={whatsappLink}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn-outline text-base px-8 py-4 rounded-xl font-bold"
+
+              <button 
+                onClick={() => onNavigate?.('/contact')}
+                className="px-10 py-5 glass-morphism text-white font-bold rounded-full hover:bg-white/10 transition-all border border-white/20"
               >
-                <Phone size={17} /> Call/WhatsApp Now
-              </a>
-              <button
-                onClick={() => setShowVideo(true)}
-                className="flex items-center gap-2 text-white/80 hover:text-white transition-colors text-sm font-semibold group"
-              >
-                <span className="w-10 h-10 bg-white/15 rounded-full flex items-center justify-center group-hover:bg-white/25 transition-colors border border-white/30">
-                  <Play size={14} className="ml-0.5" />
-                </span>
-                Watch How It Works
+                Free Site Survey
               </button>
             </div>
           </div>
         </div>
 
-        {/* Floating stat cards */}
-        <div className="absolute bottom-8 right-8 hidden xl:flex flex-col gap-3 animate-slide-right delay-500">
-          {[
-            { val: '500+', label: 'Installations', color: 'text-emerald-400' },
-            { val: '5MW+', label: 'Total Capacity', color: 'text-amber-400' },
-          ].map((s) => (
-            <div key={s.label} className="glass-dark rounded-2xl px-5 py-3 flex items-center gap-3">
-              <div>
-                <div className={`text-2xl font-black ${s.color}`} style={{ fontFamily: 'Outfit' }}>{s.val}</div>
-                <div className="text-white/60 text-xs">{s.label}</div>
+        {/* Hero Bottom Stats */}
+        <div className="absolute bottom-0 left-0 right-0 z-20 py-8 glass-morphism border-t border-white/5">
+          <div className="container grid grid-cols-2 md:grid-cols-4 gap-8">
+            {[
+              { label: 'Energy Capacity', value: '45.2', unit: 'MW+' },
+              { label: 'Live Projects', value: '850', unit: '+' },
+              { label: 'CO2 Offset', value: '12', unit: 'K Tons' },
+              { label: 'Uptime Precision', value: '98.5', unit: '%' },
+            ].map((s, i) => (
+              <div key={i} className="text-center md:text-left">
+                <div className="text-white text-3xl font-black flex items-baseline justify-center md:justify-start gap-1">
+                  {s.value}<span className="text-emerald-500 text-sm font-black">{s.unit}</span>
+                </div>
+                <div className="text-gray-500 text-[9px] uppercase font-black tracking-widest mt-1">{s.label}</div>
               </div>
-            </div>
-          ))}
-        </div>
-
-        {/* Scroll indicator */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-white/40 animate-bounce">
-          <span className="text-xs uppercase tracking-widest">Scroll</span>
-          <div className="w-px h-10 bg-gradient-to-b from-white/40 to-transparent"></div>
+            ))}
+          </div>
         </div>
       </section>
+
 
       {/* Video Modal */}
       {showVideo && (
@@ -185,7 +147,11 @@ const Home = ({ onNavigate }: HomeProps) => {
           onClick={() => setShowVideo(false)}
         >
           <div className="relative w-full max-w-3xl aspect-video bg-gray-900 rounded-2xl overflow-hidden shadow-2xl" onClick={(e) => e.stopPropagation()}>
-            <button onClick={() => setShowVideo(false)} className="absolute top-3 right-3 z-10 text-white/70 hover:text-white bg-black/40 rounded-full p-1.5">
+            <button 
+              onClick={() => setShowVideo(false)} 
+              className="absolute top-3 right-3 z-10 text-white/70 hover:text-white bg-black/40 rounded-full p-1.5"
+              title="Close Video"
+            >
               <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" fill="none" strokeWidth={2}>
                 <line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" />
               </svg>
@@ -242,7 +208,7 @@ const Home = ({ onNavigate }: HomeProps) => {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
             {STATS.map((stat, i) => (
               <div key={stat.id} className={`card-stat text-center p-6 animate-scale-in delay-${i * 100}`}>
-                <div className="text-4xl md:text-5xl font-black text-white mb-1" style={{ fontFamily: 'Outfit' }}>
+                <div className="text-4xl md:text-5xl font-black text-white mb-1 font-outfit">
                   {stat.value}
                 </div>
                 <div className="text-emerald-200 text-sm font-medium">{stat.label}</div>
@@ -369,7 +335,7 @@ const Home = ({ onNavigate }: HomeProps) => {
                     {pkg.name}
                   </div>
                   <div className="flex items-baseline gap-1 mb-1">
-                    <span className={`text-4xl font-black ${isFeatured ? 'text-white' : 'text-gray-900'}`} style={{ fontFamily: 'Outfit' }}>
+                    <span className={`text-4xl font-black ${isFeatured ? 'text-white' : 'text-gray-900'} font-outfit`}>
                       {pkg.price}
                     </span>
                   </div>
@@ -534,11 +500,12 @@ const Home = ({ onNavigate }: HomeProps) => {
             {/* Dots */}
             <div className="flex justify-center gap-2 mt-6">
               {TESTIMONIALS.map((_, i) => (
-                <button
-                  key={i}
-                  onClick={() => setCurrentTestimonial(i)}
-                  className={`h-2 rounded-full transition-all ${i === currentTestimonial ? 'w-8 bg-emerald-600' : 'w-2 bg-gray-300'}`}
-                />
+                  <button
+                    key={i}
+                    onClick={() => setCurrentTestimonial(i)}
+                    className={`h-2 rounded-full transition-all ${i === currentTestimonial ? 'w-8 bg-emerald-600' : 'w-2 bg-gray-300'}`}
+                    title={`View testimonial ${i + 1}`}
+                  />
               ))}
             </div>
           </div>
@@ -558,6 +525,7 @@ const Home = ({ onNavigate }: HomeProps) => {
             <button
               onClick={() => onNavigate?.('/knowledge-hub')}
               className="btn-outline-green text-sm px-5 py-2.5 flex-shrink-0"
+              title="View all articles from the Knowledge Hub"
             >
               All Articles <ChevronRight size={15} />
             </button>
@@ -654,62 +622,73 @@ const Home = ({ onNavigate }: HomeProps) => {
 // Inline Solar Calculator Component
 const SolarCalculatorInline = () => {
   const [bill, setBill] = useState('');
+  const [category, setCategory] = useState<'Residential' | 'Commercial' | 'Enterprise'>('Residential');
   const [result, setResult] = useState<any>(null);
 
   const calculate = () => {
     const b = parseFloat(bill);
     if (!b || b <= 0) return;
-    const units = b / 7;
-    const size = Math.ceil((units * 1.2) / 4);
-    const cost = size * 60000;
-    const savings = b * 12 * 0.8;
-    const roi = (cost / savings).toFixed(1);
-    setResult({
-      size: `${size} kW`,
-      cost: `₹${cost.toLocaleString('en-IN')}`,
-      savings: `₹${savings.toLocaleString('en-IN')}`,
-      roi: `${roi} years`,
-      monthly: `₹${Math.round(b * 0.9).toLocaleString('en-IN')}`,
-    });
+    const r = calculateSolarSystem(b, category);
+    setResult(r);
   };
 
   return (
     <div>
       <h3 className="font-bold text-gray-900 mb-1">Savings Calculator</h3>
-      <p className="text-sm text-gray-500 mb-5">Enter your monthly electricity bill</p>
+      <p className="text-sm text-gray-500 mb-4">Madhya Pradesh Tariffs · {category}</p>
+      
+      {/* Category Selection */}
+      <div className="flex gap-2 mb-4 bg-gray-50 p-1.5 rounded-xl border border-gray-100">
+        {(['Residential', 'Commercial', 'Enterprise'] as const).map((cat) => (
+          <button
+            key={cat}
+            onClick={() => { setCategory(cat); setResult(null); }}
+            className={`flex-1 py-1.5 px-2 text-xs font-bold rounded-lg transition-all ${
+              category === cat 
+                ? 'bg-white text-emerald-600 shadow-sm border border-emerald-100' 
+                : 'text-gray-500 hover:text-gray-700'
+            }`}
+          >
+            {cat}
+          </button>
+        ))}
+      </div>
+
       <div className="flex gap-3 mb-5">
         <input
           type="number"
           value={bill}
           onChange={(e) => setBill(e.target.value)}
-          placeholder="e.g. 3000"
-          className="input-field flex-1"
+          placeholder={`Monthly Bill (e.g. ${category === 'Residential' ? '3000' : '15000'})`}
+          className="input-field flex-1 text-sm font-semibold placeholder:font-normal"
         />
-        <span className="flex items-center text-gray-500 font-bold">₹</span>
+        <span className="flex items-center text-gray-500 font-bold bg-gray-50 px-4 rounded-xl border border-gray-200">₹</span>
       </div>
+      
       <button
         onClick={calculate}
         disabled={!bill || parseFloat(bill) <= 0}
-        className="w-full btn-primary mb-5 disabled:opacity-50"
+        className="w-full btn-primary mb-5 py-3 shadow-lg shadow-emerald-200 disabled:opacity-50 disabled:shadow-none"
       >
         Calculate Savings
       </button>
+
       {result && (
         <div className="grid grid-cols-2 gap-3 animate-fade-up">
           {[
-            { label: 'System Size', val: result.size, color: 'text-emerald-700' },
-            { label: 'Estimated Cost', val: result.cost, color: 'text-gray-900' },
-            { label: 'Yearly Savings', val: result.savings, color: 'text-emerald-700' },
-            { label: 'ROI Period', val: result.roi, color: 'text-amber-700' },
+            { label: 'System Size', val: result.systemSize, color: 'text-emerald-700 font-black' },
+            { label: 'After Subsidy', val: result.estimatedCost, color: 'text-gray-900 font-bold' },
+            { label: 'Yearly Savings', val: result.yearlySavings, color: 'text-emerald-700 font-black' },
+            { label: 'ROI Period', val: result.roi, color: 'text-amber-600 font-black' },
           ].map((item) => (
-            <div key={item.label} className="bg-gray-50 rounded-xl p-3 border border-gray-100">
-              <div className="text-xs text-gray-500 mb-1">{item.label}</div>
-              <div className={`font-black text-base ${item.color}`}>{item.val}</div>
+            <div key={item.label} className="bg-white rounded-xl p-3 border border-gray-100 shadow-sm hover:border-emerald-200 transition-colors">
+              <div className="text-[10px] uppercase tracking-wider text-gray-500 mb-0.5">{item.label}</div>
+              <div className={`text-base ${item.color}`}>{item.val}</div>
             </div>
           ))}
-          <div className="col-span-2 bg-emerald-50 rounded-xl p-3 border border-emerald-100 text-center">
-            <span className="text-xs text-emerald-600 font-medium">Monthly savings after install: </span>
-            <span className="font-black text-emerald-700">{result.monthly}/mo</span>
+          <div className="col-span-2 bg-gradient-to-r from-emerald-50 to-green-50 rounded-xl p-3 border border-emerald-100 text-center shadow-inner">
+            <span className="text-xs text-emerald-700 font-medium">Monthly savings after install: </span>
+            <span className="font-black text-emerald-700 text-lg"> {result.monthlySavings}/mo</span>
           </div>
         </div>
       )}

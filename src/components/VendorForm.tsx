@@ -45,14 +45,32 @@ const VendorForm = () => {
     return newErrors;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const newErrors = validate();
     if (Object.keys(newErrors).length === 0) {
-      console.log('Vendor form submitted:', formData);
-      setSubmitted(true);
-      setFormData({ companyName: '', contactPerson: '', phone: '', email: '', businessType: '', experience: '', location: '', details: '' });
-      setTimeout(() => setSubmitted(false), 5000);
+      try {
+        const response = await fetch('/api/enquiries', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            name: `${formData.contactPerson} (${formData.companyName})`,
+            email: formData.email,
+            phone: formData.phone,
+            city: formData.location,
+            interest: `Vendor: ${formData.businessType}`,
+            message: `Exp: ${formData.experience}. Details: ${formData.details}`
+          })
+        });
+
+        if (response.ok) {
+          setSubmitted(true);
+          setFormData({ companyName: '', contactPerson: '', phone: '', email: '', businessType: '', experience: '', location: '', details: '' });
+          setTimeout(() => setSubmitted(false), 5000);
+        }
+      } catch (err) {
+        console.error('Failed to submit vendor form', err);
+      }
     } else {
       setErrors(newErrors);
     }
@@ -156,6 +174,7 @@ const VendorForm = () => {
             </label>
             <select
               name="businessType"
+              title="Business Type"
               value={formData.businessType}
               onChange={handleChange}
               className={`w-full px-4 py-3 border-2 rounded-lg focus:outline-none ${

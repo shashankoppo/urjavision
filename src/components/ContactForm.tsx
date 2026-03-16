@@ -45,14 +45,28 @@ const ContactForm = ({ title = 'Get Free Consultation', subtitle = 'Fill the for
     return newErrors;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const newErrors = validate();
     if (Object.keys(newErrors).length === 0) {
-      console.log('Form submitted:', formData);
-      setSubmitted(true);
-      setFormData({ name: '', phone: '', email: '', city: '', message: '' });
-      setTimeout(() => setSubmitted(false), 5000);
+      try {
+        const response = await fetch('/api/enquiries', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            ...formData,
+            interest: 'General Inquiry'
+          })
+        });
+
+        if (response.ok) {
+          setSubmitted(true);
+          setFormData({ name: '', phone: '', email: '', city: '', message: '' });
+          setTimeout(() => setSubmitted(false), 5000);
+        }
+      } catch (err) {
+        console.error('Failed to submit enquiry', err);
+      }
     } else {
       setErrors(newErrors);
     }

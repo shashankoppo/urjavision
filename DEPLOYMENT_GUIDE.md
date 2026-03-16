@@ -158,30 +158,24 @@ server {
 </IfModule>
 ```
 
-### Option 5: Docker Deployment
+### Option 5: Docker Deployment (Recommended for Ubuntu Server)
 
-Create `Dockerfile`:
-
-```dockerfile
-FROM node:18-alpine as build
-WORKDIR /app
-COPY package*.json ./
-RUN npm install
-COPY . .
-RUN npm run build
-
-FROM nginx:alpine
-COPY --from=build /app/dist /usr/share/nginx/html
-EXPOSE 80
-CMD ["nginx", "-g", "daemon off;"]
-```
-
-Build and run:
+Use the built-in `docker-compose.yml` for a production-ready environment with the Express backend and SQLite database.
 
 ```bash
-docker build -t urja-vision .
-docker run -p 80:80 urja-vision
+# 1. Build and start the containers in detached mode
+docker compose up -d --build
+
+# 2. Check logs (optional)
+docker compose logs -f
 ```
+
+This will:
+- Build the React frontend
+- Build the Express backend
+- Initialize the SQLite database
+- Mount a persistent volume for the database
+- Expose the app on port 3000
 
 ## Environment Configuration
 

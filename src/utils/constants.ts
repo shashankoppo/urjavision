@@ -31,7 +31,7 @@ export const NAVIGATION_MENU = [
   { name: 'Solar Products', path: '/solar-products' },
   { name: 'Solar Packages', path: '/solar-packages' },
   { name: 'Government Schemes', path: '/government-schemes' },
-  { name: 'Kisan Urja', path: '/kisan-urja' },
+  { name: 'PM Kusum Yojana', path: '/pm-kusum-yojana' },
   { name: 'Vendor / Partner', path: '/vendor-partner' },
   { name: 'Training & Internship', path: '/training-internship' },
   { name: 'Careers', path: '/careers' },
@@ -44,7 +44,7 @@ export const SERVICES = [
   {
     id: 1,
     title: 'Residential Solar Installation',
-    description: 'Solar rooftop systems for homes with complete installation and maintenance.',
+    description: '1 to 10KV sys RTS for homes with complete installation and maintenance.',
     icon: 'Home'
   },
   {

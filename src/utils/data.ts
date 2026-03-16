@@ -372,7 +372,7 @@ export const jobPositions = [
   }
 ];
 
-export const kisanUrjaSolutions = [
+export const pmKusumYojanaSolutions = [
   {
     id: 1,
     title: 'Solar Irrigation Pumps',

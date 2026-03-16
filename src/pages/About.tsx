@@ -1,4 +1,4 @@
-import { CheckCircle, Users, Award, Sun, Building2, Leaf, Target, Heart } from 'lucide-react';
+import { CheckCircle, Users, Award, Sun, Building2, Leaf, Target, Heart, Zap } from 'lucide-react';
 import { STATS } from '../utils/constants';
 
 const teamMembers = [
@@ -54,7 +54,7 @@ const About = () => {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             {STATS.map((stat) => (
               <div key={stat.id} className="text-center">
-                <div className="text-4xl font-black text-emerald-700 mb-1" style={{ fontFamily: 'Outfit' }}>{stat.value}</div>
+                <div className="text-4xl font-black text-emerald-700 mb-1 font-outfit">{stat.value}</div>
                 <div className="text-sm text-gray-500 font-medium">{stat.label}</div>
               </div>
             ))}
@@ -104,11 +104,11 @@ const About = () => {
                 />
               </div>
               <div className="absolute -bottom-6 -left-6 card p-5 shadow-xl w-40 text-center">
-                <div className="text-3xl font-black text-emerald-700" style={{ fontFamily: 'Outfit' }}>15+</div>
+                <div className="text-3xl font-black text-emerald-700 font-outfit">15+</div>
                 <div className="text-xs text-gray-500 font-medium">Years of Experience</div>
               </div>
               <div className="absolute -top-6 -right-6 card p-5 shadow-xl w-44 text-center">
-                <div className="text-3xl font-black text-amber-600" style={{ fontFamily: 'Outfit' }}>1000+</div>
+                <div className="text-3xl font-black text-amber-600 font-outfit">1000+</div>
                 <div className="text-xs text-gray-500 font-medium">Happy Customers</div>
               </div>
             </div>
@@ -153,6 +153,40 @@ const About = () => {
                 <p className="text-gray-500 text-sm leading-relaxed">{item.text}</p>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Technical Partner */}
+      <section className="section-padding bg-gray-50 overflow-hidden relative">
+        <div className="absolute top-0 right-0 p-20 opacity-[0.03] rotate-12 pointer-events-none">
+          <Zap size={300} />
+        </div>
+        <div className="container relative z-10">
+          <div className="max-w-4xl mx-auto bg-white rounded-[40px] shadow-2xl shadow-emerald-900/10 border border-emerald-100 overflow-hidden flex flex-col md:flex-row">
+            <div className="md:w-1/3 bg-gradient-to-br from-emerald-600 to-emerald-800 p-10 flex flex-col items-center justify-center text-center">
+              <div className="w-16 h-16 bg-white/20 rounded-2xl flex items-center justify-center mb-4 backdrop-blur-md border border-white/30">
+                <Zap size={32} className="text-white" />
+              </div>
+              <div className="text-white font-black text-2xl mb-1">ELSxGlobal</div>
+              <div className="text-emerald-200 text-xs font-bold uppercase tracking-widest">Technical Partner</div>
+            </div>
+            <div className="flex-1 p-10 md:p-12">
+              <h3 className="text-2xl font-black text-gray-900 mb-4">Unmatched Technical Advisory</h3>
+              <p className="text-gray-600 text-sm leading-relaxed mb-6">
+                Urja Vision is proud to be strategically powered by <span className="font-bold text-emerald-700">ELSxGlobal</span> (A Division of Evolucentsphere Pvt Ltd). Our technical partnership ensures that every solar installation is engineered with the highest precision, incorporating the latest in AI-driven energy optimization and structural integrity standards.
+              </p>
+              <div className="grid grid-cols-2 gap-6">
+                <div>
+                  <div className="text-emerald-600 font-black text-xl mb-1">AI-Ready</div>
+                  <div className="text-gray-400 text-[10px] font-bold uppercase tracking-tight">Smart Monitoring Integration</div>
+                </div>
+                <div>
+                  <div className="text-emerald-600 font-black text-xl mb-1">Tier-1</div>
+                  <div className="text-gray-400 text-[10px] font-bold uppercase tracking-tight">Engineering Certification</div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>

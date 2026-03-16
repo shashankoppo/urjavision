@@ -7,7 +7,7 @@ const NewsletterForm = () => {
   const [error, setError] = useState('');
   const [subscribed, setSubscribed] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!email.trim()) {
       setError('Email is required');
@@ -17,11 +17,27 @@ const NewsletterForm = () => {
       setError('Invalid email address');
       return;
     }
-    console.log('Newsletter subscription:', email);
-    setSubscribed(true);
-    setEmail('');
-    setError('');
-    setTimeout(() => setSubscribed(false), 5000);
+    
+    try {
+      await fetch('/api/enquiries', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: 'Newsletter Subscriber',
+          email: email,
+          phone: '-',
+          city: '-',
+          interest: 'Newsletter Subscription',
+          message: `Subscriber: ${email}`
+        })
+      });
+      setSubscribed(true);
+      setEmail('');
+      setError('');
+      setTimeout(() => setSubscribed(false), 5000);
+    } catch (err) {
+      console.error('Newsletter sub failed', err);
+    }
   };
 
   return (

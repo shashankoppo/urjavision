@@ -12,7 +12,7 @@ const Contact = () => {
   const [loading, setLoading] = useState(false);
 
   const interests = [
-    'Residential Solar', 'Commercial Solar', 'Industrial Solar', 'Solar Pump (Kisan)',
+    'Residential Solar', 'Commercial Solar', 'Industrial Solar', 'PM Kusum Yojana',
     'Solar Products', 'Training / Internship', 'Vendor / Partner', 'General Inquiry'
   ];
 
@@ -32,17 +32,29 @@ const Contact = () => {
     return e;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const newErrors = validate();
     if (Object.keys(newErrors).length > 0) { setErrors(newErrors); return; }
     setLoading(true);
-    setTimeout(() => {
+    
+    try {
+      const response = await fetch('/api/enquiries', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData)
+      });
+      
+      if (response.ok) {
+        setSubmitted(true);
+        setFormData({ name: '', phone: '', email: '', city: '', interest: '', message: '' });
+        setTimeout(() => setSubmitted(false), 7000);
+      }
+    } catch (err) {
+      console.error('Failed to send enquiry', err);
+    } finally {
       setLoading(false);
-      setSubmitted(true);
-      setFormData({ name: '', phone: '', email: '', city: '', interest: '', message: '' });
-      setTimeout(() => setSubmitted(false), 7000);
-    }, 1500);
+    }
   };
 
   return (

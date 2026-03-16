@@ -1,12 +1,13 @@
-import { solarProjects } from '../utils/data';
+import { useData } from '../context/DataContext';
 import { MapPin, Zap, Calendar, Filter } from 'lucide-react';
 import { useState } from 'react';
 
 const types = ['All', 'Commercial', 'Residential', 'Educational', 'Agriculture', 'Healthcare', 'Hospitality'];
 
 const SolarProjects = () => {
+  const { projects: solarProjects } = useData();
   const [filter, setFilter] = useState('All');
-  const filtered = filter === 'All' ? solarProjects : solarProjects.filter((p) => p.type === filter);
+  const filtered = filter === 'All' ? solarProjects : solarProjects.filter((p: any) => p.type === filter);
 
   return (
     <div>
