@@ -173,9 +173,14 @@ docker compose logs -f
 This will:
 - Build the React frontend
 - Build the Express backend
-- Initialize the SQLite database
-- Mount a persistent volume for the database
+- Initialize the SQLite database in `/app/data/urja.db`
+- Mount a persistent volume from the host `./data` directory to `/app/data`
 - Expose the app on port 3000
+- Persist your production data even after container restarts
+
+> [!IMPORTANT]
+> Ensure the `./data` directory exists and has write permissions. The system will automatically create it and initialize the database if it doesn't exist.
+
 
 ## Environment Configuration
 

@@ -3,6 +3,8 @@ import cors from 'cors';
 import sqlite3 from 'sqlite3';
 import { fileURLToPath } from 'url';
 import path from 'path';
+import fs from 'fs';
+
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -38,7 +40,15 @@ app.get('*', (req, res, next) => {
 });
 
 // Initialize SQLite database
-const dbPath = path.resolve(__dirname, 'urja.db');
+const dbPath = process.env.DB_PATH || path.resolve(__dirname, 'data/urja.db');
+const dbDir = path.dirname(dbPath);
+if (!fs.existsSync(dbDir)) {
+  fs.mkdirSync(dbDir, { recursive: true });
+}
+
+
+
+
 const db = new sqlite3.Database(dbPath, (err) => {
   if (err) {
     console.error('Error opening database', err.message);
