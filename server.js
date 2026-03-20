@@ -15,6 +15,18 @@ const port = 3000;
 app.use(cors());
 app.use(express.json());
 
+// Improved Request Logger
+app.use((req, res, next) => {
+  console.log(`[${new Date().toISOString()}] ${req.method} ${req.url}`);
+  next();
+});
+
+// Healthcheck Route (for Docker & Cloud platforms)
+app.get('/api/health', (req, res) => {
+  res.status(200).json({ status: 'ok', timestamp: new Date().toISOString() });
+});
+
+
 // Enhanced CATEGORIES for Shop & Admin
 const SHOP_CATEGORIES = [
   'Solar Panels', 
@@ -372,11 +384,30 @@ app.post('/api/settings', (req, res) => {
 // The catch-all handler: for any request that doesn't
 // match one above, send back React's index.html file.
 app.get('(.*)', (req, res) => {
-  res.sendFile(path.join(__dirname, 'dist', 'index.html'));
+  const indexPath = path.join(__dirname, 'dist', 'index.html');
+  if (fs.existsSync(indexPath)) {
+    res.sendFile(indexPath);
+  } else {
+    console.warn(`WARNING: index.html not found at ${indexPath}. Frontend may be missing.`);
+    res.status(404).send('Frontend not built correctly. Please check "dist" folder.');
+  }
 });
 
 
-app.listen(port, '0.0.0.0', () => {
-  console.log(`Express API Server running on port ${port}`);
+
+// Explicitly listen on 0.0.0.0 for Docker compatibility
+const HOST = '0.0.0.0';
+const PORT = process.env.PORT || port || 3000;
+
+app.listen(PORT, HOST, () => {
+  console.log('╔══════════════════════════════════════════════════════════╗');
+  console.log('║                                                          ║');
+  console.log(`║     URJA VISION SERVER IS LIVE ON PORT ${PORT}             ║`);
+  console.log(`║     Access locally: http://localhost:${PORT}                ║`);
+  console.log('║                                                          ║');
+  console.log('╚══════════════════════════════════════════════════════════╝');
+  console.log(`[NODE_ENV: ${process.env.NODE_ENV || 'production'}]`);
+  console.log(`[DB_PATH: ${dbPath}]`);
 });
+
 
