@@ -1,10 +1,10 @@
 # Build stage
-FROM node:18-alpine AS build
+FROM node:18-slim AS build
 
 WORKDIR /app
 
-# Install build dependencies for native modules (like sqlite3)
-RUN apk add --no-cache python3 make g++
+# Install build dependencies for native modules (Debian version)
+RUN apt-get update && apt-get install -y python3 make g++ && rm -rf /var/lib/apt/lists/*
 
 # Install dependencies
 COPY package*.json ./
@@ -15,19 +15,16 @@ COPY . .
 RUN npm run build
 
 # Production stage
-FROM node:18-alpine
+FROM node:18-slim
 
 WORKDIR /app
 
-# Need build dependencies again for production install if not using bundles
-RUN apk add --no-cache python3 make g++
+# Install runtime dependencies if needed (Debian version)
+RUN apt-get update && apt-get install -y python3 make g++ && rm -rf /var/lib/apt/lists/*
 
 # Copy package files and install production deps only
 COPY package*.json ./
-RUN npm install --omit=dev
-
-# We can remove build tools after install to keep image small
-RUN apk del python3 make g++
+RUN npm install --omit=dev && apt-get purge -y python3 make g++ && apt-get autoremove -y
 
 # Copy server code and built frontend
 COPY server.js ./
@@ -41,6 +38,8 @@ EXPOSE 3000
 
 # Set environment variable for the database path
 ENV DB_PATH=/app/data/urja.db
+ENV NODE_ENV=production
 
 CMD ["node", "server.js"]
+
 
