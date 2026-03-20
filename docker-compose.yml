@@ -6,7 +6,7 @@ services:
       - "3000:3000"
     volumes:
       - ./data:/app/data
-    restart: unless-stopped
+    restart: always
     environment:
       - NODE_ENV=production
       - PORT=3000

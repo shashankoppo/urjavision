@@ -232,7 +232,8 @@ app.post('/api/settings', (req, res) => {
 });
 
 // ── SPA Fallback — MUST be last ───────────────────────────────────────────────
-app.get('(.*)', (req, res) => {
+app.get('*', (req, res) => {
+
   const indexPath = path.join(__dirname, 'dist', 'index.html');
   if (fs.existsSync(indexPath)) {
     res.sendFile(indexPath);
