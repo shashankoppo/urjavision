@@ -3,9 +3,13 @@ FROM node:18-alpine AS build
 
 WORKDIR /app
 
+# Copy package files first (layer caching)
 COPY package*.json ./
-RUN npm ci
 
+# Install ALL deps (dev + prod) needed to build the frontend
+RUN npm install
+
+# Copy all source files and build
 COPY . .
 RUN npm run build
 
@@ -14,16 +18,20 @@ FROM node:18-alpine
 
 WORKDIR /app
 
-# Only install production dependencies — pure JS, no native modules needed
+# Copy package files
 COPY package*.json ./
-RUN npm ci --omit=dev
 
-# Copy server and built frontend
+# Install ONLY production dependencies (express, cors — pure JS, no native modules)
+RUN npm install --omit=dev
+
+# Copy compiled server from source
 COPY server.js ./
+
+# Copy built React frontend from build stage
 COPY --from=build /app/dist ./dist
 
-# Persistent data directory
-RUN mkdir -p /app/data
+# Create persistent data directory
+RUN mkdir -p /app/data && chmod 777 /app/data
 
 EXPOSE 3000
 

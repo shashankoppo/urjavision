@@ -232,8 +232,9 @@ app.post('/api/settings', (req, res) => {
 });
 
 // ── SPA Fallback — MUST be last ───────────────────────────────────────────────
-app.get('*', (req, res) => {
-
+// Using app.use() instead of app.get('*') to bypass path-to-regexp entirely
+// This works with Express 4, Express 5, and any future version
+app.use((req, res) => {
   const indexPath = path.join(__dirname, 'dist', 'index.html');
   if (fs.existsSync(indexPath)) {
     res.sendFile(indexPath);
@@ -241,6 +242,7 @@ app.get('*', (req, res) => {
     res.status(503).send('Frontend not built. Run "npm run build" and try again.');
   }
 });
+
 
 // ── Start ─────────────────────────────────────────────────────────────────────
 app.listen(PORT, '0.0.0.0', () => {
