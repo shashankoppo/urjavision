@@ -32,14 +32,8 @@ app.use(express.static(path.join(__dirname, 'dist')));
 
 // API Routes go here... (omitted for brevity in this task but they exist in the file)
 
-// The catch-all handler: for any request that doesn't
-// match one above, send back React's index.html file.
-app.get('*', (req, res, next) => {
-  if (req.url.startsWith('/api')) return next();
-  res.sendFile(path.join(__dirname, 'dist', 'index.html'));
-});
-
 // Initialize SQLite database
+
 const dbPath = process.env.DB_PATH || path.resolve(__dirname, 'data/urja.db');
 const dbDir = path.dirname(dbPath);
 if (!fs.existsSync(dbDir)) {
@@ -375,6 +369,14 @@ app.post('/api/settings', (req, res) => {
   });
 });
 
+// The catch-all handler: for any request that doesn't
+// match one above, send back React's index.html file.
+app.get('(.*)', (req, res) => {
+  res.sendFile(path.join(__dirname, 'dist', 'index.html'));
+});
+
+
 app.listen(port, () => {
+
   console.log(`Express API Server running on http://localhost:${port}`);
 });
