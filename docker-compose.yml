@@ -6,8 +6,8 @@ services:
       - "3000:3000"
     volumes:
       - ./data:/app/data
-    restart: always
+    restart: unless-stopped
     environment:
       - NODE_ENV=production
-      - DB_PATH=/app/data/urja.db
-
+      - PORT=3000
+      - DATA_DIR=/app/data
