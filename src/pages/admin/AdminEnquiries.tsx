@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { MessageSquare, Star, Search, CheckCircle, XCircle, Phone, Mail, User, Tag, MapPin, Trash2, Loader2, Filter } from 'lucide-react';
+import { MessageSquare, Star, Search, XCircle, Phone, Mail, User, Trash2, Loader2 } from 'lucide-react';
 
 interface Props {
   currentTab: string;
@@ -18,9 +18,9 @@ const STATUS_COLORS: Record<string, string> = {
 const STAR_RATINGS = [1, 2, 3, 4, 5];
 
 const AdminEnquiries = ({ currentTab }: Props) => {
-  const [activeTab, setActiveTab] = useState<'enquiries' | 'reviews'>(
-    currentTab.includes('reviews') ? 'reviews' : 'enquiries'
-  );
+  // Derive active view directly from Sidebar path
+  const isReviews = currentTab.startsWith('/admin/reviews');
+  
   const [search, setSearch] = useState('');
   const [statusFilter, setStatusFilter] = useState('All');
   const [selectedEnquiry, setSelectedEnquiry] = useState<any>(null);
@@ -127,23 +127,8 @@ const AdminEnquiries = ({ currentTab }: Props) => {
     <div className="space-y-6 animate-fade-in text-gray-300">
       <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-black text-white tracking-tight">Intelligence Hub</h1>
-          <p className="text-gray-500 text-sm mt-1 uppercase tracking-widest font-bold">Leads & Feedback Protocols</p>
-        </div>
-        <div className="flex p-1 bg-white/5 border border-white/5 rounded-xl">
-          {(['enquiries', 'reviews'] as const).map((tab) => (
-            <button
-              key={tab}
-              onClick={() => setActiveTab(tab)}
-              className={`px-6 py-2 rounded-lg text-[10px] font-black uppercase tracking-widest transition-all ${
-                activeTab === tab 
-                  ? 'bg-white text-black shadow-lg' 
-                  : 'text-gray-500 hover:text-white'
-              }`}
-            >
-              {tab}
-            </button>
-          ))}
+          <h1 className="text-3xl font-black text-white tracking-tight">{isReviews ? 'Client Feedback' : 'Intelligence Hub'}</h1>
+          <p className="text-gray-500 text-sm mt-1 uppercase tracking-widest font-bold">{isReviews ? 'Reviews & Testimonials' : 'Acquisition Leads'}</p>
         </div>
       </div>
 
@@ -155,18 +140,18 @@ const AdminEnquiries = ({ currentTab }: Props) => {
               <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500" size={16} />
               <input
                 type="text"
-                placeholder={`Search ${activeTab}...`}
+                placeholder={`Search records...`}
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                className="w-full bg-white/5 border border-white/5 rounded-xl pl-12 pr-4 py-3 text-sm text-white focus:outline-none focus:ring-2 focus:ring-emerald-500/20 transition-all font-bold"
+                className="w-full bg-white/5 border border-white/5 rounded-xl pl-12 pr-4 py-3 text-sm text-white focus:outline-none focus:ring-1 focus:ring-emerald-500/30 transition-all font-bold"
               />
             </div>
-            {activeTab === 'enquiries' && (
+            {!isReviews && (
               <select
                 title="Status Filter"
                 value={statusFilter}
                 onChange={(e) => setStatusFilter(e.target.value)}
-                className="bg-white/5 border border-white/5 text-gray-400 text-[10px] font-black uppercase tracking-widest rounded-xl px-4 py-3 focus:outline-none hover:bg-white/10 transition-all cursor-pointer"
+                className="bg-white/5 border border-white/5 text-gray-400 text-[10px] font-black uppercase tracking-widest rounded-xl px-4 py-3 focus:outline-none hover:bg-white/10 transition-all cursor-pointer font-bold"
               >
                 <option value="All">All Status</option>
                 {['New', 'Contacted', 'Quoted', 'Won', 'Lost'].map(s => <option key={s} value={s}>{s}</option>)}
@@ -175,7 +160,7 @@ const AdminEnquiries = ({ currentTab }: Props) => {
           </div>
 
           <div className="space-y-2">
-            {activeTab === 'enquiries' ? (
+            {!isReviews ? (
               filteredEnquiries.map((item) => (
                 <div
                   key={item.id}
@@ -207,7 +192,7 @@ const AdminEnquiries = ({ currentTab }: Props) => {
                 <div key={review.id} className="p-6 bg-[#111827] rounded-2xl border border-white/5 group">
                   <div className="flex justify-between items-start mb-4">
                     <div className="flex items-center gap-4">
-                      <div className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center border border-white/10 text-white font-black overflow-hidden">
+                      <div className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center border border-white/10 text-white font-black overflow-hidden shadow-inner">
                         {review.image ? <img src={review.image} alt={review.name} className="w-full h-full object-cover" /> : review.name[0]}
                       </div>
                       <div>
@@ -226,81 +211,83 @@ const AdminEnquiries = ({ currentTab }: Props) => {
                       <button onClick={() => deleteReview(review.id)} className="p-2 text-gray-600 hover:text-red-400 transition-all"><Trash2 size={16} /></button>
                     </div>
                   </div>
-                  <p className="text-sm text-gray-400 leading-relaxed italic">"{review.comment || review.review}"</p>
+                  <p className="text-sm text-gray-400 leading-relaxed italic border-l-2 border-white/5 pl-4 ml-1">"{review.comment || review.review}"</p>
                 </div>
               ))
             )}
-            {!loading && (activeTab === 'enquiries' ? filteredEnquiries : reviews).length === 0 && (
-              <div className="text-center py-20 bg-white/[0.01] rounded-2xl border border-dashed border-white/5 text-gray-700 font-black uppercase tracking-widest text-xs">Records Empty</div>
+            {!loading && (!isReviews ? filteredEnquiries : reviews).length === 0 && (
+              <div className="text-center py-20 bg-white/[0.01] rounded-2xl border border-dashed border-white/5 text-gray-700 font-black uppercase tracking-widest text-xs">Buffer Clear</div>
             )}
           </div>
         </div>
 
-        {/* Sidebar Details */}
-        <div className="lg:col-span-4">
-          <div className="bg-[#111827] rounded-2xl border border-white/5 p-8 sticky top-24">
-            {selectedEnquiry ? (
-              <div className="animate-fade-in space-y-8 text-gray-400">
-                <div className="text-center border-b border-white/5 pb-8 relative">
-                  <div className="w-20 h-20 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-white text-3xl font-black mx-auto mb-4">
-                    {selectedEnquiry.name[0]}
+        {/* Details Panel - Only for Enquiries */}
+        {!isReviews && (
+          <div className="lg:col-span-4">
+            <div className="bg-[#111827] rounded-2xl border border-white/5 p-8 sticky top-24 shadow-2xl shadow-black/40">
+              {selectedEnquiry ? (
+                <div className="animate-fade-in space-y-8 text-gray-400">
+                  <div className="text-center border-b border-white/5 pb-8 relative">
+                    <div className="w-20 h-20 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-white text-3xl font-black mx-auto mb-4">
+                      {selectedEnquiry.name[0]}
+                    </div>
+                    <h3 className="text-xl font-black text-white tracking-tight">{selectedEnquiry.name}</h3>
+                    <p className="text-gray-500 text-[10px] font-black uppercase tracking-widest mt-1">Lead Context</p>
+                    <button onClick={() => setSelectedEnquiry(null)} className="absolute -top-2 -right-2 p-2 text-gray-600 hover:text-white"><XCircle size={18} /></button>
                   </div>
-                  <h3 className="text-xl font-black text-white tracking-tight">{selectedEnquiry.name}</h3>
-                  <p className="text-gray-500 text-[10px] font-black uppercase tracking-widest mt-1">Acquisition Lead</p>
-                  <button onClick={() => setSelectedEnquiry(null)} className="absolute -top-2 -right-2 p-2 text-gray-600 hover:text-white"><XCircle size={18} /></button>
-                </div>
 
-                <div className="space-y-4">
-                  <div>
-                    <div className="text-[10px] font-black text-gray-600 uppercase tracking-widest mb-3">Communication</div>
-                    <div className="space-y-2">
-                        <a href={`tel:${selectedEnquiry.phone}`} className="flex items-center gap-3 p-3 rounded-xl bg-white/[0.02] border border-white/5 hover:border-emerald-500/30 transition-all font-bold text-sm">
-                            <Phone size={14} className="text-emerald-500" /> +91 {selectedEnquiry.phone}
-                        </a>
-                        <a href={`mailto:${selectedEnquiry.email}`} className="flex items-center gap-3 p-3 rounded-xl bg-white/[0.02] border border-white/5 hover:border-indigo-500/30 transition-all font-bold text-sm truncate">
-                            <Mail size={14} className="text-indigo-500" /> {selectedEnquiry.email}
-                        </a>
+                  <div className="space-y-6">
+                    <div>
+                      <div className="text-[10px] font-black text-gray-600 uppercase tracking-widest mb-3">Communication Channel</div>
+                      <div className="space-y-2">
+                          <a href={`tel:${selectedEnquiry.phone}`} className="flex items-center gap-3 p-3 rounded-xl bg-white/[0.02] border border-white/5 hover:border-emerald-500/30 transition-all font-bold text-sm">
+                              <Phone size={14} className="text-emerald-500" /> +91 {selectedEnquiry.phone}
+                          </a>
+                          <a href={`mailto:${selectedEnquiry.email}`} className="flex items-center gap-3 p-3 rounded-xl bg-white/[0.02] border border-white/5 hover:border-indigo-500/30 transition-all font-bold text-sm truncate">
+                              <Mail size={14} className="text-indigo-500" /> {selectedEnquiry.email}
+                          </a>
+                      </div>
+                    </div>
+
+                    <div>
+                      <div className="text-[10px] font-black text-gray-600 uppercase tracking-widest mb-3">Intelligence Summary</div>
+                      <div className="p-4 rounded-xl bg-white/[0.02] border border-white/5 text-xs text-gray-400 italic leading-relaxed">
+                          "{selectedEnquiry.message || 'No additional narrative data.'}"
+                      </div>
                     </div>
                   </div>
 
-                  <div>
-                    <div className="text-[10px] font-black text-gray-600 uppercase tracking-widest mb-3">Intelligence</div>
-                    <div className="p-4 rounded-xl bg-white/[0.02] border border-white/5 text-xs text-gray-400 italic leading-relaxed">
-                        "{selectedEnquiry.message || 'No additional narrative data.'}"
+                  <div className="pt-8 border-t border-white/5">
+                    <div className="text-[10px] font-black text-gray-600 uppercase tracking-widest mb-4 text-center">Status Control</div>
+                    <div className="grid grid-cols-2 gap-2">
+                      {['Won', 'Lost', 'Quoted', 'Contacted'].map(status => (
+                        <button
+                          key={status}
+                          onClick={() => updateStatus(selectedEnquiry.id, status)}
+                          className="px-4 py-2 rounded-lg border border-white/5 text-[9px] font-black uppercase tracking-widest text-gray-500 hover:text-white hover:border-emerald-500/30 transition-all font-bold"
+                        >
+                          {status}
+                        </button>
+                      ))}
                     </div>
+                    <button
+                      onClick={() => deleteEnquiry(selectedEnquiry.id)}
+                      className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-xl border border-red-500/10 text-[10px] font-black uppercase tracking-widest text-red-500/50 hover:text-red-500 hover:bg-red-500/10 transition-all mt-6"
+                    >
+                      <Trash2 size={14} /> Terminate Record
+                    </button>
                   </div>
                 </div>
-
-                <div className="pt-8 border-t border-white/5">
-                  <div className="text-[10px] font-black text-gray-600 uppercase tracking-widest mb-4 text-center">Update Protocol</div>
-                  <div className="grid grid-cols-2 gap-2">
-                    {['Won', 'Lost', 'Quoted', 'Contacted'].map(status => (
-                      <button
-                        key={status}
-                        onClick={() => updateStatus(selectedEnquiry.id, status)}
-                        className="px-4 py-2 rounded-lg border border-white/5 text-[9px] font-black uppercase tracking-widest text-gray-500 hover:text-white hover:border-emerald-500/30 transition-all font-bold"
-                      >
-                        {status}
-                      </button>
-                    ))}
-                  </div>
-                  <button
-                    onClick={() => deleteEnquiry(selectedEnquiry.id)}
-                    className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-xl border border-red-500/10 text-[10px] font-black uppercase tracking-widest text-red-500/50 hover:text-red-500 hover:bg-red-500/10 transition-all mt-6"
-                  >
-                    <Trash2 size={14} /> Terminate Record
-                  </button>
+              ) : (
+                <div className="py-20 text-center animate-fade-in opacity-50">
+                  <User size={40} className="text-gray-800 mx-auto mb-6" />
+                  <h4 className="text-white font-black uppercase tracking-widest text-xs">Waiting For Selection</h4>
+                  <p className="text-gray-600 text-[9px] font-bold mt-2 uppercase tracking-tight">Access Acquisition Intel</p>
                 </div>
-              </div>
-            ) : (
-              <div className="py-20 text-center animate-fade-in opacity-50">
-                <User size={40} className="text-gray-800 mx-auto mb-6" />
-                <h4 className="text-white font-black uppercase tracking-widest text-xs">Waiting For Selection</h4>
-                <p className="text-gray-600 text-[9px] font-bold mt-2 uppercase tracking-tight">Access Deep Lead Intelligence</p>
-              </div>
-            )}
+              )}
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </div>
   );

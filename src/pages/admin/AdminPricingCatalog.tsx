@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Package, Plus, Image as ImageIcon, Search, Edit3, Trash2, X, Save, CheckCircle, MapPin, Calendar, Zap, LayoutGrid, List } from 'lucide-react';
+import { Package, Plus, Image as ImageIcon, Search, Trash2, X, CheckCircle, MapPin, Zap } from 'lucide-react';
 import { useData } from '../../context/DataContext';
 
 interface Props {
@@ -14,10 +14,11 @@ const CATEGORIES = [
 const PROJECT_TYPES = ['Commercial','Residential','Educational','Agriculture','Healthcare','Hospitality','Industrial'];
 
 const AdminPricingCatalog = ({ currentTab }: Props) => {
-  const [activeTab, setActiveTab] = useState<'products' | 'portfolio' | 'orders'>( 
-    currentTab.includes('portfolio') ? 'portfolio' : 
-    currentTab.includes('orders') ? 'orders' : 'products' 
-  );
+  // Determine if we are in Products, Portfolio, or Orders mode based on the URL path
+  const isPortfolio = currentTab.startsWith('/admin/portfolio');
+  const isOrders = currentTab.startsWith('/admin/orders');
+  const isProducts = currentTab.startsWith('/admin/products');
+
   const [search, setSearch] = useState('');
   const [showModal, setShowModal] = useState(false);
   const [saving, setSaving] = useState(false);
@@ -118,36 +119,20 @@ const AdminPricingCatalog = ({ currentTab }: Props) => {
       <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
         <div>
           <h1 className="text-3xl font-black text-white tracking-tight">
-            {activeTab === 'products' ? 'Inventory' : activeTab === 'portfolio' ? 'Portfolio' : 'Orders'}
+            {isProducts ? 'Inventory' : isPortfolio ? 'Portfolio' : 'Orders'}
           </h1>
           <p className="text-gray-500 text-sm mt-1 uppercase tracking-widest font-bold">
-            {activeTab === 'products' ? 'Catalog Management' : activeTab === 'portfolio' ? 'Project Showcase' : 'Purchase Inquiries'}
+            {isProducts ? 'Catalog Management' : isPortfolio ? 'Project Showcase' : 'Purchase Inquiries'}
           </p>
         </div>
-        {activeTab !== 'orders' && (
+        {!isOrders && (
           <button
             onClick={() => setShowModal(true)}
             className="flex items-center gap-2 bg-emerald-500 text-black px-6 py-3 rounded-xl text-xs font-black uppercase tracking-widest transition-all hover:scale-105"
           >
-            <Plus size={16} /> New {activeTab === 'products' ? 'Item' : 'Project'}
+            <Plus size={16} /> New {isProducts ? 'Item' : 'Project'}
           </button>
         )}
-      </div>
-
-      <div className="flex p-1 bg-white/5 border border-white/5 rounded-xl w-fit">
-        {[
-          { id: 'products', label: 'Products', icon: Package },
-          { id: 'portfolio', label: 'Portfolio', icon: ImageIcon },
-          { id: 'orders', label: 'Orders', icon: Zap },
-        ].map((tab) => (
-          <button
-            key={tab.id}
-            onClick={() => setActiveTab(tab.id as any)}
-            className={`px-6 py-2 rounded-lg text-[10px] font-black uppercase tracking-widest transition-all flex items-center gap-2 ${activeTab === tab.id ? 'bg-white text-black shadow-lg' : 'text-gray-500 hover:text-white'}`}
-          >
-            <tab.icon size={12} /> {tab.label}
-          </button>
-        ))}
       </div>
 
       <div className="bg-[#111827] border border-white/5 rounded-2xl overflow-hidden shadow-2xl">
@@ -159,13 +144,13 @@ const AdminPricingCatalog = ({ currentTab }: Props) => {
               placeholder="Filter database..."
               value={search}
               onChange={e => setSearch(e.target.value)}
-              className="w-full bg-white/5 border border-white/5 rounded-xl pl-12 pr-4 py-2.5 text-xs text-white focus:outline-none focus:ring-1 focus:ring-emerald-500/30"
+              className="w-full bg-white/5 border border-white/5 rounded-xl pl-12 pr-4 py-3 text-sm text-white focus:outline-none focus:ring-1 focus:ring-emerald-500/30 font-bold"
             />
           </div>
         </div>
 
         <div className="overflow-x-auto">
-          {activeTab === 'products' && (
+          {isProducts && (
             <table className="w-full text-xs text-left">
               <thead className="bg-[#151B2D] text-gray-500 font-bold uppercase tracking-widest border-b border-white/5">
                 <tr>
@@ -199,7 +184,7 @@ const AdminPricingCatalog = ({ currentTab }: Props) => {
             </table>
           )}
 
-          {activeTab === 'portfolio' && (
+          {isPortfolio && (
             <table className="w-full text-xs text-left">
               <thead className="bg-[#151B2D] text-gray-500 font-bold uppercase tracking-widest border-b border-white/5">
                 <tr>
@@ -233,7 +218,7 @@ const AdminPricingCatalog = ({ currentTab }: Props) => {
             </table>
           )}
 
-          {activeTab === 'orders' && (
+          {isOrders && (
             <table className="w-full text-xs text-left">
               <thead className="bg-[#151B2D] text-gray-500 font-bold uppercase tracking-widest border-b border-white/5">
                 <tr>
@@ -268,7 +253,7 @@ const AdminPricingCatalog = ({ currentTab }: Props) => {
           <div className="bg-[#111827] border border-white/10 rounded-2xl w-full max-w-lg overflow-hidden shadow-2xl">
             <div className="px-8 py-6 border-b border-white/5 flex justify-between items-center">
               <div>
-                <h3 className="text-xl font-black text-white">Add {activeTab === 'products' ? 'Product' : 'Project'}</h3>
+                <h3 className="text-xl font-black text-white">Add {isProducts ? 'Product' : 'Project'}</h3>
                 <p className="text-[10px] text-gray-500 uppercase tracking-widest font-black mt-1">Direct Database Entry</p>
               </div>
               <button onClick={() => setShowModal(false)} className="text-gray-500 hover:text-white"><X size={20} /></button>
@@ -280,7 +265,7 @@ const AdminPricingCatalog = ({ currentTab }: Props) => {
                   <CheckCircle size={60} className="text-emerald-500 mx-auto mb-4" />
                   <div className="text-white font-black uppercase tracking-widest">Entry Synchronized</div>
                 </div>
-              ) : activeTab === 'products' ? (
+              ) : isProducts ? (
                 <>
                   {[
                     { label: 'Name', key: 'name', type: 'text' },
@@ -326,7 +311,7 @@ const AdminPricingCatalog = ({ currentTab }: Props) => {
             {!saved && (
               <div className="p-8 border-t border-white/5 flex gap-4">
                 <button onClick={() => setShowModal(false)} className="flex-1 py-4 border border-white/5 rounded-xl text-xs font-black uppercase text-gray-500 hover:text-white transition-all">Cancel</button>
-                <button onClick={activeTab === 'products' ? handleAddProduct : handleAddProject} disabled={saving} className="flex-1 py-4 bg-emerald-500 text-black rounded-xl text-xs font-black uppercase transition-all hover:scale-105 active:scale-95 disabled:opacity-50">
+                <button onClick={isProducts ? handleAddProduct : handleAddProject} disabled={saving} className="flex-1 py-4 bg-emerald-500 text-black rounded-xl text-xs font-black uppercase transition-all hover:scale-105 active:scale-95 disabled:opacity-50">
                   {saving ? 'Syncing...' : 'Confirm Entry'}
                 </button>
               </div>
