@@ -1,0 +1,15 @@
+[
+  {
+    "id": 1,
+    "title": "Solar Irrigation Pumps",
+    "description": "Replace diesel pumps with solar-powered irrigation systems",
+    "benefits": [
+      "Zero electricity bills",
+      "No diesel expenses",
+      "Government subsidy up to 90%",
+      "25-year lifespan"
+    ],
+    "subsidyAvailable": true,
+    "image": "https://images.pexels.com/photos/2382894/pexels-photo-2382894.jpeg?auto=compress&cs=tinysrgb&w=600"
+  }
+]

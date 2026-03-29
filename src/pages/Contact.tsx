@@ -61,15 +61,28 @@ const Contact = () => {
     <div>
       {/* Hero */}
       <section className="bg-gradient-hero text-white section-padding relative overflow-hidden">
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute bottom-0 right-0 w-96 h-96 bg-amber-400 rounded-full blur-3xl" />
+        {/* Animated Glow Orbs */}
+        <div className="absolute top-0 right-10 w-[500px] h-[500px] bg-emerald-500/10 rounded-full blur-[100px] animate-orb-float" />
+        <div className="absolute bottom-10 left-10 w-[400px] h-[400px] bg-amber-500/10 rounded-full blur-[80px] animate-orb-float" style={{ animationDelay: '2s' }} />
+        
+        <div className="absolute inset-0 z-0">
+          <div className="absolute inset-0 bg-gradient-to-b from-[#020617]/95 via-[#0A0F1E]/80 to-[#0A0F1E] z-10" />
+          <img
+            src="https://images.pexels.com/photos/8853438/pexels-photo-8853438.jpeg?auto=compress&cs=tinysrgb&w=1600"
+            alt="Customer Support Solar"
+            className="w-full h-full object-cover scale-105 opacity-30"
+          />
         </div>
-        <div className="container relative z-10 text-center">
-          <div className="section-tag !bg-white/10 !text-white !border-white/20 mx-auto w-fit mb-4">
-            <MessageCircle size={12} /> Get In Touch
+
+        <div className="container relative z-10 text-center pt-8">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-morphism border border-white/10 mb-6 animate-fade-up">
+            <MessageCircle size={14} className="text-emerald-400" />
+            <span className="text-emerald-400 text-[10px] font-black uppercase tracking-[0.2em]">Contact Engineering Team</span>
           </div>
-          <h1 className="text-white mb-4">Let's Talk Solar</h1>
-          <p className="text-white/80 text-lg max-w-2xl mx-auto">
+          <h1 className="text-white text-5xl md:text-7xl font-black tracking-tighter mb-6 animate-fade-up delay-100">
+            Let's <span className="mega-gradient-text">Talk Solar</span>
+          </h1>
+          <p className="text-gray-400 text-lg max-w-2xl mx-auto leading-relaxed animate-fade-up delay-200">
             Reach out for a free consultation, site survey, or any questions about solar energy — our experts are ready to help.
           </p>
         </div>
@@ -95,7 +108,7 @@ const Contact = () => {
                   main: COMPANY_INFO.contact.phone,
                   sub: 'Mon-Sat, 9AM-6PM',
                   href: getPhoneLink(COMPANY_INFO.contact.phone),
-                  color: 'icon-wrapper-green'
+                  gradient: 'from-emerald-50 to-green-100'
                 },
                 {
                   icon: Mail,
@@ -103,7 +116,7 @@ const Contact = () => {
                   main: COMPANY_INFO.contact.email,
                   sub: 'Response within 24 hours',
                   href: getEmailLink(COMPANY_INFO.contact.email),
-                  color: 'icon-wrapper-amber'
+                  gradient: 'from-amber-50 to-amber-100'
                 },
                 {
                   icon: MapPin,
@@ -111,7 +124,7 @@ const Contact = () => {
                   main: `${COMPANY_INFO.address.line1}, ${COMPANY_INFO.address.city}`,
                   sub: `${COMPANY_INFO.address.state} - ${COMPANY_INFO.address.pincode}`,
                   href: 'https://maps.google.com/?q=Jabalpur+Madhya+Pradesh',
-                  color: 'icon-wrapper-green'
+                  gradient: 'from-blue-50 to-sky-100'
                 },
                 {
                   icon: Clock,
@@ -119,24 +132,24 @@ const Contact = () => {
                   main: 'Monday – Saturday',
                   sub: '9:00 AM – 6:00 PM',
                   href: null,
-                  color: 'icon-wrapper-amber'
+                  gradient: 'from-gray-50 to-gray-100'
                 }
-              ].map((item) => (
-                <div key={item.title} className="card p-5 flex items-start gap-4">
-                  <div className={`icon-wrapper ${item.color} w-11 h-11 flex-shrink-0`}>
-                    <item.icon size={20} />
+              ].map((item, i) => (
+                <div key={item.title} className="card-premium p-5 flex items-start gap-4 animate-fade-up" style={{ animationDelay: `${i * 100}ms` }}>
+                  <div className={`w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 bg-gradient-to-br ${item.gradient} shadow-inner`}>
+                    <item.icon size={22} className={item.gradient.includes('amber') ? 'text-amber-600' : item.gradient.includes('blue') ? 'text-blue-600' : 'text-emerald-600'} />
                   </div>
                   <div>
-                    <div className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-0.5">{item.title}</div>
+                    <div className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1">{item.title}</div>
                     {item.href ? (
                       <a href={item.href} target={item.href.startsWith('http') ? '_blank' : undefined} rel="noopener noreferrer"
-                        className="font-bold text-gray-900 hover:text-emerald-600 transition-colors text-sm block">
+                        className="font-bold text-gray-900 hover:text-emerald-600 transition-colors text-sm sm:text-base block">
                         {item.main}
                       </a>
                     ) : (
-                      <div className="font-bold text-gray-900 text-sm">{item.main}</div>
+                      <div className="font-bold text-gray-900 text-sm sm:text-base">{item.main}</div>
                     )}
-                    <div className="text-xs text-gray-400 mt-0.5">{item.sub}</div>
+                    <div className="text-xs font-semibold text-gray-500 mt-0.5">{item.sub}</div>
                   </div>
                 </div>
               ))}
@@ -161,9 +174,9 @@ const Contact = () => {
 
             {/* Right Form Column */}
             <div className="lg:col-span-3">
-              <div className="card p-6 md:p-8">
-                <h3 className="mb-1">Get Free Solar Consultation</h3>
-                <p className="text-sm text-gray-500 mb-6">Fill out the form and our expert will reach you within 24 hours.</p>
+              <div className="card-premium p-8 md:p-10 border-t-4 border-t-emerald-500">
+                <h3 className="text-2xl font-black text-gray-900 mb-2">Get Free Solar Consultation</h3>
+                <p className="text-sm font-medium text-gray-500 mb-8">Fill out the form and our expert will reach you within 24 hours.</p>
 
                 {submitted && (
                   <div className="flex items-start gap-3 bg-emerald-50 border border-emerald-200 text-emerald-800 p-4 rounded-xl mb-6 animate-fade-up">
@@ -268,20 +281,21 @@ const Contact = () => {
                   <button
                     type="submit"
                     disabled={loading}
-                    className="w-full btn-primary py-4 text-base disabled:opacity-60 disabled:cursor-wait"
+                    className="w-full btn-primary py-4 text-base disabled:opacity-60 disabled:cursor-wait shadow-xl shadow-emerald-200 mt-2"
                   >
                     {loading ? (
-                      <>
-                        <svg className="animate-spin w-5 h-5" viewBox="0 0 24 24" fill="none">
+                      <div className="flex items-center justify-center gap-2">
+                        <svg className="animate-spin w-5 h-5 text-white" viewBox="0 0 24 24" fill="none">
                           <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                           <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
                         </svg>
-                        Sending...
-                      </>
+                        <span>Sending...</span>
+                      </div>
                     ) : (
-                      <>
-                        <Send size={18} /> Submit Inquiry
-                      </>
+                      <div className="flex items-center justify-center gap-2">
+                        <Send size={18} /> 
+                        <span>Submit Inquiry</span>
+                      </div>
                     )}
                   </button>
                 </form>

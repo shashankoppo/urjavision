@@ -19,8 +19,8 @@ body {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  color: var(--text-primary);
-  background-color: var(--background);
+  color: #0F172A;
+  background-color: #FFFFFF;
   overflow-x: hidden;
   line-height: 1.6;
 }
@@ -100,7 +100,7 @@ textarea:focus,
 select:focus {
   outline: none;
   border-color: var(--energy-green);
-  box-shadow: 0 0 0 4px rgba(5, 150, 105, 0.08);
+  box-shadow: 0 0 0 4px rgba(5, 150, 105, 0.1), 0 0 20px rgba(5, 150, 105, 0.05);
 }
 
 /* =============================================
@@ -124,11 +124,11 @@ select:focus {
 }
 
 /* =============================================
-   DIVIDERS
+   GRADIENT DIVIDERS
    ============================================= */
 .hr-gradient {
   height: 2px;
-  background: linear-gradient(90deg, transparent, #059669, #F59E0B, #059669, transparent);
+  background: linear-gradient(90deg, transparent, #059669, #0EA5E9, #F59E0B, #059669, transparent);
   border: none;
   margin: 0;
 }
@@ -139,6 +139,27 @@ select:focus {
 ::selection {
   background: rgba(5, 150, 105, 0.2);
   color: var(--energy-dark);
+}
+
+/* =============================================
+   GLOBAL GRADIENT KEYFRAMES
+   Making sure the CSS animation name references work
+   ============================================= */
+@keyframes gradient-flow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes orb-float {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  25% { transform: translate(30px, -20px) scale(1.05); }
+  50% { transform: translate(-10px, 20px) scale(0.95); }
+  75% { transform: translate(-30px, -10px) scale(1.02); }
+}
+
+.animate-orb-float {
+  animation: orb-float 12s ease-in-out infinite;
 }
 
 /* =============================================

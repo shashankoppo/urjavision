@@ -1,225 +1,49 @@
 /* =============================================
-   URJA VISION – PREMIUM THEME SYSTEM
+   URJA VISION – HYPER-PREMIUM TRUST THEME
+   Crisp, clean, high-conversion design system
    ============================================= */
 
 :root {
   /* --- Brand Colors --- */
-  --solar-yellow: #F59E0B;
-  --solar-amber: #FBBF24;
-  --solar-glow: #FDE68A;
-  --energy-green: #059669;
-  --energy-dark: #047857;
-  --energy-light: #10B981;
-  --energy-xlight: #D1FAE5;
+  --color-primary: #0B1221; /* Deepest Executive Slate */
+  --color-primary-light: #2563EB; /* Vibrant Trust Blue */
+  --color-secondary: #10B981; /* Precise Engineering Green */
+  --color-accent: #6366F1; /* Modern Indigo */
   
-  --solar-blue: #0EA5E9;
-  --solar-blue-dark: #1D4ED8;
-  --solar-cyan: #22D3EE;
-
   /* --- Neutrals --- */
   --white: #FFFFFF;
-  --gray-50: #F8FAFC;
-  --gray-100: #F1F5F9;
-  --gray-200: #E2E8F0;
-  --gray-300: #CBD5E1;
-  --gray-400: #94A3B8;
-  --gray-500: #64748B;
-  --gray-600: #475569;
-  --gray-700: #334155;
-  --gray-800: #1E293B;
-  --gray-900: #0F172A;
-  --dark: #0A0F1E;
-
-  /* --- Semantic Aliases --- */
-  --primary: var(--energy-green);
-  --primary-dark: var(--energy-dark);
-  --secondary: var(--solar-yellow);
-  --text-primary: var(--gray-900);
-  --text-secondary: var(--gray-500);
-  --text-tertiary: var(--gray-400);
-  --background: var(--white);
-  --surface: var(--gray-50);
+  --slate-50: #F8FAFC;
+  --slate-100: #F1F5F9;
+  --slate-200: #E2E8F0;
+  --slate-300: #CBD5E1;
+  --slate-400: #94A3B8;
+  --slate-500: #64748B;
+  --slate-600: #475569;
+  --slate-700: #334155;
+  --slate-800: #1E293B;
+  --slate-900: #0F172A;
+  --black: #020617;
 
   /* --- Spacing / Shape --- */
-  --radius-sm: 6px;
+  --radius-sm: 8px;
   --radius: 12px;
   --radius-lg: 20px;
   --radius-xl: 32px;
   --radius-full: 9999px;
 
-  /* --- Shadows --- */
-  --shadow-xs: 0 1px 2px rgba(0,0,0,0.04);
-  --shadow-sm: 0 2px 8px rgba(0,0,0,0.06);
-  --shadow-md: 0 4px 20px rgba(0,0,0,0.08);
-  --shadow-lg: 0 8px 40px rgba(0,0,0,0.12);
-  --shadow-xl: 0 20px 60px rgba(0,0,0,0.15);
-  --shadow-green: 0 8px 30px rgba(5,150,105,0.25);
-  --shadow-amber: 0 8px 30px rgba(245,158,11,0.25);
-  --shadow-glow: 0 0 40px rgba(5,150,105,0.3), 0 0 80px rgba(245,158,11,0.1);
+  /* --- Transitions --- */
+  --transition-fast: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  --transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 
-  /* --- Level Up Shadows --- */
-  --shadow-diffuse: 0 10px 50px -12px rgba(0, 0, 0, 0.25);
-  --shadow-inner-glow: inset 0 1px 1px 0 rgba(255, 255, 255, 0.1);
-  --shadow-premium: 0 50px 100px -20px rgba(0,0,0,0.25), 0 30px 60px -30px rgba(0,0,0,0.3);
-  --shadow-solar-beam: 0 0 80px rgba(245, 158, 11, 0.2);
-}
-
-@keyframes slow-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
-
-.animate-slow-spin {
-  animation: slow-spin 8s linear infinite;
-}
-
-/* =============================================
-   ULTRA-PREMIUM UTILITIES
-   ============================================= */
-.luxury-text-reveal {
-  display: inline-block;
-  overflow: hidden;
-  vertical-align: top;
-}
-.luxury-text-reveal span {
-  display: inline-block;
-  animation: luxuryReveal 1.2s cubic-bezier(0.19, 1, 0.22, 1) both;
-}
-@keyframes luxuryReveal {
-  from { transform: translateY(110%); }
-  to { transform: translateY(0); }
-}
-
-.glow-orb {
-  position: absolute;
-  border-radius: 100%;
-  filter: blur(120px);
-  z-index: 0;
-  pointer-events: none;
-  opacity: 0.15;
-}
-
-.glass-morphism {
-  background: rgba(255, 255, 255, 0.03);
-  -webkit-backdrop-filter: blur(24px);
-  backdrop-filter: blur(24px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: var(--shadow-inner-glow);
-}
-
-.mega-gradient-text {
-  background: linear-gradient(135deg, #fff 0%, #a1a1aa 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-/* =============================================
-   GRADIENTS — Sun Rising → Eco Green Journey
-   CONCEPT: Dawn (gold) → Solar Energy (amber) → Sustainable Future (green)
-   This mirrors the sun rising, converting to clean power.
-   ============================================= */
-
-/* Main website primary gradient — eco green */
-.bg-gradient-primary {
-  background: linear-gradient(135deg, #1D4ED8 0%, #059669 50%, #10B981 100%);
-}
-
-.bg-gradient-secondary {
-  background: linear-gradient(135deg, #D97706 0%, #F59E0B 50%, #FBBF24 100%);
-}
-
-/* Hero: Deep sunrise sky → rich eco green */
-.bg-gradient-hero {
-  background: linear-gradient(160deg,
-    #0A0710 0%,     /* deep predawn */
-    #1a0f2e 15%,    /* midnight indigo */
-    #2d1b00 30%,    /* first warmth on horizon */
-    #7C3A00 45%,    /* sunrise orange-brown */
-    #B85C00 55%,    /* golden amber sunrise */
-    #064E3B 75%,    /* solar → eco green transition */
-    #022C22 100%    /* deep earthy green */
-  );
-}
-
-/* Products page hero: pure sunrise  */
-.products-hero {
-  min-height: 40vh;
-  display: flex;
-  align-items: center;
-}
-.products-hero-grad {
-  background: linear-gradient(160deg,
-    #0D0A03 0%,
-    #3D1F00 25%,
-    #8B4500 45%,
-    #D97706 60%,
-    #047857 80%,
-    #022C22 100%
-  );
-  opacity: 0.92;
-}
-
-/* Calculator page hero */
-.calc-hero {
-  min-height: 30vh;
-  display: flex;
-  align-items: center;
-}
-.calc-hero-grad {
-  background: linear-gradient(160deg,
-    #0A0710 0%,
-    #1a0f2e 20%,
-    #3D1F00 40%,
-    #047857 70%,
-    #022C22 100%
-  );
-  opacity: 0.92;
-}
-
-/* Footer CTA strip — sunrise horizon */
-.footer-cta-strip {
-  background: linear-gradient(135deg,
-    #064E3B 0%,
-    #047857 40%,
-    #059669 70%,
-    #10B981 100%
-  );
-}
-
-.bg-gradient-card {
-  background: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);
-}
-
-.gradient-text-primary {
-  background: linear-gradient(135deg, #059669, #10B981);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.gradient-text-gold {
-  background: linear-gradient(135deg, #D97706, #F59E0B, #FBBF24);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.gradient-border {
-  position: relative;
-}
-.gradient-border::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  padding: 2px;
-  background: linear-gradient(135deg, #059669, #F59E0B);
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  pointer-events: none;
+  /* --- Shadows with color --- */
+  --shadow-xs: 0 1px 2px rgba(15, 23, 42, 0.04);
+  --shadow-sm: 0 4px 6px -1px rgba(15, 23, 42, 0.05), 0 2px 4px -1px rgba(15, 23, 42, 0.03);
+  --shadow-md: 0 10px 25px -3px rgba(15, 23, 42, 0.06), 0 4px 10px -2px rgba(15, 23, 42, 0.03);
+  --shadow-lg: 0 20px 40px -5px rgba(15, 23, 42, 0.08), 0 10px 15px -3px rgba(15, 23, 42, 0.03);
+  --shadow-xl: 0 30px 60px -10px rgba(15, 23, 42, 0.12), 0 20px 25px -5px rgba(15, 23, 42, 0.05);
+  
+  --shadow-primary: 0 10px 25px -5px rgba(37, 99, 235, 0.3);
+  --shadow-secondary: 0 10px 25px -5px rgba(5, 150, 105, 0.25);
 }
 
 /* =============================================
@@ -227,90 +51,77 @@
    ============================================= */
 .glass {
   background: rgba(255, 255, 255, 0.85);
-  -webkit-backdrop-filter: blur(20px);
-  backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  box-shadow: 0 4px 30px rgba(15, 23, 42, 0.03);
 }
 
 .glass-dark {
-  background: rgba(10, 15, 30, 0.75);
-  -webkit-backdrop-filter: blur(20px);
-  backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-}
-
-.glass-green {
-  background: rgba(5, 150, 105, 0.12);
-  -webkit-backdrop-filter: blur(12px);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(5, 150, 105, 0.2);
+  background: rgba(15, 23, 42, 0.7);
+  -webkit-backdrop-filter: blur(20px) saturate(150%);
+  backdrop-filter: blur(20px) saturate(150%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
 }
 
 /* =============================================
    BUTTONS
    ============================================= */
 .btn-primary {
-  background: linear-gradient(135deg, #047857, #059669);
-  color: var(--white);
-  padding: 0.875rem 2rem;
-  border-radius: var(--radius);
-  font-weight: 700;
-  font-size: 0.95rem;
-  letter-spacing: 0.01em;
+  background: var(--color-primary);
+  color: #ffffff;
+  padding: 1.125rem 2.75rem;
+  border-radius: var(--radius-full);
+  font-weight: 800;
+  font-size: 1rem;
+  letter-spacing: -0.02em;
   transition: var(--transition);
-  border: none;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 20px 40px -10px rgba(15, 23, 42, 0.3);
   cursor: pointer;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 0.5rem;
-  box-shadow: var(--shadow-green);
+  gap: 0.75rem;
   position: relative;
   overflow: hidden;
 }
-.btn-primary::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, transparent 100%);
-  opacity: 0;
-  transition: var(--transition);
-}
-.btn-primary:hover::before { opacity: 1; }
 .btn-primary:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 12px 40px rgba(5,150,105,0.4);
+  background: #000000;
+  transform: translateY(-4px);
+  box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.5);
 }
-.btn-primary:active { transform: translateY(-1px); }
 
 .btn-secondary {
-  background: linear-gradient(135deg, #D97706, #F59E0B);
-  color: var(--gray-900);
-  padding: 0.875rem 2rem;
-  border-radius: var(--radius);
-  font-weight: 700;
+  background: var(--color-secondary);
+  color: #ffffff;
+  padding: 0.875rem 2.25rem;
+  border-radius: var(--radius-full);
+  font-weight: 600;
   font-size: 0.95rem;
-  letter-spacing: 0.01em;
-  transition: var(--transition);
-  border: none;
+  letter-spacing: -0.01em;
+  transition: var(--transition-fast);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 2px 4px rgba(0, 0, 0, 0.1);
   cursor: pointer;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  box-shadow: var(--shadow-amber);
 }
 .btn-secondary:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 12px 40px rgba(245,158,11,0.4);
+  background: var(--color-secondary-dark);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-secondary);
 }
 
 .btn-outline {
   background: transparent;
-  color: var(--white);
+  color: var(--gray-900);
   padding: 0.875rem 2rem;
-  border: 2px solid rgba(255,255,255,0.5);
-  border-radius: var(--radius);
+  border: 1px solid var(--gray-300);
+  border-radius: var(--radius-full);
   font-weight: 600;
   font-size: 0.95rem;
   transition: var(--transition);
@@ -319,537 +130,20 @@
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  -webkit-backdrop-filter: blur(8px);
-  backdrop-filter: blur(8px);
 }
 .btn-outline:hover {
-  background: rgba(255,255,255,0.15);
-  border-color: rgba(255,255,255,0.8);
+  border-color: var(--gray-900);
+  background: var(--gray-50);
   transform: translateY(-2px);
 }
 
-.btn-outline-green {
-  background: transparent;
-  color: var(--energy-green);
-  padding: 0.875rem 2rem;
-  border: 2px solid var(--energy-green);
-  border-radius: var(--radius);
-  font-weight: 600;
-  transition: var(--transition);
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-}
-.btn-outline-green:hover {
-  background: var(--energy-green);
-  color: var(--white);
-  box-shadow: var(--shadow-green);
-  transform: translateY(-2px);
-}
-
-.btn-ghost {
-  background: rgba(5,150,105,0.08);
-  color: var(--energy-green);
-  padding: 0.75rem 1.5rem;
-  border-radius: var(--radius);
-  font-weight: 600;
-  font-size: 0.875rem;
-  transition: var(--transition);
-  border: none;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-.btn-ghost:hover {
-  background: rgba(5,150,105,0.15);
-  transform: translateY(-1px);
-}
-
-/* =============================================
-   CARDS
-   ============================================= */
-.card {
-  background: var(--white);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-md);
-  transition: var(--transition);
-  border: 1px solid var(--gray-100);
-  overflow: hidden;
-}
-.card:hover {
-  box-shadow: var(--shadow-xl);
-  transform: translateY(-6px);
-  border-color: var(--gray-200);
-}
-
-.card-premium {
-  position: relative;
-  background: var(--white);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-md);
-  transition: var(--transition);
-  border: 1px solid var(--gray-100);
-  overflow: hidden;
-}
-.card-premium::after {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 3px;
-  background: linear-gradient(90deg, #059669, #F59E0B, #059669);
-  opacity: 0;
-  transition: var(--transition);
-}
-.card-premium:hover::after { opacity: 1; }
-.card-premium:hover {
-  box-shadow: var(--shadow-xl);
-  transform: translateY(-8px);
-}
-
-.card-stat {
-  background: rgba(255,255,255,0.08);
-  border: 1px solid rgba(255,255,255,0.12);
-  border-radius: var(--radius-lg);
-  transition: var(--transition);
-}
-.card-stat:hover {
-  background: rgba(255,255,255,0.12);
-  transform: scale(1.04);
-}
-
-/* =============================================
-   BADGE / TAG
-   ============================================= */
-.badge {
-  display: inline-block;
-  padding: 0.3rem 0.8rem;
-  border-radius: var(--radius-full);
-  font-size: 0.72rem;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-}
-.badge-green {
-  background: var(--energy-xlight);
-  color: var(--energy-dark);
-}
-.badge-amber {
-  background: #FEF3C7;
-  color: #92400E;
-}
-.badge-blue {
-  background: #DBEAFE;
-  color: #1E40AF;
-}
-.badge-featured {
-  background: linear-gradient(135deg, #D97706, #F59E0B);
-  color: var(--gray-900);
-  box-shadow: 0 4px 12px rgba(245,158,11,0.3);
-}
-
-/* =============================================
-   SECTION UTILITIES
-   ============================================= */
-.section-pad {
-  padding: clamp(4rem, 10vw, 7rem) 0;
-}
-.section-pad-sm {
-  padding: clamp(2.5rem, 6vw, 4rem) 0;
-}
-
-/* =============================================
-   SCROLL REVEAL ANIMATIONS
-   ============================================= */
-@keyframes fade-up {
-  from { opacity: 0; transform: translateY(40px); }
-  to   { opacity: 1; transform: translateY(0);    }
-}
-@keyframes fade-in {
-  from { opacity: 0; }
-  to   { opacity: 1; }
-}
-@keyframes slide-in-left {
-  from { opacity: 0; transform: translateX(-40px); }
-  to   { opacity: 1; transform: translateX(0);     }
-}
-@keyframes slide-in-right {
-  from { opacity: 0; transform: translateX(40px); }
-  to   { opacity: 1; transform: translateX(0);    }
-}
-@keyframes scale-in {
-  from { opacity: 0; transform: scale(0.9); }
-  to   { opacity: 1; transform: scale(1);   }
-}
-@keyframes float {
-  0%, 100% { transform: translateY(0px) rotate(0deg); }
-  33%       { transform: translateY(-15px) rotate(1deg); }
-  66%       { transform: translateY(-8px) rotate(-1deg); }
-}
-@keyframes solar-spin {
-  from { transform: rotate(0deg); }
-  to   { transform: rotate(360deg); }
-}
-@keyframes solar-pulse {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(5,150,105,0.5); }
-  50%       { box-shadow: 0 0 0 16px rgba(5,150,105,0); }
-}
-@keyframes shimmer {
-  0%   { background-position: -1000px 0; }
-  100% { background-position:  1000px 0; }
-}
-@keyframes counter-up {
-  from { opacity: 0; transform: translateY(20px); }
-  to   { opacity: 1; transform: translateY(0);    }
-}
-@keyframes gradient-shift {
-  0%   { background-position: 0% 50%; }
-  50%  { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-@keyframes sparkle {
-  0%, 100% { opacity: 0; transform: scale(0.5) rotate(0deg); }
-  50%       { opacity: 1; transform: scale(1) rotate(180deg); }
-}
-@keyframes wave {
-  0%   { transform: scaleX(1) scaleY(1); }
-  25%  { transform: scaleX(1.03) scaleY(0.97); }
-  50%  { transform: scaleX(1) scaleY(1.03); }
-  75%  { transform: scaleX(0.97) scaleY(1); }
-  100% { transform: scaleX(1) scaleY(1); }
-}
-
-.animate-fade-up         { animation: fade-up 0.7s ease both; }
-.animate-fade-in         { animation: fade-in 0.6s ease both; }
-.animate-slide-left      { animation: slide-in-left 0.7s ease both; }
-.animate-slide-right     { animation: slide-in-right 0.7s ease both; }
-.animate-scale-in        { animation: scale-in 0.5s ease both; }
-.animate-float           { animation: float 6s ease-in-out infinite; }
-.animate-solar-spin      { animation: solar-spin 20s linear infinite; }
-.animate-solar-pulse     { animation: solar-pulse 2.5s ease infinite; }
-.animate-gradient-shift  { animation: gradient-shift 6s ease infinite; background-size: 200% 200%; }
-.animate-wave            { animation: wave 3s ease-in-out infinite; }
-
-.delay-100 { animation-delay: 0.1s; }
-.delay-200 { animation-delay: 0.2s; }
-.delay-300 { animation-delay: 0.3s; }
-.delay-400 { animation-delay: 0.4s; }
-.delay-500 { animation-delay: 0.5s; }
-.delay-600 { animation-delay: 0.6s; }
-.delay-700 { animation-delay: 0.7s; }
-
-/* =============================================
-   SHIMMER LOADING EFFECT
-   ============================================= */
-.shimmer {
-  background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.3) 50%, transparent 100%);
-  background-size: 1000px 100%;
-  animation: shimmer 2.5s infinite;
-}
-
-/* =============================================
-   HOVER UTILITIES
-   ============================================= */
-.hover-lift {
-  transition: var(--transition);
-}
-.hover-lift:hover {
-  transform: translateY(-6px);
-  box-shadow: var(--shadow-xl);
-}
-
-.hover-scale {
-  transition: var(--transition);
-}
-.hover-scale:hover {
-  transform: scale(1.03);
-}
-
-.hover-glow:hover {
-  box-shadow: var(--shadow-glow);
-}
-
-/* =============================================
-   SECTION DIVIDERS
-   ============================================= */
-.wave-divider {
-  position: absolute;
-  bottom: 0; left: 0; right: 0;
-  overflow: hidden;
-  line-height: 0;
-}
-
-/* =============================================
-   CUSTOM SCROLLBAR
-   ============================================= */
+/* Scrollbar */
 ::-webkit-scrollbar { width: 8px; }
-::-webkit-scrollbar-track { background: var(--gray-100); }
+::-webkit-scrollbar-track { background: var(--gray-50); }
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, #059669, #F59E0B);
+  background: var(--gray-300);
   border-radius: 4px;
 }
-::-webkit-scrollbar-thumb:hover { background: #047857; }
-
-/* =============================================
-   RESPONSIVE GRID HELPERS
-   ============================================= */
-.grid-auto-fit {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 1.5rem;
-}
-.grid-auto-fill {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-  gap: 1.5rem;
-}
-
-/* =============================================
-   PRODUCT CARD — Clean, not cluttered
-   ============================================= */
-.product-card {
-  background: var(--white);
-  border-radius: var(--radius-lg);
-  border: 1.5px solid var(--gray-100);
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  transition: var(--transition);
-  box-shadow: 0 2px 12px rgba(0,0,0,0.05);
-}
-.product-card:hover {
-  border-color: #10B981;
-  box-shadow: 0 8px 32px rgba(5,150,105,0.15), 0 2px 8px rgba(0,0,0,0.06);
-  transform: translateY(-5px);
-}
-
-/* Scrollbar hide for filter bar */
-.scrollbar-none::-webkit-scrollbar { display: none; }
-.scrollbar-none { -ms-overflow-style: none; }
-
-/* Technical Partner badge */
-.tech-partner-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.5rem 1rem;
-  border-radius: 0.75rem;
-  background: rgba(255,255,255,0.03);
-  border: 1px solid rgba(255,255,255,0.08);
-  transition: all 0.3s ease;
-}
-.tech-partner-badge:hover {
-  background: rgba(5,150,105,0.1);
-  border-color: rgba(5,150,105,0.3);
-  transform: translateY(-1px);
-}
-
-/* Samsung-style shop card */
-.shop-card {
-  background: var(--white);
-  border-radius: var(--radius-lg);
-  border: 1.5px solid var(--gray-100);
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  position: relative;
-}
-.shop-card:hover {
-  border-color: #10B981;
-  box-shadow: 0 12px 40px rgba(5,150,105,0.12), 0 4px 12px rgba(0,0,0,0.04);
-  transform: translateY(-6px);
-}
-.shop-card .shop-card-img {
-  background: #f8fafc;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 1.5rem;
-  min-height: 200px;
-}
-.shop-card .shop-card-img img {
-  max-height: 160px;
-  object-fit: contain;
-  transition: transform 0.5s ease;
-}
-.shop-card:hover .shop-card-img img {
-  transform: scale(1.08);
-}
-
-/* Admin notification dropdown */
-.notif-dropdown {
-  position: absolute;
-  top: calc(100% + 0.5rem);
-  right: 0;
-  width: 360px;
-  max-height: 420px;
-  background: white;
-  border-radius: 1rem;
-  box-shadow: 0 20px 60px rgba(0,0,0,0.15), 0 8px 20px rgba(0,0,0,0.08);
-  border: 1px solid #f1f5f9;
-  overflow: hidden;
-  z-index: 200;
-  animation: slideDown 0.2s ease;
-}
-@keyframes slideDown {
-  from { opacity: 0; transform: translateY(-8px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-/* =============================================
-   NOISE TEXTURE OVERLAY
-   ============================================= */
-.noise-overlay::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
-  pointer-events: none;
-}
-
-/* =============================================
-   FORM INPUTS
-   ============================================= */
-.input-field {
-  width: 100%;
-  padding: 0.875rem 1.25rem;
-  border: 2px solid var(--gray-200);
-  border-radius: var(--radius);
-  font-family: inherit;
-  font-size: 0.95rem;
-  color: var(--gray-900);
-  background: var(--white);
-  transition: var(--transition-fast);
-  outline: none;
-}
-.input-field:hover { border-color: var(--gray-300); }
-.input-field:focus {
-  border-color: var(--energy-green);
-  box-shadow: 0 0 0 4px rgba(5,150,105,0.08);
-}
-.input-field.error {
-  border-color: #EF4444;
-  background: #FFF5F5;
-}
-.input-field::placeholder { color: var(--gray-400); }
-
-/* =============================================
-   WHATSAPP FLOAT BUTTON
-   ============================================= */
-.whatsapp-float {
-  position: fixed;
-  bottom: 1.5rem;
-  right: 1.5rem;
-  z-index: 999;
-  width: 56px;
-  height: 56px;
-  border-radius: 50%;
-  background: #25D366;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 4px 20px rgba(37,211,102,0.4);
-  transition: var(--transition);
-  border: none;
-  cursor: pointer;
-  text-decoration: none;
-}
-.whatsapp-float:hover {
-  transform: scale(1.12);
-  box-shadow: 0 8px 30px rgba(37,211,102,0.5);
-}
-
-/* =============================================
-   MOBILE MENU ANIMATION
-   ============================================= */
-@keyframes menu-slide {
-  from { opacity: 0; transform: translateY(-12px); }
-  to   { opacity: 1; transform: translateY(0);     }
-}
-.menu-animate { animation: menu-slide 0.25s ease both; }
-
-/* =============================================
-   FEATURE ICON WRAPPER
-   ============================================= */
-.icon-wrapper {
-  width: 64px;
-  height: 64px;
-  border-radius: var(--radius-lg);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: linear-gradient(135deg, rgba(5,150,105,0.12), rgba(245,158,11,0.08));
-  border: 1px solid rgba(5,150,105,0.15);
-  flex-shrink: 0;
-  transition: var(--transition);
-}
-.icon-wrapper-green {
-  background: linear-gradient(135deg, #059669, #10B981);
-  box-shadow: 0 4px 16px rgba(5,150,105,0.25);
-  color: white;
-}
-.icon-wrapper-amber {
-  background: linear-gradient(135deg, #D97706, #F59E0B);
-  box-shadow: 0 4px 16px rgba(245,158,11,0.25);
-  color: white;
-}
-
-/* =============================================
-   SECTION TAG / CHIP
-   ============================================= */
-.section-tag {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
-  background: rgba(5,150,105,0.08);
-  color: var(--energy-green);
-  border: 1px solid rgba(5,150,105,0.2);
-  padding: 0.35rem 1rem;
-  border-radius: var(--radius-full);
-  font-size: 0.78rem;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  margin-bottom: 1rem;
-}
-
-/* =============================================
-   TESTIMONIAL STAR
-   ============================================= */
-.star-filled { color: #F59E0B; }
-.star-empty  { color: #E2E8F0; }
-
-/* =============================================
-   IMAGE OVERLAY
-   ============================================= */
-.img-overlay {
-  position: relative;
-  overflow: hidden;
-}
-.img-overlay::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 60%);
-  transition: var(--transition);
-}
-.img-overlay:hover::after {
-  background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.1) 60%);
-}
-.img-overlay img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
-}
-.img-overlay:hover img { transform: scale(1.08); }
-
-/* =============================================
-   STICKY NAV SHADOW ON SCROLL
-   ============================================= */
-.nav-scrolled {
-  box-shadow: 0 4px 30px rgba(0,0,0,0.1);
+::-webkit-scrollbar-thumb:hover { 
+  background: var(--gray-400);
 }

@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1,
+    "name": "Ravi Sharma",
+    "rating": 5,
+    "review": "Urja Vision installed a 5kW system at my home. Exceptional service!",
+    "status": "Approved",
+    "date": "Mar 10, 2024",
+    "source": "Google"
+  },
+  {
+    "id": 2,
+    "name": "Priya Patel",
+    "rating": 4,
+    "review": "Very professional team. The installation was smooth and savings are real.",
+    "status": "Approved",
+    "date": "Mar 12, 2024",
+    "source": "Website"
+  }
+]

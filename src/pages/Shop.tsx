@@ -77,42 +77,46 @@ const Shop = () => {
   return (
     <div className="min-h-screen bg-white font-sans selection:bg-emerald-100 selection:text-emerald-900">
       
-      {/* ─── PREMIUM HERO (Samsung-inspired Dynamic Design) ─── */}
-      <section className="relative h-[400px] flex items-center overflow-hidden bg-gray-950">
-        <div className="absolute inset-0">
-          <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-emerald-600/20 rounded-full blur-[160px] animate-pulse" />
-          <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-blue-600/10 rounded-full blur-[140px]" />
-          <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-20" />
+      {/* ─── PREMIUM HERO ─── */}
+      <section className="bg-gradient-hero text-white section-padding relative overflow-hidden h-auto md:h-[400px] flex items-center">
+        {/* Animated Glow Orbs */}
+        <div className="absolute top-0 right-10 w-[500px] h-[500px] bg-emerald-500/10 rounded-full blur-[100px] animate-orb-float" />
+        <div className="absolute bottom-10 left-10 w-[400px] h-[400px] bg-amber-500/10 rounded-full blur-[80px] animate-orb-float" style={{ animationDelay: '2s' }} />
+
+        <div className="absolute inset-0 z-0">
+          <div className="absolute inset-0 bg-[#020617]/95" />
+          <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-10" />
         </div>
         
         <div className="container relative z-10 flex flex-col md:flex-row items-center justify-between gap-10">
           <div className="max-w-2xl">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-[10px] font-black uppercase tracking-widest mb-6">
-              <Sparkles size={12} /> The Future is Solar
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-morphism border border-white/10 mb-6 animate-fade-up">
+              <Sparkles size={14} className="text-amber-400" />
+              <span className="text-amber-400 text-[10px] font-black uppercase tracking-[0.2em]">The Future is Solar</span>
             </div>
-            <h1 className="text-white text-5xl md:text-7xl font-black leading-[1.1] tracking-tighter mb-6">
+            <h1 className="text-white text-5xl md:text-7xl font-black leading-[1.1] tracking-tighter mb-6 animate-fade-up delay-100">
               Shop Smarter.<br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400">Save Brighter.</span>
+              <span className="mega-gradient-text">Save Brighter.</span>
             </h1>
-            <p className="text-gray-400 text-lg md:text-xl font-medium max-w-lg mb-8 leading-relaxed">
+            <p className="text-gray-400 text-lg md:text-xl font-medium max-w-lg mb-8 leading-relaxed animate-fade-up delay-200">
               Explore professional-grade solar components curated for performance, longevity, and maximum ROI.
             </p>
-            <div className="flex flex-wrap gap-4">
+            <div className="flex flex-wrap gap-4 animate-fade-up delay-300">
               <button 
                 onClick={() => document.getElementById('shop-grid')?.scrollIntoView({ behavior: 'smooth' })}
-                className="px-8 py-4 bg-white text-gray-950 font-black rounded-2xl hover:bg-emerald-400 hover:scale-105 transition-all shadow-xl shadow-white/5"
+                className="btn-primary py-4 px-8 text-sm shadow-xl shadow-emerald-500/20"
               >
                 Start Exploring
               </button>
-              <div className="flex -space-x-3">
+              <div className="flex -space-x-3 ml-4">
                 {[1, 2, 3, 4].map(i => (
-                  <div key={i} className="w-12 h-12 rounded-full border-4 border-gray-950 bg-gray-800 flex items-center justify-center text-xs font-bold text-gray-400">
+                  <div key={i} className="w-12 h-12 rounded-full border-4 border-[#020617] bg-gray-800 flex items-center justify-center text-xs font-bold text-gray-400">
                     {i === 4 ? '+5k' : <User size={16} />}
                   </div>
                 ))}
                 <div className="pl-6 flex flex-col justify-center">
                   <div className="text-white font-bold text-sm">Trusted by Thousands</div>
-                  <div className="text-emerald-500 text-xs font-black uppercase tracking-widest">Active Installs</div>
+                  <div className="text-emerald-500 text-[10px] font-black uppercase tracking-widest">Active Installs</div>
                 </div>
               </div>
             </div>
@@ -300,20 +304,20 @@ const Shop = () => {
       </main>
 
       {/* ─── TRUST REINFORCEMENT ─── */}
-      <section className="bg-gray-950 py-24 mt-24 overflow-hidden relative">
+      <section className="bg-gradient-hero py-24 mt-24 overflow-hidden relative">
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1200px] h-[400px] bg-emerald-600/10 rounded-full blur-[140px]" />
-        <div className="container relative z-10">
+        <div className="container relative z-10 glass-morphism rounded-[40px] p-12 top-0 border border-white/10 shadow-2xl">
           <div className="grid md:grid-cols-3 gap-12 text-center md:text-left">
             {[
-              { icon: Shield, title: 'Authorized Distributor', desc: 'Every product comes with official brand warranty and test certificates.', color: 'text-emerald-400' },
-              { icon: Package, title: 'Quality Inspection', desc: 'Each component is inspected for physical damage and performance before dispatch.', color: 'text-amber-400' },
-              { icon: Truck, title: 'Secure Logistics', desc: 'Insured transit across Madhya Pradesh with specialized solar handling teams.', color: 'text-blue-400' },
+              { icon: Shield, title: 'Authorized Distributor', desc: 'Every product comes with official brand warranty and test certificates.', color: 'text-emerald-400', bg: 'bg-emerald-500/10' },
+              { icon: Package, title: 'Quality Inspection', desc: 'Each component is inspected for physical damage and performance before...', color: 'text-amber-400', bg: 'bg-amber-500/10' },
+              { icon: Truck, title: 'Secure Logistics', desc: 'Insured transit across Madhya Pradesh with specialized solar handling teams.', color: 'text-blue-400', bg: 'bg-blue-500/10' },
             ].map(item => (
               <div key={item.title} className="group">
-                <div className={`w-16 h-16 rounded-[24px] bg-white/5 flex items-center justify-center mb-6 mx-auto md:mx-0 ${item.color} group-hover:scale-110 transition-transform`}>
+                <div className={`w-16 h-16 rounded-[24px] ${item.bg} flex items-center justify-center mb-6 mx-auto md:mx-0 ${item.color} group-hover:scale-110 transition-transform`}>
                   <item.icon size={28} />
                 </div>
-                <h3 className="text-white text-xl font-bold mb-3">{item.title}</h3>
+                <h3 className="text-white text-xl font-black mb-3">{item.title}</h3>
                 <p className="text-gray-400 text-sm leading-relaxed">{item.desc}</p>
               </div>
             ))}

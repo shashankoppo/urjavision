@@ -1,4 +1,4 @@
-import { Phone, Mail, MapPin, Facebook, Twitter, Linkedin, Instagram, Sun, Zap, Shield, Award, ArrowRight, ExternalLink } from 'lucide-react';
+import { Phone, Mail, MapPin, Facebook, Twitter, Linkedin, Instagram, Sun, Zap, Shield, Award, ArrowRight, ExternalLink, MessageCircle } from 'lucide-react';
 import { COMPANY_INFO, NAVIGATION_MENU } from '../utils/constants';
 import { getPhoneLink, getEmailLink, getWhatsAppLink } from '../utils/helpers';
 import Logo from './Logo';
@@ -14,105 +14,104 @@ const Footer = ({ onNavigate }: FooterProps) => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-gray-950 text-white relative overflow-hidden">
-      {/* Subtle ambient glow */}
-      <div className="absolute top-0 left-1/4 w-96 h-96 bg-emerald-600 rounded-full blur-[180px] opacity-5 pointer-events-none" />
-      <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-amber-500 rounded-full blur-[180px] opacity-5 pointer-events-none" />
-
-      {/* ─── CTA STRIP ─── */}
-      <div className="relative bg-gradient-to-r from-emerald-700 via-emerald-600 to-emerald-700 border-b border-emerald-500/30">
-        <div className="container py-8">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-5">
-            <div className="text-center md:text-left">
-              <h3 className="text-white font-black text-xl mb-1">Start Saving with Solar Today</h3>
-              <p className="text-emerald-200 text-sm">Free consultation · Site survey · Custom quote — all within 24 hours.</p>
-            </div>
-            <div className="flex flex-col sm:flex-row gap-3">
-              <a
-                href={getWhatsAppLink(COMPANY_INFO.contact.phone, 'Hi! I want a free solar consultation.')}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 bg-[#25D366] hover:bg-[#1EBE5A] text-white font-bold px-6 py-3 rounded-xl transition-all hover:scale-105 text-sm shadow-lg"
-              >
-                <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.554 4.118 1.528 5.849L0 24l6.335-1.508A11.93 11.93 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.885 0-3.648-.502-5.164-1.38l-.37-.22-3.758.895.942-3.651-.241-.386A9.96 9.96 0 012 12C2 6.486 6.486 2 12 2s10 4.486 10 10-4.486 10-10 10z"/></svg>
-                WhatsApp Us
-              </a>
-              <a
-                href={getPhoneLink(COMPANY_INFO.contact.phone)}
-                className="inline-flex items-center gap-2 bg-white text-emerald-700 font-bold px-6 py-3 rounded-xl hover:bg-amber-50 transition-all text-sm"
-              >
-                <Phone size={15} /> {COMPANY_INFO.contact.phone}
-              </a>
-            </div>
+    <footer className="relative bg-white border-t border-slate-100 overflow-hidden">
+      {/* ─── ARCHITECTURAL CTA SECTION ─── */}
+      <div className="container py-32 border-b border-slate-100 relative">
+        <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-blue-500/5 rounded-full blur-[120px] pointer-events-none" />
+        <div className="flex flex-col lg:flex-row items-center justify-between gap-16 relative z-10">
+          <div className="max-w-2xl text-center lg:text-left">
+            <h3 className="text-[#0B1221] font-black text-4xl md:text-6xl mb-8 tracking-[-0.03em] leading-[1.1]">
+              Ready to architect your <br/><span className="text-blue-600">energy independence?</span>
+            </h3>
+            <p className="text-slate-500 text-lg md:text-xl font-medium leading-relaxed">
+              Join the league of 850+ premium clients across Madhya Pradesh who have eliminated their power bills forever.
+            </p>
+          </div>
+          <div className="flex flex-col sm:flex-row gap-6 w-full lg:w-auto">
+            <a
+              href={getWhatsAppLink(COMPANY_INFO.contact.phone, 'Hi! I want a free solar consultation.')}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-[#0B1221] text-white px-10 py-5 rounded-full font-black text-base shadow-2xl hover:bg-black hover:-translate-y-1.5 transition-all text-center flex items-center justify-center gap-3"
+            >
+              <MessageCircle size={20} />
+              Consultation
+            </a>
+            <a
+              href={getPhoneLink(COMPANY_INFO.contact.phone)}
+              className="bg-white text-slate-900 border border-slate-200 px-10 py-5 rounded-full font-black text-base shadow-sm hover:bg-slate-50 hover:border-slate-300 hover:-translate-y-1.5 transition-all text-center"
+            >
+              Contact Sales
+            </a>
           </div>
         </div>
       </div>
 
       {/* ─── MAIN FOOTER ─── */}
-      <div className="container py-14 relative z-10">
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-10 lg:gap-12">
+      <div className="container py-20">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-12 lg:gap-16">
 
           {/* Brand — 4 cols */}
-          <div className="md:col-span-4">
+          <div className="md:col-span-4 lg:col-span-5">
             <button 
               onClick={() => navigate('/')}
-              className="mb-8 block outline-none"
+              className="mb-8 block outline-none transition-transform hover:scale-105 origin-left"
               title="Urja Vision Home"
             >
-              <Logo light className="h-10 md:h-12" />
+              <Logo className="h-10" />
             </button>
 
-            <p className="text-gray-400 text-sm leading-relaxed mb-6 max-w-sm">
-              Madhya Pradesh's trusted solar partner — powering homes, businesses & farms with premium solar solutions backed by government subsidies.
+            <p className="text-slate-600 text-base leading-relaxed mb-8 max-w-sm">
+              Madhya Pradesh's most trusted solar engineering partner. We deliver unparalleled quality, precision architectures, and flawless execution for residential and enterprise clients.
             </p>
 
             {/* Trust badges */}
-            <div className="flex flex-wrap gap-2 mb-6">
+            <div className="flex flex-col gap-4 mb-12">
               {[
-                { icon: Shield, label: 'ISO Certified' },
-                { icon: Award, label: 'MNRE Approved' },
-                { icon: Zap, label: 'Govt. Empaneled' },
+                { icon: Shield, label: 'ISO 9001:2015 QUALITY MANAGEMENT' },
+                { icon: Award, label: 'MNRE REGISTERED ENGINEERING FIRM' },
+                { icon: Zap, label: 'PREMIUM TIER-1 HARDWARE INTEGRATION' },
               ].map(b => (
-                <span key={b.label} className="flex items-center gap-1.5 bg-white/[0.04] border border-white/10 rounded-lg px-3 py-2 text-[10px] text-gray-400 font-bold hover:bg-white/[0.08] transition-colors">
-                  <b.icon size={11} className="text-amber-400" />
+                <div key={b.label} className="flex items-center gap-4 text-[10px] font-black tracking-[0.2em] text-slate-400 group">
+                  <b.icon size={16} className="text-blue-600 group-hover:scale-110 transition-transform" />
                   {b.label}
-                </span>
+                </div>
               ))}
             </div>
 
             {/* Social */}
-            <div className="flex gap-2.5">
+            <div className="flex gap-3">
               {[
-                { href: COMPANY_INFO.social.facebook, Icon: Facebook, label: 'Facebook' },
-                { href: COMPANY_INFO.social.twitter, Icon: Twitter, label: 'Twitter' },
-                { href: COMPANY_INFO.social.linkedin, Icon: Linkedin, label: 'LinkedIn' },
-                { href: COMPANY_INFO.social.instagram, Icon: Instagram, label: 'Instagram' },
-              ].map(({ href, Icon, label }) => (
+                { href: COMPANY_INFO.social.facebook, Icon: Facebook, label: 'Facebook', hover: 'hover:bg-blue-600 hover:text-white hover:border-blue-600' },
+                { href: COMPANY_INFO.social.twitter, Icon: Twitter, label: 'Twitter', hover: 'hover:bg-sky-500 hover:text-white hover:border-sky-500' },
+                { href: COMPANY_INFO.social.linkedin, Icon: Linkedin, label: 'LinkedIn', hover: 'hover:bg-blue-700 hover:text-white hover:border-blue-700' },
+                { href: COMPANY_INFO.social.instagram, Icon: Instagram, label: 'Instagram', hover: 'hover:bg-pink-600 hover:text-white hover:border-pink-600' },
+              ].map(({ href, Icon, label, hover }) => (
                 <a
                   key={label}
                   href={href}
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={label}
-                  className="w-9 h-9 rounded-xl bg-white/[0.05] hover:bg-emerald-600 border border-white/10 hover:border-emerald-500 flex items-center justify-center transition-all hover:scale-110 text-gray-400 hover:text-white"
+                  className={`w-10 h-10 rounded-full bg-white border border-slate-200 flex items-center justify-center transition-all text-slate-500 hover:shadow-sm ${hover}`}
                 >
-                  <Icon size={15} />
+                  <Icon size={16} />
                 </a>
               ))}
             </div>
           </div>
 
           {/* Quick Links — 2 cols */}
-          <div className="md:col-span-2">
-            <h4 className="text-xs font-black text-white uppercase tracking-[.15em] mb-5 flex items-center gap-2">
-              <span className="w-5 h-px bg-amber-400" /> Navigation
+          <div className="md:col-span-2 lg:col-span-2">
+            <h4 className="text-sm font-black text-slate-900 tracking-widest uppercase mb-6 flex items-center gap-3">
+              Platform
             </h4>
-            <ul className="space-y-2.5">
-              {NAVIGATION_MENU.slice(0, 6).map(item => (
+            <ul className="space-y-4">
+              {NAVIGATION_MENU.slice(0, 5).map(item => (
                 <li key={item.path}>
                   <button
                     onClick={() => navigate(item.path)}
-                    className="text-gray-400 hover:text-white text-sm transition-colors hover:translate-x-1 transform inline-block"
+                    className="text-slate-600 hover:text-blue-600 font-medium transition-colors hover:translate-x-1 inline-flex items-center gap-2"
                   >
                     {item.name}
                   </button>
@@ -122,23 +121,22 @@ const Footer = ({ onNavigate }: FooterProps) => {
           </div>
 
           {/* Services — 2 cols */}
-          <div className="md:col-span-2">
-            <h4 className="text-xs font-black text-white uppercase tracking-[.15em] mb-5 flex items-center gap-2">
-              <span className="w-5 h-px bg-amber-400" /> Services
+          <div className="md:col-span-2 lg:col-span-2">
+            <h4 className="text-sm font-black text-slate-900 tracking-widest uppercase mb-6 flex items-center gap-3">
+              Solutions
             </h4>
-            <ul className="space-y-2.5">
+            <ul className="space-y-4">
               {[
-                { name: 'Residential Solar', path: '/solar-solutions' },
-                { name: 'Commercial Solar', path: '/solar-solutions' },
-                { name: 'PM Kusum Yojana', path: '/pm-kusum-yojana' },
-                { name: 'Solar Calculator', path: '/calculator' },
-                { name: 'Solar Shop', path: '/shop' },
-                { name: 'Govt. Schemes', path: '/government-schemes' },
+                { name: 'Residential Architecture', path: '/solar-products' },
+                { name: 'Commercial Scale', path: '/solar-products' },
+                { name: 'PM Surya Ghar', path: '/government-schemes' },
+                { name: 'ROI Calculator', path: '/calculator' },
+                { name: 'Case Studies', path: '/solar-projects' },
               ].map(s => (
                 <li key={s.name}>
                   <button
                     onClick={() => navigate(s.path)}
-                    className="text-gray-400 hover:text-white text-sm transition-colors hover:translate-x-1 transform inline-block"
+                    className="text-slate-600 hover:text-blue-600 font-medium transition-colors hover:translate-x-1 inline-flex items-center gap-2"
                   >
                     {s.name}
                   </button>
@@ -148,53 +146,56 @@ const Footer = ({ onNavigate }: FooterProps) => {
           </div>
 
           {/* Contact — 4 cols */}
-          <div className="md:col-span-4">
-            <h4 className="text-xs font-black text-white uppercase tracking-[.15em] mb-5 flex items-center gap-2">
-              <span className="w-5 h-px bg-amber-400" /> Get in Touch
+          <div className="md:col-span-4 lg:col-span-3">
+            <h4 className="text-sm font-black text-slate-900 tracking-widest uppercase mb-6 flex items-center gap-3">
+              Headquarters
             </h4>
-            <ul className="space-y-3.5 mb-6">
+            <ul className="space-y-4 mb-8">
               <li>
                 <a
                   href={`https://maps.google.com/?q=390+Premnagar+Jabalpur+MP`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex gap-3 text-gray-400 hover:text-white transition-colors text-sm group"
+                  className="flex gap-3 text-slate-600 hover:text-blue-600 transition-colors group items-start font-medium"
                 >
-                  <MapPin size={15} className="text-emerald-500 shrink-0 mt-0.5 group-hover:text-emerald-400" />
-                  <span>{COMPANY_INFO.address.line1}, {COMPANY_INFO.address.city}, {COMPANY_INFO.address.state} - {COMPANY_INFO.address.pincode}</span>
+                  <MapPin size={20} className="text-blue-600 shrink-0 mt-0.5" />
+                  <span className="leading-snug">{COMPANY_INFO.address.line1}, <br/>{COMPANY_INFO.address.city}, {COMPANY_INFO.address.state} - {COMPANY_INFO.address.pincode}</span>
                 </a>
               </li>
               <li>
                 <a
                   href={getPhoneLink(COMPANY_INFO.contact.phone)}
-                  className="flex items-center gap-3 text-gray-400 hover:text-white transition-colors text-sm group"
+                  className="flex items-center gap-3 text-slate-600 hover:text-blue-600 transition-colors font-bold text-lg"
                 >
-                  <Phone size={15} className="text-emerald-500 shrink-0 group-hover:text-emerald-400" />
+                  <Phone size={20} className="text-emerald-500 shrink-0" />
                   {COMPANY_INFO.contact.phone}
                 </a>
               </li>
               <li>
                 <a
                   href={getEmailLink(COMPANY_INFO.contact.email)}
-                  className="flex items-center gap-3 text-gray-400 hover:text-white transition-colors text-sm group"
+                  className="flex items-center gap-3 text-slate-600 hover:text-blue-600 transition-colors font-medium"
                 >
-                  <Mail size={15} className="text-emerald-500 shrink-0 group-hover:text-emerald-400" />
+                  <Mail size={20} className="text-blue-600 shrink-0" />
                   {COMPANY_INFO.contact.email}
                 </a>
               </li>
             </ul>
 
-            {/* Newsletter mini form */}
-            <div className="bg-white/[0.04] border border-white/10 rounded-xl p-4">
-              <p className="text-xs font-bold text-gray-300 mb-2">Get Solar Tips & Offers</p>
+            {/* Newsletter Minimal */}
+            <div className="bg-slate-50 rounded-2xl p-6 border border-slate-200">
+              <p className="text-sm font-bold text-slate-800 mb-3">Subscribe to Market Updates</p>
               <div className="flex gap-2">
                 <input
                   type="email"
-                  placeholder="Your email"
-                  className="flex-1 px-3 py-2 rounded-lg bg-white/[0.06] border border-white/10 text-white placeholder-gray-500 text-sm focus:outline-none focus:border-emerald-500 transition-colors"
+                  placeholder="name@company.com"
+                  className="flex-1 px-4 py-3 rounded-xl bg-white border border-slate-300 text-slate-900 placeholder-slate-400 focus:outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-600/20 transition-all shadow-[inset_0_2px_4px_rgba(0,0,0,0.02)]"
                 />
-                <button className="bg-emerald-600 hover:bg-emerald-500 text-white px-4 py-2 rounded-lg text-sm font-bold transition-colors shrink-0" title="Subscribe to newsletter">
-                  <ArrowRight size={16} />
+                <button 
+                  className="bg-[#0B1221] hover:bg-slate-800 text-white px-5 py-3 rounded-xl font-bold transition-colors shadow-md flex items-center justify-center shrink-0" 
+                  title="Subscribe"
+                >
+                  <ArrowRight size={20} />
                 </button>
               </div>
             </div>
@@ -203,49 +204,46 @@ const Footer = ({ onNavigate }: FooterProps) => {
       </div>
 
       {/* ─── TECHNICAL PARTNER STRIP ─── */}
-      <div className="border-t border-white/[0.06]">
+      <div className="border-t border-slate-200 bg-slate-50">
         <div className="container py-6">
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-            <div className="flex items-center gap-3">
-              <span className="text-[10px] text-gray-500 uppercase tracking-[.2em] font-bold">Technical Partner</span>
-              <div className="w-px h-4 bg-gray-700 hidden sm:block" />
+            <div className="flex items-center gap-4">
+              <span className="text-xs text-slate-500 uppercase tracking-widest font-bold">Technology Partner</span>
+              <div className="w-px h-6 bg-slate-300 hidden sm:block" />
               <a
                 href="https://elsxglobal.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="tech-partner-badge group"
+                className="flex items-center gap-3 group"
               >
-                <div className="flex items-center gap-2">
-                  <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-emerald-500 to-emerald-700 flex items-center justify-center shadow-sm">
-                    <Zap size={13} className="text-white" />
+                <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-blue-600 to-blue-700 flex items-center justify-center shadow-md group-hover:scale-105 transition-transform" >
+                  <Zap size={18} className="text-white" />
+                </div>
+                <div>
+                  <div className="text-sm font-black text-slate-900 group-hover:text-blue-600 transition-colors flex items-center gap-1">
+                    ELSxGlobal
+                    <ExternalLink size={12} className="opacity-0 group-hover:opacity-100 transition-opacity -mt-1" />
                   </div>
-                  <div>
-                    <div className="text-sm font-black text-white group-hover:text-emerald-400 transition-colors flex items-center gap-1.5">
-                      ELSxGlobal
-                      <ExternalLink size={10} className="opacity-0 group-hover:opacity-100 transition-opacity" />
-                    </div>
-                    <div className="text-[10px] text-gray-500 leading-tight">Division of Evolucentsphere Pvt Ltd</div>
-                  </div>
+                  <div className="text-[10px] uppercase font-bold text-slate-500 tracking-widest">Division of Evolucentsphere</div>
                 </div>
               </a>
             </div>
-            <div className="flex items-center gap-2 text-xs text-gray-500">
-              <Sun size={11} className="text-amber-500" />
-              <span>Designed & Developed with ☀️ for a greener India</span>
+            <div className="flex items-center gap-2 text-sm font-bold text-slate-500">
+              Made in Bharat <span className="mx-1">🇮🇳</span> for a greener tomorrow.
             </div>
           </div>
         </div>
       </div>
 
       {/* ─── COPYRIGHT BAR ─── */}
-      <div className="border-t border-white/[0.04] bg-black/20">
-        <div className="container py-4">
-          <div className="flex flex-col sm:flex-row justify-between items-center gap-2 text-[11px] text-gray-600">
-            <p>© {currentYear} {COMPANY_INFO.name}. All rights reserved.</p>
-            <div className="flex items-center gap-4">
-              <button className="hover:text-white transition-colors">Privacy Policy</button>
-              <button className="hover:text-white transition-colors">Terms of Service</button>
-              <button className="hover:text-white transition-colors">Sitemap</button>
+      <div className="bg-white border-t border-slate-100">
+        <div className="container py-12">
+          <div className="flex flex-col sm:flex-row justify-between items-center gap-8 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">
+            <p>© {currentYear} {COMPANY_INFO.name}. Engineering Excellence.</p>
+            <div className="flex items-center gap-10">
+              <button className="hover:text-blue-600 transition-colors">Privacy</button>
+              <button className="hover:text-blue-600 transition-colors">Terms</button>
+              <button className="hover:text-blue-600 transition-colors">Sitemap</button>
             </div>
           </div>
         </div>

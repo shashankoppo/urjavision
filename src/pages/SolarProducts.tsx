@@ -73,29 +73,34 @@ const SolarProducts = () => {
   return (
     <div className="products-page">
       {/* ─────────────────── HERO ─────────────────── */}
-      <section className="products-hero relative text-white overflow-hidden">
-        <div className="absolute inset-0">
+      <section className="bg-gradient-hero relative text-white overflow-hidden py-24 md:py-32">
+        {/* Animated Glow Orbs */}
+        <div className="absolute top-0 right-10 w-[500px] h-[500px] bg-emerald-500/10 rounded-full blur-[100px] animate-orb-float" />
+        <div className="absolute bottom-10 left-10 w-[400px] h-[400px] bg-amber-500/10 rounded-full blur-[80px] animate-orb-float" style={{ animationDelay: '2s' }} />
+
+        <div className="absolute inset-0 z-0">
+          <div className="absolute inset-0 bg-gradient-to-b from-[#020617]/95 via-[#0A0F1E]/80 to-[#0A0F1E] z-10" />
           <img
             src="https://images.pexels.com/photos/356036/pexels-photo-356036.jpeg?auto=compress&cs=tinysrgb&w=1600"
             alt="Solar Products"
-            className="w-full h-full object-cover opacity-20"
+            className="w-full h-full object-cover scale-105 opacity-30 mix-blend-overlay"
           />
-          <div className="absolute inset-0 products-hero-grad" />
         </div>
-        <div className="container relative z-10 py-20 md:py-28 text-center">
-          <div className="section-tag !bg-white/10 !text-white !border-white/20 mx-auto w-fit mb-5">
-            <Zap size={12} /> Premium Solar Products
+        <div className="container relative z-10 text-center">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-morphism border border-white/10 mb-6 animate-fade-up">
+            <Zap size={14} className="text-amber-400" />
+            <span className="text-amber-400 text-[10px] font-black uppercase tracking-[0.2em]">Premium Equipment</span>
           </div>
-          <h1 className="text-white mb-4 max-w-3xl mx-auto">
-            Power Your Future with the Best Solar
+          <h1 className="text-white mb-6 max-w-4xl mx-auto text-5xl md:text-7xl font-black tracking-tighter animate-fade-up delay-100">
+            Power Your Future with <span className="mega-gradient-text">Top-Tier Solar</span>
           </h1>
-          <p className="text-white/80 text-lg max-w-2xl mx-auto leading-relaxed">
-            Top-tier solar panels, inverters & batteries — backed by manufacturer warranties, expert installation & government subsidy support.
+          <p className="text-gray-400 text-lg max-w-2xl mx-auto leading-relaxed animate-fade-up delay-200">
+            Enterprise-grade solar panels, inverters & batteries — exclusively backed by manufacturer warranties, expert deployment, and subsidy facilitation.
           </p>
           {/* Trust pills */}
-          <div className="flex flex-wrap justify-center gap-3 mt-8">
+          <div className="flex flex-wrap justify-center gap-3 mt-10 animate-fade-up delay-300">
             {['✅ Genuine Products', '🏆 Top Brands', '📋 Subsidy Help', '🛡️ 5-Year Support'].map(pill => (
-              <span key={pill} className="bg-white/10 border border-white/20 text-white text-xs font-semibold px-4 py-1.5 rounded-full backdrop-blur-sm">
+              <span key={pill} className="glass-morphism border border-white/10 text-white text-xs font-bold px-5 py-2 rounded-full shadow-lg">
                 {pill}
               </span>
             ))}
@@ -152,23 +157,27 @@ const SolarProducts = () => {
       </section>
 
       {/* ─────────────────── PRODUCTS GRID ─────────────────── */}
-      <section className="section-padding bg-gray-50">
-        <div className="container">
+      <section className="section-padding bg-gray-50 dark-mesh-bg relative z-20">
+        <div className="absolute inset-0 bg-white/95" />
+        <div className="container relative z-10">
           <div className="flex items-center justify-between mb-8">
             <div>
-              <h2 className="text-xl font-black text-gray-900">
-                {selectedCategory === 'All' ? 'All Products' : selectedCategory}
+              <h2 className="text-2xl font-black text-gray-900 tracking-tight">
+                {selectedCategory === 'All' ? 'All Inventory' : selectedCategory}
               </h2>
-              <p className="text-sm text-gray-400 mt-0.5">{filtered.length} products available</p>
+              <p className="text-sm text-gray-400 mt-1 font-medium">{filtered.length} products available</p>
             </div>
           </div>
 
           {filtered.length === 0 ? (
-            <div className="text-center py-24">
-              <div className="text-5xl mb-4">🔍</div>
-              <h3 className="text-gray-700">No products found</h3>
-              <p className="text-gray-400 mt-2 text-sm">Try a different search or category</p>
-              <button onClick={() => { setSearchQuery(''); setSelectedCategory('All'); }} className="mt-5 btn-primary text-sm px-6 py-2.5">
+            <div className="text-center py-24 glass-white rounded-[32px] border border-gray-100 shadow-2xl shadow-emerald-900/5">
+              <div className="text-5xl mb-4 animate-bounce">🔍</div>
+              <h3 className="text-gray-900 font-bold mb-2">No matching inventory</h3>
+              <p className="text-gray-500 text-sm mb-6">Try adjusting your search or category filters.</p>
+              <button 
+                onClick={() => { setSearchQuery(''); setSelectedCategory('All'); }} 
+                className="btn-primary text-sm px-6 py-3 font-bold shadow-lg"
+              >
                 Clear Filters
               </button>
             </div>
@@ -179,52 +188,58 @@ const SolarProducts = () => {
                 return (
                   <div
                     key={product.id}
-                    className={`product-card group animate-fade-up delay-${(i % 4 + 1) * 100}`}
+                    className={`card-premium group flex flex-col h-full animate-fade-up`} 
+                    style={{ animationDelay: `${(i % 4 + 1) * 100}ms` }}
                   >
                     {/* Image */}
-                    <div className="relative h-44 overflow-hidden rounded-t-2xl flex-shrink-0">
+                    <div className="relative h-48 overflow-hidden rounded-t-[20px] flex-shrink-0 bg-gray-100">
                       <img
                         src={product.image}
                         alt={product.name}
                         className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
-                      <span className="absolute top-3 left-3 text-[10px] font-black uppercase tracking-wider bg-emerald-500 text-white px-2.5 py-1 rounded-full shadow-sm">
+                      <div className="absolute inset-0 bg-gradient-to-t from-gray-900/80 via-transparent to-transparent pointer-events-none" />
+                      
+                      <span className="absolute top-3 left-3 text-[10px] font-black uppercase tracking-widest bg-gradient-to-r from-emerald-500 to-green-500 text-white px-3 py-1.5 rounded-full shadow-lg border border-white/20">
                         {product.category}
                       </span>
+                      
                       {inCart && (
-                        <span className="absolute top-3 right-3 w-6 h-6 bg-amber-400 text-gray-900 font-black text-[10px] rounded-full flex items-center justify-center shadow-sm">
-                          ✓
+                        <span className="absolute top-3 right-3 w-8 h-8 bg-gradient-to-br from-amber-400 to-orange-500 text-white font-black text-[10px] rounded-full flex items-center justify-center shadow-lg border border-white/20 animate-scale-in">
+                          <CheckCircle size={14} />
                         </span>
                       )}
+                      
                       <button
                         onClick={() => openProduct(product)}
-                        className="absolute bottom-2.5 right-2.5 bg-white/90 hover:bg-white text-gray-800 text-[10px] font-bold px-3 py-1.5 rounded-lg shadow-sm opacity-0 group-hover:opacity-100 transition-all translate-y-1 group-hover:translate-y-0"
+                        className="absolute bottom-3 right-3 glass-white hover:bg-white text-gray-900 text-[10px] font-black uppercase tracking-widest px-4 py-2 rounded-xl shadow-lg opacity-0 group-hover:opacity-100 transition-all translate-y-2 group-hover:translate-y-0"
                       >
                         Quick View
                       </button>
                     </div>
 
                     {/* Content */}
-                    <div className="p-4 flex flex-col flex-1">
-                      <div className="text-[10px] font-black text-amber-600 uppercase tracking-widest mb-1">{product.brand}</div>
-                      <h3 className="font-bold text-gray-900 text-sm leading-snug group-hover:text-emerald-700 transition-colors mb-1 line-clamp-2">
+                    <div className="p-5 flex flex-col flex-1 relative">
+                      <div className="text-[10px] font-black text-amber-500 uppercase tracking-widest mb-1">{product.brand}</div>
+                      <h3 className="font-bold text-gray-900 text-base leading-snug group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-emerald-600 group-hover:to-green-500 transition-all mb-2 line-clamp-2">
                         {product.name}
                       </h3>
-                      <div className="font-black text-emerald-600 text-xs mb-2">{product.capacity}</div>
+                      <div className="font-black text-transparent bg-clip-text bg-gradient-to-r from-emerald-600 to-green-500 text-sm mb-3">
+                        {product.capacity}
+                      </div>
 
                       {/* Stars */}
-                      <div className="flex items-center gap-1 mb-3">
-                        {[...Array(5)].map((_, idx) => <Star key={idx} size={10} className="text-amber-400 fill-amber-400" />)}
-                        <span className="text-[10px] text-gray-400 ml-1">4.8</span>
+                      <div className="flex items-center gap-1 mb-4">
+                        {[...Array(5)].map((_, idx) => <Star key={idx} size={12} className="text-amber-400 fill-amber-400" />)}
+                        <span className="text-xs font-bold text-gray-400 ml-1.5">4.8</span>
                       </div>
 
                       {/* Top 2 specs */}
-                      <div className="flex flex-col gap-1 mb-4 flex-1">
+                      <div className="flex flex-col gap-2 mb-5 flex-1">
                         {(product.specifications || []).slice(0, 2).map((spec: string) => (
-                          <div key={spec} className="flex items-center gap-1.5 text-[10px] text-gray-500">
-                            <CheckCircle size={9} className="text-emerald-500 shrink-0" />
-                            <span className="truncate">{spec}</span>
+                          <div key={spec} className="flex items-start gap-2 text-xs text-gray-500 font-medium">
+                            <CheckCircle size={12} className="text-emerald-500 shrink-0 mt-0.5" />
+                            <span className="line-clamp-1">{spec}</span>
                           </div>
                         ))}
                       </div>
@@ -233,18 +248,18 @@ const SolarProducts = () => {
                       <div className="grid grid-cols-2 gap-2 mt-auto">
                         <button
                           onClick={() => openProduct(product)}
-                          className="py-2 border border-emerald-200 text-emerald-700 text-xs font-bold rounded-xl hover:bg-emerald-50 transition-colors"
+                          className="py-2.5 bg-emerald-50/50 hover:bg-emerald-50 border border-emerald-100 text-emerald-700 text-xs font-bold rounded-xl transition-colors shadow-sm"
                         >
-                          Details
+                          Specs
                         </button>
                         <button
                           onClick={() => inCart ? setCartOpen(true) : openProduct(product)}
-                          className={`py-2 text-xs font-bold rounded-xl transition-all flex items-center justify-center gap-1 ${inCart
-                            ? 'bg-amber-400 text-gray-900 hover:bg-amber-500'
-                            : 'bg-emerald-600 text-white hover:bg-emerald-700 shadow-md shadow-emerald-500/20'}`}
+                          className={`py-2.5 text-xs font-bold rounded-xl transition-all shadow-md flex items-center justify-center gap-1.5 ${inCart
+                            ? 'bg-gradient-to-br from-amber-400 to-orange-500 text-white hover:brightness-110 shadow-amber-500/20 shadow-lg border border-amber-400/50'
+                            : 'bg-gradient-to-br from-emerald-600 to-emerald-800 text-white hover:brightness-110 shadow-emerald-900/20'}`}
                         >
-                          <ShoppingCart size={11} />
-                          {inCart ? 'In Cart' : 'Add'}
+                          <ShoppingCart size={14} />
+                          {inCart ? 'In Cart' : 'Select'}
                         </button>
                       </div>
                     </div>
@@ -259,19 +274,19 @@ const SolarProducts = () => {
       {/* ─────────────────── TRUST SECTION ─────────────────── */}
       <section className="section-padding-sm bg-white border-t border-gray-100">
         <div className="container">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             {[
-              { icon: Shield, title: 'Genuine Products', desc: 'Direct from authorized distributors', color: 'text-emerald-600 bg-emerald-50' },
-              { icon: Star, title: 'Top Brands Only', desc: 'Adani, Vikram, Luminous & more', color: 'text-amber-600 bg-amber-50' },
-              { icon: CheckCircle, title: 'Subsidy Assistance', desc: 'All paperwork handled by us', color: 'text-blue-600 bg-blue-50' },
-              { icon: Zap, title: '24/7 AMC Support', desc: 'Annual maintenance & emergency calls', color: 'text-purple-600 bg-purple-50' },
+              { icon: Shield, title: 'Genuine Products', desc: 'Direct from authorized distributors', color: 'from-emerald-500 to-green-600 shadow-emerald-900/20' },
+              { icon: Star, title: 'Top Brands Only', desc: 'Adani, Vikram, Luminous & more', color: 'from-amber-400 to-orange-500 shadow-amber-900/20' },
+              { icon: CheckCircle, title: 'Subsidy Assistance', desc: 'All paperwork handled natively', color: 'from-blue-500 to-indigo-600 shadow-blue-900/20' },
+              { icon: Zap, title: '24/7 AMC Support', desc: 'Annual maintenance & emergency', color: 'from-purple-500 to-fuchsia-600 shadow-purple-900/20' },
             ].map(item => (
-              <div key={item.title} className="flex flex-col items-center text-center p-5 rounded-2xl border border-gray-100 hover:shadow-md hover:-translate-y-1 transition-all">
-                <div className={`w-12 h-12 rounded-2xl flex items-center justify-center mb-3 ${item.color}`}>
-                  <item.icon size={22} />
+              <div key={item.title} className="flex flex-col items-center text-center p-6 rounded-3xl border border-gray-100 hover:shadow-xl hover:-translate-y-2 transition-all bg-gray-50/50 group">
+                <div className={`w-14 h-14 rounded-2xl flex items-center justify-center mb-4 bg-gradient-to-br text-white shadow-lg ${item.color} group-hover:scale-110 transition-transform`}>
+                  <item.icon size={24} />
                 </div>
-                <div className="font-bold text-gray-900 text-sm mb-1">{item.title}</div>
-                <p className="text-xs text-gray-500 leading-relaxed">{item.desc}</p>
+                <div className="font-black text-gray-900 text-sm mb-1">{item.title}</div>
+                <p className="text-xs text-gray-500 font-medium leading-relaxed max-w-[180px]">{item.desc}</p>
               </div>
             ))}
           </div>

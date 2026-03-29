@@ -1,0 +1,152 @@
+[
+  {
+    "id": 1,
+    "name": "Adani 550W Mono PERC Panel",
+    "category": "Solar Panels",
+    "capacity": "550W",
+    "brand": "Adani Solar",
+    "description": "High-performance Mono PERC module with 21.5% efficiency.",
+    "specifications": [
+      "550W Output",
+      "21.5% Efficiency",
+      "12 Year Warranty",
+      "PID Resistant"
+    ],
+    "image": "https://images.pexels.com/photos/433308/pexels-photo-433308.jpeg?auto=compress&cs=tinysrgb&w=800"
+  },
+  {
+    "id": 2,
+    "name": "Vikram Solar Somera 450W",
+    "category": "Solar Panels",
+    "capacity": "450W",
+    "brand": "Vikram Solar",
+    "description": "Reliable mono-crystalline panels for extreme Indian weather.",
+    "specifications": [
+      "450W Capacity",
+      "High Yield",
+      "Anti-reflective glass",
+      "27 Year Warranty"
+    ],
+    "image": "https://images.pexels.com/photos/159397/solar-panel-array-power-sun-electricity-159397.jpeg?auto=compress&cs=tinysrgb&w=800"
+  },
+  {
+    "id": 3,
+    "name": "Tata Power Solaro 545W",
+    "category": "Solar Panels",
+    "capacity": "545W",
+    "brand": "Tata Power",
+    "description": "Trust of Tata with maximum power density for limited roof spaces.",
+    "specifications": [
+      "Tata Quality",
+      "High Reliability",
+      "IP68 Junction Box",
+      "Advanced Mono Tech"
+    ],
+    "image": "https://images.pexels.com/photos/2800832/pexels-photo-2800832.jpeg?auto=compress&cs=tinysrgb&w=800"
+  },
+  {
+    "id": 4,
+    "name": "Growatt 5kW Hybrid Inverter",
+    "category": "Solar Inverters",
+    "capacity": "5kW",
+    "brand": "Growatt",
+    "description": "Smart hybrid inverter with dual MPPT.",
+    "specifications": [
+      "5kW Output",
+      "Dual MPPT",
+      "Wi-Fi Monitoring",
+      "5 Year Warranty"
+    ],
+    "image": "https://images.pexels.com/photos/9875427/pexels-photo-9875427.jpeg?auto=compress&cs=tinysrgb&w=800"
+  },
+  {
+    "id": 5,
+    "name": "Microtek 10kW On-Grid",
+    "category": "Solar Inverters",
+    "capacity": "10kW",
+    "brand": "Microtek",
+    "description": "Heavy-duty industrial on-grid inverter.",
+    "specifications": [
+      "10kW Capacity",
+      "98.5% Efficiency",
+      "LCD Display",
+      "Made in India"
+    ],
+    "image": "https://images.pexels.com/photos/4297357/pexels-photo-4297357.jpeg?auto=compress&cs=tinysrgb&w=800"
+  },
+  {
+    "id": 6,
+    "name": "Starter Home Bundle (3kW)",
+    "category": "Solar Combos",
+    "capacity": "3kW System",
+    "brand": "Urja Vision",
+    "description": "Complete 3kW solar system with panels, inverter, and structures.",
+    "specifications": [
+      "6 x 545W Panels",
+      "3.5kVA Inverter",
+      "2 Batteries",
+      "Full Installation"
+    ],
+    "image": "https://images.pexels.com/photos/356036/pexels-photo-356036.jpeg?auto=compress&cs=tinysrgb&w=800"
+  },
+  {
+    "id": 7,
+    "name": "Agriculture Pumping Combo",
+    "category": "Solar Combos",
+    "capacity": "5HP Pump",
+    "brand": "Kirloskar/Urja",
+    "description": "5HP DC solar pump kit with 5kW panels.",
+    "specifications": [
+      "5HP DC Pump",
+      "8 x 450W Panels",
+      "Solar Tracking Frame",
+      "90% PM Kusum Subsidy"
+    ],
+    "image": "https://images.pexels.com/photos/2382894/pexels-photo-2382894.jpeg?auto=compress&cs=tinysrgb&w=600"
+  },
+  {
+    "id": 8,
+    "name": "Premium Independence Suite",
+    "category": "Solar Combos",
+    "capacity": "10kW + Lithium",
+    "brand": "Executive Series",
+    "description": "10kW backup for large homes with 10kWh Lithium storage.",
+    "specifications": [
+      "20 x 550W Panels",
+      "10kW Hybrid Inverter",
+      "10kWh Lithium Stack",
+      "Smart APP Access"
+    ],
+    "image": "https://images.pexels.com/photos/433308/pexels-photo-433308.jpeg?auto=compress&cs=tinysrgb&w=800"
+  },
+  {
+    "id": 9,
+    "name": "Solar Health Audit",
+    "category": "Solar Services",
+    "capacity": "Standard",
+    "brand": "Urja Engineering",
+    "description": "Thermal imaging, testing, cleaning for 40% efficiency boost.",
+    "specifications": [
+      "Thermal Imaging",
+      "Voc/Isc Testing",
+      "Cleaning & Polishing",
+      "Performance Report"
+    ],
+    "image": "https://images.pexels.com/photos/159397/solar-panel-array-power-sun-electricity-159397.jpeg?auto=compress&cs=tinysrgb&w=800"
+  },
+  {
+    "id": 10,
+    "name": "Expert Structural Installation",
+    "category": "Solar Services",
+    "capacity": "Premium",
+    "brand": "Urja Engineering",
+    "description": "HDGI structural mounting — wind-stable up to 150 kmph.",
+    "specifications": [
+      "Wind Load Calc",
+      "HDGI Materials",
+      "Anti-Corrosion Pile",
+      "Safety Anchors"
+    ],
+    "image": "https://images.pexels.com/photos/2800832/pexels-photo-2800832.jpeg?auto=compress&cs=tinysrgb&w=800"
+  }
+]

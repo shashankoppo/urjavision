@@ -1,0 +1,32 @@
+[
+  {
+    "id": 1,
+    "title": "50kW Industrial Solar Plant",
+    "location": "Jabalpur Industrial Area",
+    "capacity": "50 kW",
+    "type": "Commercial",
+    "description": "Large-scale installation for manufacturing with annual savings of ₹8 lakhs",
+    "image": "https://images.pexels.com/photos/433308/pexels-photo-433308.jpeg?auto=compress&cs=tinysrgb&w=800",
+    "year": "2024"
+  },
+  {
+    "id": 2,
+    "title": "Residential Rooftop Solar",
+    "location": "Napier Town, Jabalpur",
+    "capacity": "5 kW",
+    "type": "Residential",
+    "description": "Modern home solar solution reducing electricity bills by 90%",
+    "image": "https://images.pexels.com/photos/159397/solar-panel-array-power-sun-electricity-159397.jpeg?auto=compress&cs=tinysrgb&w=800",
+    "year": "2024"
+  },
+  {
+    "id": 3,
+    "title": "Hospital Solar System",
+    "location": "Jabalpur",
+    "capacity": "30 kW",
+    "type": "Healthcare",
+    "description": "Reliable solar power for 24/7 hospital operations",
+    "image": "https://images.pexels.com/photos/433308/pexels-photo-433308.jpeg?auto=compress&cs=tinysrgb&w=800",
+    "year": "2023"
+  }
+]
