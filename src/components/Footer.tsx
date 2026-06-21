@@ -1,201 +1,201 @@
-import { Phone, Mail, MapPin, Facebook, Twitter, Linkedin, Instagram, Sun, Zap, Shield, Award, ArrowRight, ExternalLink, MessageCircle } from 'lucide-react';
+import {
+  ArrowRight,
+  Facebook,
+  Instagram,
+  Linkedin,
+  Mail,
+  MapPin,
+  MessageCircle,
+  Phone,
+  ShieldCheck,
+  Sprout,
+  SunMedium,
+  Twitter,
+  Zap
+} from 'lucide-react';
 import { COMPANY_INFO, NAVIGATION_MENU } from '../utils/constants';
-import { getPhoneLink, getEmailLink, getWhatsAppLink } from '../utils/helpers';
+import { getEmailLink, getPhoneLink, getWhatsAppLink } from '../utils/helpers';
 import Logo from './Logo';
 
 interface FooterProps {
   onNavigate?: (path: string) => void;
 }
 
+const quickSolutions = [
+  { name: 'Home Rooftop Solar', path: '/solar-solutions' },
+  { name: 'Commercial Solar', path: '/solar-solutions' },
+  { name: 'Solar Packages', path: '/solar-packages' },
+  { name: 'Government Schemes', path: '/government-schemes' },
+  { name: 'Solar Calculator', path: '/calculator' }
+];
+
 const Footer = ({ onNavigate }: FooterProps) => {
-  const navigate = (path: string) => {
-    if (onNavigate) onNavigate(path);
-  };
   const currentYear = new Date().getFullYear();
 
+  const navigate = (path: string) => {
+    onNavigate?.(path);
+  };
+
   return (
-    <footer className="relative bg-white border-t border-slate-100 overflow-hidden">
-      {/* ─── ARCHITECTURAL CTA SECTION ─── */}
-      <div className="container py-32 border-b border-slate-100 relative">
-        <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-blue-500/5 rounded-full blur-[120px] pointer-events-none" />
-        <div className="flex flex-col lg:flex-row items-center justify-between gap-16 relative z-10">
-          <div className="max-w-2xl text-center lg:text-left">
-            <h3 className="text-[#0B1221] font-black text-4xl md:text-6xl mb-8 tracking-[-0.03em] leading-[1.1]">
-              Ready to architect your <br/><span className="text-blue-600">energy independence?</span>
-            </h3>
-            <p className="text-slate-500 text-lg md:text-xl font-medium leading-relaxed">
-              Join the league of 850+ premium clients across Madhya Pradesh who have eliminated their power bills forever.
-            </p>
-          </div>
-          <div className="flex flex-col sm:flex-row gap-6 w-full lg:w-auto">
-            <a
-              href={getWhatsAppLink(COMPANY_INFO.contact.phone, 'Hi! I want a free solar consultation.')}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="bg-[#0B1221] text-white px-10 py-5 rounded-full font-black text-base shadow-2xl hover:bg-black hover:-translate-y-1.5 transition-all text-center flex items-center justify-center gap-3"
-            >
-              <MessageCircle size={20} />
-              Consultation
-            </a>
-            <a
-              href={getPhoneLink(COMPANY_INFO.contact.phone)}
-              className="bg-white text-slate-900 border border-slate-200 px-10 py-5 rounded-full font-black text-base shadow-sm hover:bg-slate-50 hover:border-slate-300 hover:-translate-y-1.5 transition-all text-center"
-            >
-              Contact Sales
-            </a>
+    <footer className="overflow-hidden border-t border-[var(--border-soft)] bg-[linear-gradient(180deg,#fff8ef_0%,#fffdf8_100%)]">
+      <div className="container py-20">
+        <div className="relative overflow-hidden rounded-[36px] border border-[rgba(249,115,22,0.18)] bg-[linear-gradient(135deg,#fff1dc_0%,#ffffff_55%,#eefaf1_100%)] px-6 py-10 shadow-[0_24px_60px_rgba(15,23,42,0.08)] md:px-10 md:py-12">
+          <div className="absolute -right-16 -top-20 h-56 w-56 rounded-full bg-[rgba(249,115,22,0.16)] blur-3xl" />
+          <div className="absolute -bottom-20 left-1/3 h-52 w-52 rounded-full bg-[rgba(34,197,94,0.14)] blur-3xl" />
+
+          <div className="relative z-10 flex flex-col gap-8 lg:flex-row lg:items-center lg:justify-between">
+            <div className="max-w-2xl">
+              <div className="inline-flex items-center gap-2 rounded-full bg-white/80 px-4 py-2 text-xs font-bold uppercase tracking-[0.22em] text-[var(--text-muted)]">
+                <SunMedium size={14} className="text-[var(--accent-saffron)]" />
+                Solar for Indian homes and businesses
+              </div>
+              <h3 className="mt-5 text-4xl font-black tracking-[-0.04em] text-[var(--text-primary)] md:text-5xl">
+                Ready for a quotation that feels practical, local, and commercially strong?
+              </h3>
+              <p className="mt-4 max-w-xl text-lg text-[var(--text-secondary)]">
+                Talk to the {COMPANY_INFO.brandName} team for rooftop solar, business installations, project support, and subsidy-aligned guidance in Madhya Pradesh.
+              </p>
+            </div>
+
+            <div className="flex flex-col gap-4 sm:flex-row">
+              <a
+                href={getWhatsAppLink(COMPANY_INFO.contact.phone, 'Hi! I want a solar quote for my home or business.')}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-primary"
+              >
+                <MessageCircle size={18} />
+                WhatsApp Quote
+              </a>
+              <a href={getPhoneLink(COMPANY_INFO.contact.phone)} className="btn-warm">
+                <Phone size={18} />
+                Call Sales
+              </a>
+            </div>
           </div>
         </div>
-      </div>
 
-      {/* ─── MAIN FOOTER ─── */}
-      <div className="container py-20">
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-12 lg:gap-16">
-
-          {/* Brand — 4 cols */}
-          <div className="md:col-span-4 lg:col-span-5">
-            <button 
+        <div className="mt-16 grid gap-12 md:grid-cols-12">
+          <div className="md:col-span-5">
+            <button
               onClick={() => navigate('/')}
-              className="mb-8 block outline-none transition-transform hover:scale-105 origin-left"
-              title="Urja Vision Home"
+              className="inline-flex transition-transform duration-300 hover:scale-[1.02]"
+              title="Urja Vision home"
             >
-              <Logo className="h-10" />
+              <Logo className="h-11" />
             </button>
 
-            <p className="text-slate-600 text-base leading-relaxed mb-8 max-w-sm">
-              Madhya Pradesh's most trusted solar engineering partner. We deliver unparalleled quality, precision architectures, and flawless execution for residential and enterprise clients.
+            <p className="mt-6 max-w-md text-base leading-8 text-[var(--text-secondary)]">
+              Trusted solar partner for homes, commercial buyers, institutions, and farms. We combine local market understanding with cleaner design, stronger execution, and service that helps people buy with confidence.
             </p>
 
-            {/* Trust badges */}
-            <div className="flex flex-col gap-4 mb-12">
+            <div className="mt-8 space-y-4">
               {[
-                { icon: Shield, label: 'ISO 9001:2015 QUALITY MANAGEMENT' },
-                { icon: Award, label: 'MNRE REGISTERED ENGINEERING FIRM' },
-                { icon: Zap, label: 'PREMIUM TIER-1 HARDWARE INTEGRATION' },
-              ].map(b => (
-                <div key={b.label} className="flex items-center gap-4 text-[10px] font-black tracking-[0.2em] text-slate-400 group">
-                  <b.icon size={16} className="text-blue-600 group-hover:scale-110 transition-transform" />
-                  {b.label}
+                { icon: ShieldCheck, text: 'Clear proposals and practical sizing' },
+                { icon: Zap, text: 'Residential, commercial and industrial execution' },
+                { icon: Sprout, text: 'Support for agriculture and subsidy-driven solar journeys' }
+              ].map((item) => (
+                <div key={item.text} className="flex items-center gap-3 text-sm font-semibold text-[var(--text-primary)]">
+                  <item.icon size={18} className="text-[var(--brand-green)]" />
+                  {item.text}
                 </div>
               ))}
             </div>
 
-            {/* Social */}
-            <div className="flex gap-3">
+            <div className="mt-8 flex gap-3">
               {[
-                { href: COMPANY_INFO.social.facebook, Icon: Facebook, label: 'Facebook', hover: 'hover:bg-blue-600 hover:text-white hover:border-blue-600' },
-                { href: COMPANY_INFO.social.twitter, Icon: Twitter, label: 'Twitter', hover: 'hover:bg-sky-500 hover:text-white hover:border-sky-500' },
-                { href: COMPANY_INFO.social.linkedin, Icon: Linkedin, label: 'LinkedIn', hover: 'hover:bg-blue-700 hover:text-white hover:border-blue-700' },
-                { href: COMPANY_INFO.social.instagram, Icon: Instagram, label: 'Instagram', hover: 'hover:bg-pink-600 hover:text-white hover:border-pink-600' },
-              ].map(({ href, Icon, label, hover }) => (
+                { href: COMPANY_INFO.social.facebook, icon: Facebook, label: 'Facebook' },
+                { href: COMPANY_INFO.social.twitter, icon: Twitter, label: 'Twitter' },
+                { href: COMPANY_INFO.social.linkedin, icon: Linkedin, label: 'LinkedIn' },
+                { href: COMPANY_INFO.social.instagram, icon: Instagram, label: 'Instagram' }
+              ].map((item) => (
                 <a
-                  key={label}
-                  href={href}
+                  key={item.label}
+                  href={item.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  aria-label={label}
-                  className={`w-10 h-10 rounded-full bg-white border border-slate-200 flex items-center justify-center transition-all text-slate-500 hover:shadow-sm ${hover}`}
+                  aria-label={item.label}
+                  className="flex h-11 w-11 items-center justify-center rounded-full border border-[var(--border-soft)] bg-white text-[var(--text-secondary)] transition-all duration-300 hover:-translate-y-1 hover:border-[var(--brand-red)] hover:text-[var(--brand-red)]"
                 >
-                  <Icon size={16} />
+                  <item.icon size={17} />
                 </a>
               ))}
             </div>
           </div>
 
-          {/* Quick Links — 2 cols */}
-          <div className="md:col-span-2 lg:col-span-2">
-            <h4 className="text-sm font-black text-slate-900 tracking-widest uppercase mb-6 flex items-center gap-3">
-              Platform
-            </h4>
-            <ul className="space-y-4">
-              {NAVIGATION_MENU.slice(0, 5).map(item => (
-                <li key={item.path}>
-                  <button
-                    onClick={() => navigate(item.path)}
-                    className="text-slate-600 hover:text-blue-600 font-medium transition-colors hover:translate-x-1 inline-flex items-center gap-2"
-                  >
-                    {item.name}
-                  </button>
-                </li>
+          <div className="md:col-span-2">
+            <h4 className="text-sm font-black uppercase tracking-[0.22em] text-[var(--text-muted)]">Company</h4>
+            <div className="mt-6 space-y-4">
+              {NAVIGATION_MENU.slice(0, 6).map((item) => (
+                <button
+                  key={item.path}
+                  onClick={() => navigate(item.path)}
+                  className="block text-left text-sm font-semibold text-[var(--text-secondary)] transition-colors hover:text-[var(--brand-red)]"
+                >
+                  {item.name}
+                </button>
               ))}
-            </ul>
+            </div>
           </div>
 
-          {/* Services — 2 cols */}
-          <div className="md:col-span-2 lg:col-span-2">
-            <h4 className="text-sm font-black text-slate-900 tracking-widest uppercase mb-6 flex items-center gap-3">
-              Solutions
-            </h4>
-            <ul className="space-y-4">
-              {[
-                { name: 'Residential Architecture', path: '/solar-products' },
-                { name: 'Commercial Scale', path: '/solar-products' },
-                { name: 'PM Surya Ghar', path: '/government-schemes' },
-                { name: 'ROI Calculator', path: '/calculator' },
-                { name: 'Case Studies', path: '/solar-projects' },
-              ].map(s => (
-                <li key={s.name}>
-                  <button
-                    onClick={() => navigate(s.path)}
-                    className="text-slate-600 hover:text-blue-600 font-medium transition-colors hover:translate-x-1 inline-flex items-center gap-2"
-                  >
-                    {s.name}
-                  </button>
-                </li>
+          <div className="md:col-span-2">
+            <h4 className="text-sm font-black uppercase tracking-[0.22em] text-[var(--text-muted)]">Solutions</h4>
+            <div className="mt-6 space-y-4">
+              {quickSolutions.map((item) => (
+                <button
+                  key={item.path}
+                  onClick={() => navigate(item.path)}
+                  className="block text-left text-sm font-semibold text-[var(--text-secondary)] transition-colors hover:text-[var(--brand-red)]"
+                >
+                  {item.name}
+                </button>
               ))}
-            </ul>
+            </div>
           </div>
 
-          {/* Contact — 4 cols */}
-          <div className="md:col-span-4 lg:col-span-3">
-            <h4 className="text-sm font-black text-slate-900 tracking-widest uppercase mb-6 flex items-center gap-3">
-              Headquarters
-            </h4>
-            <ul className="space-y-4 mb-8">
-              <li>
-                <a
-                  href={`https://maps.google.com/?q=390+Premnagar+Jabalpur+MP`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex gap-3 text-slate-600 hover:text-blue-600 transition-colors group items-start font-medium"
-                >
-                  <MapPin size={20} className="text-blue-600 shrink-0 mt-0.5" />
-                  <span className="leading-snug">{COMPANY_INFO.address.line1}, <br/>{COMPANY_INFO.address.city}, {COMPANY_INFO.address.state} - {COMPANY_INFO.address.pincode}</span>
-                </a>
-              </li>
-              <li>
-                <a
-                  href={getPhoneLink(COMPANY_INFO.contact.phone)}
-                  className="flex items-center gap-3 text-slate-600 hover:text-blue-600 transition-colors font-bold text-lg"
-                >
-                  <Phone size={20} className="text-emerald-500 shrink-0" />
-                  {COMPANY_INFO.contact.phone}
-                </a>
-              </li>
-              <li>
-                <a
-                  href={getEmailLink(COMPANY_INFO.contact.email)}
-                  className="flex items-center gap-3 text-slate-600 hover:text-blue-600 transition-colors font-medium"
-                >
-                  <Mail size={20} className="text-blue-600 shrink-0" />
-                  {COMPANY_INFO.contact.email}
-                </a>
-              </li>
-            </ul>
+          <div className="md:col-span-3">
+            <h4 className="text-sm font-black uppercase tracking-[0.22em] text-[var(--text-muted)]">Contact</h4>
+            <div className="mt-6 space-y-4">
+              <a
+                href="https://maps.google.com/?q=390+Premnagar+Jabalpur+Madhya+Pradesh"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-start gap-3 text-sm font-medium leading-6 text-[var(--text-secondary)] transition-colors hover:text-[var(--brand-red)]"
+              >
+                <MapPin size={18} className="mt-1 shrink-0 text-[var(--brand-green)]" />
+                <span>
+                  {COMPANY_INFO.address.line1}, {COMPANY_INFO.address.line2}, {COMPANY_INFO.address.city}, {COMPANY_INFO.address.state} {COMPANY_INFO.address.pincode}
+                </span>
+              </a>
+              <a
+                href={getPhoneLink(COMPANY_INFO.contact.phone)}
+                className="flex items-center gap-3 text-sm font-semibold text-[var(--text-secondary)] transition-colors hover:text-[var(--brand-red)]"
+              >
+                <Phone size={18} className="text-[var(--brand-green)]" />
+                {COMPANY_INFO.contact.phone}
+              </a>
+              <a
+                href={getEmailLink(COMPANY_INFO.contact.email)}
+                className="flex items-center gap-3 text-sm font-semibold text-[var(--text-secondary)] transition-colors hover:text-[var(--brand-red)]"
+              >
+                <Mail size={18} className="text-[var(--brand-red)]" />
+                {COMPANY_INFO.contact.email}
+              </a>
+            </div>
 
-            {/* Newsletter Minimal */}
-            <div className="bg-slate-50 rounded-2xl p-6 border border-slate-200">
-              <p className="text-sm font-bold text-slate-800 mb-3">Subscribe to Market Updates</p>
-              <div className="flex gap-2">
+            <div className="mt-8 rounded-[24px] border border-[var(--border-soft)] bg-white p-5 shadow-[0_16px_36px_rgba(15,23,42,0.05)]">
+              <div className="text-sm font-black text-[var(--text-primary)]">Stay updated on solar offers</div>
+              <p className="mt-2 text-sm text-[var(--text-secondary)]">
+                Get package ideas, subsidy updates, and buyer-friendly solar information.
+              </p>
+              <div className="mt-4 flex gap-2">
                 <input
                   type="email"
-                  placeholder="name@company.com"
-                  className="flex-1 px-4 py-3 rounded-xl bg-white border border-slate-300 text-slate-900 placeholder-slate-400 focus:outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-600/20 transition-all shadow-[inset_0_2px_4px_rgba(0,0,0,0.02)]"
+                  placeholder="Enter your email"
+                  className="flex-1 rounded-xl border border-[var(--border-soft)] bg-[var(--bg-soft)] px-4 py-3 text-sm"
                 />
-                <button 
-                  className="bg-[#0B1221] hover:bg-slate-800 text-white px-5 py-3 rounded-xl font-bold transition-colors shadow-md flex items-center justify-center shrink-0" 
-                  title="Subscribe"
-                >
-                  <ArrowRight size={20} />
+                <button className="flex h-12 w-12 items-center justify-center rounded-xl bg-[var(--text-primary)] text-white transition-colors hover:bg-[var(--brand-red)]">
+                  <ArrowRight size={18} />
                 </button>
               </div>
             </div>
@@ -203,48 +203,13 @@ const Footer = ({ onNavigate }: FooterProps) => {
         </div>
       </div>
 
-      {/* ─── TECHNICAL PARTNER STRIP ─── */}
-      <div className="border-t border-slate-200 bg-slate-50">
-        <div className="container py-6">
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-            <div className="flex items-center gap-4">
-              <span className="text-xs text-slate-500 uppercase tracking-widest font-bold">Technology Partner</span>
-              <div className="w-px h-6 bg-slate-300 hidden sm:block" />
-              <a
-                href="https://elsxglobal.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-3 group"
-              >
-                <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-blue-600 to-blue-700 flex items-center justify-center shadow-md group-hover:scale-105 transition-transform" >
-                  <Zap size={18} className="text-white" />
-                </div>
-                <div>
-                  <div className="text-sm font-black text-slate-900 group-hover:text-blue-600 transition-colors flex items-center gap-1">
-                    ELSxGlobal
-                    <ExternalLink size={12} className="opacity-0 group-hover:opacity-100 transition-opacity -mt-1" />
-                  </div>
-                  <div className="text-[10px] uppercase font-bold text-slate-500 tracking-widest">Division of Evolucentsphere</div>
-                </div>
-              </a>
-            </div>
-            <div className="flex items-center gap-2 text-sm font-bold text-slate-500">
-              Made in Bharat <span className="mx-1">🇮🇳</span> for a greener tomorrow.
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* ─── COPYRIGHT BAR ─── */}
-      <div className="bg-white border-t border-slate-100">
-        <div className="container py-12">
-          <div className="flex flex-col sm:flex-row justify-between items-center gap-8 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">
-            <p>© {currentYear} {COMPANY_INFO.name}. Engineering Excellence.</p>
-            <div className="flex items-center gap-10">
-              <button className="hover:text-blue-600 transition-colors">Privacy</button>
-              <button className="hover:text-blue-600 transition-colors">Terms</button>
-              <button className="hover:text-blue-600 transition-colors">Sitemap</button>
-            </div>
+      <div className="border-t border-[var(--border-soft)] bg-white">
+        <div className="container flex flex-col gap-4 py-6 text-sm font-semibold text-[var(--text-secondary)] md:flex-row md:items-center md:justify-between">
+          <p>© {currentYear} {COMPANY_INFO.name}. Built for Bharat’s cleaner energy future.</p>
+          <div className="flex flex-wrap items-center gap-5">
+            <button className="transition-colors hover:text-[var(--brand-red)]">Privacy</button>
+            <button className="transition-colors hover:text-[var(--brand-red)]">Terms</button>
+            <button className="transition-colors hover:text-[var(--brand-red)]">Support</button>
           </div>
         </div>
       </div>

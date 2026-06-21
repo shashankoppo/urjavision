@@ -102,8 +102,8 @@ const Logo: React.FC<LogoProps> = ({ className = "h-10", showText = true, light 
               VISION
             </span>
           </span>
-          <span className={`text-[9px] font-bold uppercase tracking-[0.2em] transform scale-y-90 origin-left ${light ? 'text-gray-400' : 'text-gray-500'}`}>
-            Powering the Future
+          <span className={`text-[9px] font-bold uppercase tracking-[0.18em] transform scale-y-90 origin-left ${light ? 'text-gray-400' : 'text-gray-500'}`}>
+            Solar For Bharat
           </span>
         </div>
       )}

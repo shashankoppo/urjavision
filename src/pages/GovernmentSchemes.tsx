@@ -1,5 +1,5 @@
 import { GOVERNMENT_SCHEMES } from '../utils/constants';
-import { CheckCircle, ExternalLink, Phone, Zap, DollarSign, Users } from 'lucide-react';
+import { CheckCircle, ExternalLink, Phone, DollarSign, Users } from 'lucide-react';
 
 const GovernmentSchemes = () => {
   return (

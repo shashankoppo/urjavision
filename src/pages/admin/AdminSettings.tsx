@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Mail, Settings, Server, Shield, CheckCircle, Activity, Globe, Bell, Eye, EyeOff, RefreshCw, Layout, Save, Terminal, ListStart } from 'lucide-react';
+import { Mail, CheckCircle, Globe, Bell, Eye, EyeOff, Layout, Save, Terminal } from 'lucide-react';
 
 interface Props {
   currentTab: string;
@@ -11,9 +11,6 @@ const AdminSettings = ({ currentTab }: Props) => {
     currentTab.includes('hero') ? 'hero' : 'general' 
   );
   const [showPassword, setShowPassword] = useState(false);
-  const [testing, setTesting] = useState(false);
-  const [testResult, setTestResult] = useState<'success' | 'fail' | null>(null);
-  const [loading, setLoading] = useState(true);
   const [saved, setSaved] = useState(false);
 
   const [smtp, setSmtp] = useState({ host: 'smtp.hostinger.com', port: '465', secure: 'true', user: 'info@urjavision.com', password: '' });
@@ -38,13 +35,11 @@ const AdminSettings = ({ currentTab }: Props) => {
           subtitle: data.hero_subtitle || '',
           banner: data.hero_banner || ''
         });
-        setLoading(false);
       })
-      .catch(() => setLoading(false));
+      .catch(() => {});
   }, []);
 
   const handleSave = async () => {
-    setLoading(true);
     const dataToSave: any = {};
     if (activeTab === 'general') {
         dataToSave.site_tagline = general.tagline;
@@ -66,8 +61,6 @@ const AdminSettings = ({ currentTab }: Props) => {
         setTimeout(() => setSaved(false), 2000);
     } catch (err) {
         console.error('Save failed', err);
-    } finally {
-        setLoading(false);
     }
   };
 

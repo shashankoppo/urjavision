@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Menu, X, Phone, Mail, ChevronRight } from 'lucide-react';
+import { Menu, X, Phone, Mail } from 'lucide-react';
 import { COMPANY_INFO, NAVIGATION_MENU } from '../utils/constants';
 import { getPhoneLink, getEmailLink } from '../utils/helpers';
 import Logo from './Logo';

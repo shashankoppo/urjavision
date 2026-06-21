@@ -2,14 +2,13 @@ import { useState, useEffect } from 'react';
 import { 
   Menu, X, LayoutDashboard, Package, MessageSquare, 
   Settings, LogOut, Bell, Image as ImageIcon, Star,
-  Search, ShoppingBag, CheckCircle, ChevronRight, Globe, Sidebar
+  Search, ShoppingBag, CheckCircle, Globe, Sidebar
 } from 'lucide-react';
 
 import AdminDashboard from './AdminDashboard.tsx';
 import AdminPricingCatalog from './AdminPricingCatalog.tsx';
 import AdminEnquiries from './AdminEnquiries.tsx';
 import AdminSettings from './AdminSettings.tsx';
-import Logo from '../../components/Logo';
 
 interface AdminLayoutProps {
   currentPage: string;

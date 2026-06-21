@@ -16,11 +16,11 @@ html {
 }
 
 body {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-family: 'Manrope', 'Segoe UI', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  color: #0F172A;
-  background-color: #FFFFFF;
+  color: var(--text-primary);
+  background: var(--bg-cream);
   overflow-x: hidden;
   line-height: 1.6;
 }
@@ -31,44 +31,29 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: 'Outfit', 'Inter', sans-serif;
-  font-weight: 700;
-  line-height: 1.15;
+  font-family: 'Sora', 'Manrope', sans-serif;
+  font-weight: 800;
+  line-height: 1.08;
   color: var(--text-primary);
-  letter-spacing: -0.02em;
-}
-
-h1 {
-  font-size: clamp(2.25rem, 6vw, 4rem);
-  font-weight: 900;
   letter-spacing: -0.03em;
 }
 
+h1 {
+  font-size: clamp(2.6rem, 6vw, 5.4rem);
+}
+
 h2 {
-  font-size: clamp(1.75rem, 4vw, 3rem);
-  font-weight: 800;
-  letter-spacing: -0.025em;
+  font-size: clamp(2rem, 4vw, 4rem);
 }
 
 h3 {
-  font-size: clamp(1.25rem, 3vw, 2rem);
-  font-weight: 700;
-}
-
-h4 {
-  font-size: clamp(1.1rem, 2vw, 1.5rem);
-  font-weight: 600;
-}
-
-h5 {
-  font-size: 1.125rem;
-  font-weight: 600;
+  font-size: clamp(1.4rem, 2.3vw, 2.2rem);
 }
 
 p {
   line-height: 1.75;
   color: var(--text-secondary);
-  font-size: clamp(0.9rem, 1.5vw, 1.05rem);
+  font-size: clamp(0.98rem, 1.5vw, 1.08rem);
 }
 
 a {
@@ -83,112 +68,79 @@ img {
   display: block;
 }
 
-button {
-  font-family: inherit;
-  cursor: pointer;
-}
-
+button,
 input,
 textarea,
 select {
-  font-family: inherit;
-  font-size: inherit;
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
 }
 
 input:focus,
 textarea:focus,
 select:focus {
   outline: none;
-  border-color: var(--energy-green);
-  box-shadow: 0 0 0 4px rgba(5, 150, 105, 0.1), 0 0 20px rgba(5, 150, 105, 0.05);
+  border-color: rgba(234, 88, 12, 0.35);
+  box-shadow: 0 0 0 4px rgba(249, 115, 22, 0.12);
 }
 
-/* =============================================
-   CONTAINER
-   ============================================= */
 .container {
   max-width: 1320px;
   margin: 0 auto;
   padding: 0 clamp(1rem, 4vw, 2rem);
 }
 
-/* =============================================
-   SECTION PADDING
-   ============================================= */
 .section-padding {
-  padding: clamp(4rem, 10vw, 7rem) 0;
+  padding: clamp(4rem, 9vw, 7rem) 0;
 }
 
-.section-padding-sm {
-  padding: clamp(2.5rem, 6vw, 4rem) 0;
-}
-
-/* =============================================
-   GRADIENT DIVIDERS
-   ============================================= */
-.hr-gradient {
-  height: 2px;
-  background: linear-gradient(90deg, transparent, #059669, #0EA5E9, #F59E0B, #059669, transparent);
-  border: none;
-  margin: 0;
-}
-
-/* =============================================
-   SELECTION COLOR
-   ============================================= */
 ::selection {
-  background: rgba(5, 150, 105, 0.2);
-  color: var(--energy-dark);
+  background: rgba(249, 115, 22, 0.18);
+  color: var(--text-primary);
 }
 
-/* =============================================
-   GLOBAL GRADIENT KEYFRAMES
-   Making sure the CSS animation name references work
-   ============================================= */
 @keyframes gradient-flow {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }
 
-@keyframes orb-float {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  25% { transform: translate(30px, -20px) scale(1.05); }
-  50% { transform: translate(-10px, 20px) scale(0.95); }
-  75% { transform: translate(-30px, -10px) scale(1.02); }
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-.animate-orb-float {
-  animation: orb-float 12s ease-in-out infinite;
+.animate-fade-in {
+  animation: fade-in 0.35s ease-out;
 }
 
-/* =============================================
-   MOBILE RESPONSIVE ADJUSTMENTS
-   ============================================= */
 @media (max-width: 768px) {
-  h1 {
-    letter-spacing: -0.02em;
-  }
-
-  h2 {
-    letter-spacing: -0.015em;
-  }
-
   .section-padding {
-    padding: 3.5rem 0;
+    padding: 4rem 0;
   }
 }
 
 @media (max-width: 640px) {
-  h4 {
-    font-size: 1.125rem;
-  }
-
   .container {
     padding: 0 1rem;
   }
 
   .section-padding {
-    padding: 2.5rem 0;
+    padding: 3.2rem 0;
   }
 }

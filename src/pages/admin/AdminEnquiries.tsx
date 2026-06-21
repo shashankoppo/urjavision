@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { MessageSquare, Star, Search, XCircle, Phone, Mail, User, Trash2, Loader2 } from 'lucide-react';
+import { Star, Search, XCircle, Phone, Mail, User, Trash2, Loader2 } from 'lucide-react';
 
 interface Props {
   currentTab: string;

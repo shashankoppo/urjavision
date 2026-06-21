@@ -2,8 +2,8 @@ import { useState, useEffect } from 'react';
 import { useData } from '../../context/DataContext';
 import { 
   Users, Package, IndianRupee, Zap, 
-  ArrowUpRight, Clock, Database,
-  CheckCircle, Bell, ExternalLink, Activity
+  ArrowUpRight, Database,
+  Bell, ExternalLink, Activity
 } from 'lucide-react';
 
 interface Props {
@@ -18,7 +18,7 @@ const AdminDashboard = ({ onNavigate }: Props) => {
     fetch('/api/enquiries')
       .then(res => res.json())
       .then(data => setEnquiries(data))
-      .catch(err => {
+      .catch(() => {
         console.warn('Backend API not responding. Showing buffer state.');
         setEnquiries([
           { name: 'Raj Kumar', interest: 'Residential 3kW', status: 'New', date: '2026-03-29' },

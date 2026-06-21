@@ -1,5 +1,5 @@
 import { trainingCourses } from '../utils/data';
-import { CheckCircle, Clock, Award, Users, BookOpen, Zap, Phone } from 'lucide-react';
+import { Clock, Award, Users, BookOpen, Zap, Phone } from 'lucide-react';
 
 const TrainingInternship = () => {
   return (

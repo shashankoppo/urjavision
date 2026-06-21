@@ -98,6 +98,7 @@ export const calculateSolarSystem = (monthlyBill: number, category: 'Residential
     dailyGeneration: `${dailyUnits} units/day`,
     co2Saved: `${(size * 1.5).toFixed(1)} Tons/yr`,
     treesEquivalent: Math.round(size * 5),
+    lifetimeSavings: formatCurrency(yearlySavings * 25),
     sizeKw: size,
     roiNum: roiYears,
     netCostNum: netCost,
@@ -158,7 +159,7 @@ export const debounce = <T extends (...args: any[]) => any>(
   func: T,
   wait: number
 ): ((...args: Parameters<T>) => void) => {
-  let timeout: NodeJS.Timeout;
+  let timeout: ReturnType<typeof setTimeout>;
   return (...args: Parameters<T>) => {
     clearTimeout(timeout);
     timeout = setTimeout(() => func(...args), wait);

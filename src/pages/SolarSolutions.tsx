@@ -4,23 +4,23 @@ import { Home as HomeIcon, Building2, Factory, Settings, FileText, Zap, CheckCir
 const solutionDetails = [
   {
     icon: HomeIcon,
-    title: 'Residential Solar Installation',
+    title: 'Residential Solar',
     desc: 'Turn your rooftop into a power plant. With subsidies up to 40% from the government, a home solar system is the smartest investment you can make.',
-    features: ['Bill savings up to 90%', '3kW to 10kW systems', 'Subsidy available', '25-year panel warranty', 'Net metering support'],
+    features: ['Home rooftop solar system', 'Bill savings up to 90%', 'Subsidy available', '25-year panel warranty', 'Net metering support'],
     image: 'https://images.pexels.com/photos/159397/solar-panel-array-power-sun-electricity-159397.jpeg?auto=compress&cs=tinysrgb&w=800'
   },
   {
     icon: Building2,
-    title: 'Commercial Solar Solutions',
-    desc: 'Reduce your business electricity bills dramatically. Perfect for offices, hospitals, schools, hotels, and shopping complexes.',
-    features: ['10kW to 100kW systems', 'Achieve ROI in 3-4 years', 'Power Purchase Agreements', 'Smart energy monitoring', 'Priority maintenance'],
+    title: 'Commercial Solar',
+    desc: 'Reduce your business electricity bills dramatically. Perfect for offices, hospitals, and hotels.',
+    features: ['Hotels', 'Hospitals', 'Offices', 'Achieve ROI in 3-4 years', 'Smart energy monitoring'],
     image: 'https://images.pexels.com/photos/433308/pexels-photo-433308.jpeg?auto=compress&cs=tinysrgb&w=800'
   },
   {
     icon: Factory,
-    title: 'Industrial Solar Power Plants',
+    title: 'Industrial Solar Solutions',
     desc: 'Large-scale solar installations for factories, manufacturing units, and industrial complexes — cutting energy costs at scale.',
-    features: ['100kW to MW-scale plants', 'Custom EPC solutions', 'Grid tie + storage options', 'Advanced monitoring', 'O&M contracts available'],
+    features: ['Factory rooftop solar', 'High capacity systems', 'MW-scale plants', 'Advanced monitoring', 'O&M contracts available'],
     image: 'https://images.pexels.com/photos/9875441/pexels-photo-9875441.jpeg?auto=compress&cs=tinysrgb&w=800'
   },
 ];
@@ -105,7 +105,7 @@ const SolarSolutions = () => {
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
             {[
               { icon: FileText, title: 'Solar Consultancy', desc: 'Feasibility study, site assessment, financial modeling, and ROI analysis before you invest a single rupee.', color: 'from-amber-400 to-orange-500' },
-              { icon: Zap, title: 'Solar EPC Projects', desc: 'Complete Engineering, Procurement & Construction for large commercial and industrial solar projects.', color: 'from-blue-500 to-indigo-600' },
+              { icon: Zap, title: 'Solar EPC Services', desc: 'Site Survey, System Design, Supply of Solar Equipment, Installation & Commissioning.', color: 'from-blue-500 to-indigo-600' },
               { icon: Settings, title: 'AMC & Maintenance', desc: 'Regular cleaning, performance monitoring, and preventive maintenance to keep your system at peak output.', color: 'from-purple-500 to-fuchsia-600' },
             ].map((s, i) => (
               <div key={s.title} className="card-premium p-8 group animate-fade-up" style={{ animationDelay: `${(i % 3 + 1) * 100}ms` }}>

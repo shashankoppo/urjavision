@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { CheckCircle, Users, Handshake, Globe, Phone, ArrowRight } from 'lucide-react';
+import { CheckCircle, Users, Handshake, Globe, ArrowRight } from 'lucide-react';
 
 const vendorBenefits = [
   'Exclusive territory distribution rights',

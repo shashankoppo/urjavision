@@ -1,7 +1,7 @@
 export const COMPANY_INFO = {
   name: 'Urja Vision Technologies Private Limited',
   brandName: 'URJA VISION',
-  tagline: 'Powering the Future with Technology',
+  tagline: 'Practical Solar For Indian Homes And Businesses',
   address: {
     line1: '390/1 Premnagar',
     line2: 'Near Ram Mandir',
@@ -26,17 +26,9 @@ export const COMPANY_INFO = {
 
 export const NAVIGATION_MENU = [
   { name: 'Home', path: '/' },
-  { name: 'About Us', path: '/about' },
-  { name: 'Solar Solutions', path: '/solar-solutions' },
-  { name: 'Solar Products', path: '/solar-products' },
-  { name: 'Solar Packages', path: '/solar-packages' },
-  { name: 'Government Schemes', path: '/government-schemes' },
-  { name: 'PM Kusum Yojana', path: '/pm-kusum-yojana' },
-  { name: 'Vendor / Partner', path: '/vendor-partner' },
-  { name: 'Training & Internship', path: '/training-internship' },
-  { name: 'Careers', path: '/careers' },
-  { name: 'Solar Projects', path: '/solar-projects' },
-  { name: 'Knowledge Hub', path: '/knowledge-hub' },
+  { name: 'About', path: '/about' },
+  { name: 'Services', path: '/solar-solutions' },
+  { name: 'Projects', path: '/solar-projects' },
   { name: 'Contact', path: '/contact' }
 ];
 
@@ -44,37 +36,37 @@ export const SERVICES = [
   {
     id: 1,
     title: 'Residential Solar Installation',
-    description: '1 to 10KV sys RTS for homes with complete installation and maintenance.',
+    description: 'Rooftop systems for homes with end-to-end installation and maintenance.',
     icon: 'Home'
   },
   {
     id: 2,
     title: 'Commercial Solar Solutions',
-    description: 'Solar systems for offices, hospitals, schools, and hotels.',
+    description: 'Solar systems for offices, hospitals, schools, hotels, and retail spaces.',
     icon: 'Building2'
   },
   {
     id: 3,
     title: 'Industrial Solar Power Plants',
-    description: 'Large-scale solar installations for factories and industries.',
+    description: 'Large-scale solar installations for factories and industrial loads.',
     icon: 'Factory'
   },
   {
     id: 4,
     title: 'Solar Consultancy',
-    description: 'Solar feasibility study and project planning services.',
+    description: 'Solar feasibility studies, proposal support, and project planning.',
     icon: 'FileText'
   },
   {
     id: 5,
     title: 'Solar EPC Projects',
-    description: 'Engineering, procurement, and construction services.',
+    description: 'Engineering, procurement, and construction with local execution support.',
     icon: 'Construction'
   },
   {
     id: 6,
     title: 'Solar Maintenance',
-    description: 'Regular maintenance and monitoring of solar installations.',
+    description: 'Monitoring, preventive maintenance, and performance support.',
     icon: 'Settings'
   }
 ];
@@ -96,8 +88,8 @@ export const SOLAR_PACKAGES = [
     name: '2kW Home Solar Package',
     capacity: '2 kW',
     generation: '8-10 units/day',
-    price: '₹1,20,000',
-    savings: '₹3,000-4,000/month',
+    price: 'Rs 1,20,000',
+    savings: 'Rs 3,000-4,000/month',
     roi: '4-5 years',
     components: [
       '2kW Solar Panels',
@@ -112,8 +104,8 @@ export const SOLAR_PACKAGES = [
     name: '5kW Smart Solar Package',
     capacity: '5 kW',
     generation: '20-25 units/day',
-    price: '₹2,50,000',
-    savings: '₹7,000-9,000/month',
+    price: 'Rs 2,50,000',
+    savings: 'Rs 7,000-9,000/month',
     roi: '4-5 years',
     components: [
       '5kW Solar Panels',
@@ -129,8 +121,8 @@ export const SOLAR_PACKAGES = [
     name: '10kW Commercial Solar Package',
     capacity: '10 kW',
     generation: '40-50 units/day',
-    price: '₹4,50,000',
-    savings: '₹15,000-20,000/month',
+    price: 'Rs 4,50,000',
+    savings: 'Rs 15,000-20,000/month',
     roi: '3-4 years',
     components: [
       '10kW Solar Panels',
@@ -148,14 +140,10 @@ export const GOVERNMENT_SCHEMES = [
   {
     id: 1,
     name: 'PM Kusum Yojana',
-    description: 'Subsidy for farmers to install solar pumps and grid-connected solar power plants.',
+    description: 'Subsidy support for farmers to install solar pumps and grid-connected systems.',
     subsidy: 'Up to 60% subsidy',
     eligibility: 'Farmers and farmer cooperatives',
-    benefits: [
-      'Reduced electricity bills',
-      'Additional income from solar power',
-      'Sustainable irrigation'
-    ]
+    benefits: ['Reduced electricity bills', 'Additional income from solar power', 'Sustainable irrigation']
   },
   {
     id: 2,
@@ -163,23 +151,15 @@ export const GOVERNMENT_SCHEMES = [
     description: 'Central government subsidy for residential rooftop solar installations.',
     subsidy: '40% for up to 3kW, 20% for 3-10kW',
     eligibility: 'Residential consumers',
-    benefits: [
-      'Lower installation cost',
-      'Reduced electricity bills',
-      'Environmental benefits'
-    ]
+    benefits: ['Lower installation cost', 'Reduced electricity bills', 'Environmental benefits']
   },
   {
     id: 3,
     name: 'Agriculture Solar Pump Scheme',
-    description: 'State government subsidy for solar irrigation pumps in Madhya Pradesh.',
+    description: 'State government subsidy support for solar irrigation pumps in Madhya Pradesh.',
     subsidy: 'Up to 90% subsidy',
     eligibility: 'Farmers in Madhya Pradesh',
-    benefits: [
-      'Free irrigation',
-      'Reduced diesel costs',
-      'Increased crop yield'
-    ]
+    benefits: ['Free irrigation', 'Reduced diesel costs', 'Increased crop yield']
   }
 ];
 
@@ -189,7 +169,7 @@ export const TESTIMONIALS = [
     name: 'Rajesh Kumar',
     location: 'Jabalpur',
     rating: 5,
-    text: 'Excellent service! My 5kW solar system has reduced my electricity bill by 80%. The team was professional and completed installation in just 2 days.',
+    text: 'Excellent service. My 5kW solar system has reduced my electricity bill by around 80 percent. The team explained everything clearly and completed the installation smoothly.',
     image: 'https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=200'
   },
   {
@@ -197,7 +177,7 @@ export const TESTIMONIALS = [
     name: 'Sunita Sharma',
     location: 'Katni',
     rating: 5,
-    text: 'Great solar consultancy and installation. They helped me get government subsidy and the system is performing better than expected.',
+    text: 'They guided me properly on subsidy and system sizing. The installation looks neat, and the performance has been better than we expected.',
     image: 'https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg?auto=compress&cs=tinysrgb&w=200'
   },
   {
@@ -205,7 +185,7 @@ export const TESTIMONIALS = [
     name: 'Vikram Singh',
     location: 'Mandla',
     rating: 5,
-    text: 'Installed a 10kW system for my factory. ROI is looking great and their after-sales support is excellent.',
+    text: 'We installed a 10kW system for our factory. The commercial savings are visible and their after-sales response has been dependable.',
     image: 'https://images.pexels.com/photos/1222271/pexels-photo-1222271.jpeg?auto=compress&cs=tinysrgb&w=200'
   }
 ];
@@ -227,10 +207,8 @@ export const SOLAR_BENEFITS = [
 ];
 
 export const SEO_KEYWORDS = [
-  'Solar Panel Installation Jabalpur',
-  'Solar Company Jabalpur',
-  'Solar Rooftop System MP',
-  'Solar EPC Company Jabalpur',
-  'Best Solar Installation Jabalpur',
-  'Solar Subsidy Madhya Pradesh'
+  'Solar Company in Jabalpur',
+  'Solar EPC Company MP',
+  'Rooftop Solar Installation',
+  'Urja VisionTechnologies Pvt. Ltd.'
 ];

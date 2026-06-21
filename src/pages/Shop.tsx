@@ -1,23 +1,42 @@
-import { useState, useMemo } from 'react';
-import { 
-  Search, ShoppingCart, Star, Zap, CheckCircle, X, Plus, Minus, 
-  User, MessageCircle, Grid3X3, List, Shield, Truck, Package, 
-  Heart, ChevronRight, Info, TrendingUp, Sparkles, Filter
+import { useEffect, useMemo, useRef, useState } from 'react';
+import {
+  ArrowRight,
+  BadgeCheck,
+  ChevronRight,
+  Filter,
+  Grid3X3,
+  Heart,
+  Info,
+  List,
+  MessageCircle,
+  Minus,
+  Package,
+  Plus,
+  Search,
+  ShieldCheck,
+  ShoppingCart,
+  Sparkles,
+  Star,
+  Truck,
+  X,
+  Zap
 } from 'lucide-react';
+import gsap from 'gsap';
 import { useData } from '../context/DataContext';
 import { useCart } from '../context/CartContext';
 
 const CATEGORIES = [
-  'All', 
-  'Solar Panels', 
-  'Solar Inverters', 
-  'Solar Batteries', 
-  'Solar Pumps', 
-  'Solar Street Lights', 
+  'All',
+  'Solar Panels',
+  'Solar Inverters',
+  'Solar Batteries',
+  'Solar Mounting Structures',
+  'Solar Pumps',
   'Solar Monitoring Systems',
-  'Solar Combos',
-  'Solar Services'
-];
+  'Solar Street Lights'
+] as const;
+
+type Category = typeof CATEGORIES[number];
 
 interface Product {
   id: number;
@@ -30,529 +49,730 @@ interface Product {
   specifications?: string[];
 }
 
+interface ProductCardProps {
+  product: Product;
+  viewMode: 'grid' | 'list';
+  inCart: boolean;
+  isWishlisted: boolean;
+  onWishlist: () => void;
+  onBuy: () => void;
+  onInfo: () => void;
+  onAddToCart: () => void;
+}
+
+const ProductCard = ({
+  product,
+  viewMode,
+  inCart,
+  isWishlisted,
+  onWishlist,
+  onBuy,
+  onInfo,
+  onAddToCart
+}: ProductCardProps) => {
+  const specs = (product.specifications ?? []).slice(0, 3);
+
+  if (viewMode === 'list') {
+    return (
+      <article className="rounded-[32px] border border-[var(--border-soft)] bg-white p-5 shadow-[0_16px_36px_rgba(15,23,42,0.05)] transition-transform duration-300 hover:-translate-y-1">
+        <div className="flex flex-col gap-5 lg:flex-row">
+          <div className="relative overflow-hidden rounded-[24px] bg-[var(--bg-soft)] lg:h-56 lg:w-64">
+            <img src={product.image} alt={product.name} className="h-full w-full object-cover transition-transform duration-700 hover:scale-105" />
+            <button
+              onClick={onWishlist}
+              className={`absolute right-4 top-4 flex h-11 w-11 items-center justify-center rounded-full ${
+                isWishlisted ? 'bg-[var(--brand-red)] text-white' : 'bg-white/90 text-[var(--text-muted)]'
+              }`}
+              title="Toggle wishlist"
+            >
+              <Heart size={18} fill={isWishlisted ? 'currentColor' : 'none'} />
+            </button>
+          </div>
+
+          <div className="flex flex-1 flex-col">
+            <div className="flex flex-wrap items-center gap-3">
+              <span className="rounded-full bg-[rgba(34,197,94,0.10)] px-3 py-1 text-[11px] font-bold uppercase tracking-[0.18em] text-[var(--brand-green)]">
+                {product.brand}
+              </span>
+              <span className="text-xs font-bold uppercase tracking-[0.16em] text-[var(--text-muted)]">{product.category}</span>
+            </div>
+            <h3 className="mt-4 text-2xl font-black tracking-[-0.03em]">{product.name}</h3>
+            <p className="mt-3 max-w-2xl text-sm leading-7 text-[var(--text-secondary)]">{product.description}</p>
+
+            <div className="mt-5 flex flex-wrap items-center gap-3">
+              <div className="inline-flex items-center gap-2 rounded-full bg-[var(--bg-soft)] px-4 py-2 text-sm font-bold text-[var(--text-primary)]">
+                <Zap size={15} className="text-[var(--brand-red)]" />
+                {product.capacity}
+              </div>
+              <div className="inline-flex items-center gap-2 rounded-full bg-[var(--bg-soft)] px-4 py-2 text-sm font-bold text-[var(--text-primary)]">
+                <Star size={15} className="text-[var(--warm-gold)]" />
+                Buyer-ready listing
+              </div>
+            </div>
+
+            <div className="mt-5 flex flex-wrap gap-2">
+              {specs.map((spec) => (
+                <span key={spec} className="rounded-full border border-[var(--border-soft)] px-3 py-1.5 text-xs font-medium text-[var(--text-secondary)]">
+                  {spec}
+                </span>
+              ))}
+            </div>
+
+            <div className="mt-6 flex flex-col gap-3 sm:flex-row">
+              <button onClick={onBuy} className="btn-primary">
+                Request Quote
+              </button>
+              <button onClick={onAddToCart} className="btn-outline-dark">
+                {inCart ? 'Added To Draft Order' : 'Add To Draft Order'}
+              </button>
+              <button onClick={onInfo} className="inline-flex items-center gap-2 text-sm font-bold text-[var(--brand-red)]">
+                <Info size={16} />
+                Ask Details
+              </button>
+            </div>
+          </div>
+        </div>
+      </article>
+    );
+  }
+
+  return (
+    <article className="group overflow-hidden rounded-[32px] border border-[var(--border-soft)] bg-white shadow-[0_16px_36px_rgba(15,23,42,0.05)] transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_26px_56px_rgba(15,23,42,0.10)]">
+      <div className="relative overflow-hidden bg-[var(--bg-soft)]">
+        <img src={product.image} alt={product.name} className="h-64 w-full object-cover transition-transform duration-700 group-hover:scale-105" />
+        <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-black/38 to-transparent" />
+        <button
+          onClick={onWishlist}
+          className={`absolute right-4 top-4 flex h-11 w-11 items-center justify-center rounded-full shadow-lg ${
+            isWishlisted ? 'bg-[var(--brand-red)] text-white' : 'bg-white/92 text-[var(--text-muted)]'
+          }`}
+          title="Toggle wishlist"
+        >
+          <Heart size={18} fill={isWishlisted ? 'currentColor' : 'none'} />
+        </button>
+        {inCart && (
+          <div className="absolute bottom-4 left-4 inline-flex items-center gap-2 rounded-full bg-white/92 px-3 py-2 text-[11px] font-bold uppercase tracking-[0.16em] text-[var(--brand-green)]">
+            <BadgeCheck size={14} />
+            In draft order
+          </div>
+        )}
+      </div>
+
+      <div className="p-6">
+        <div className="flex flex-wrap items-center gap-3">
+          <span className="rounded-full bg-[rgba(34,197,94,0.10)] px-3 py-1 text-[11px] font-bold uppercase tracking-[0.18em] text-[var(--brand-green)]">
+            {product.brand}
+          </span>
+          <span className="text-[11px] font-bold uppercase tracking-[0.16em] text-[var(--text-muted)]">{product.category}</span>
+        </div>
+
+        <h3 className="mt-4 text-2xl font-black tracking-[-0.03em]">{product.name}</h3>
+        <p className="mt-3 text-sm leading-7 text-[var(--text-secondary)]">{product.description}</p>
+
+        <div className="mt-5 inline-flex items-center gap-2 rounded-full bg-[var(--bg-soft)] px-4 py-2 text-sm font-bold text-[var(--text-primary)]">
+          <Zap size={15} className="text-[var(--brand-red)]" />
+          {product.capacity}
+        </div>
+
+        <div className="mt-5 space-y-2">
+          {specs.map((spec) => (
+            <div key={spec} className="flex items-start gap-3 text-sm text-[var(--text-secondary)]">
+              <span className="mt-1 h-2 w-2 rounded-full bg-[var(--brand-green)]" />
+              <span>{spec}</span>
+            </div>
+          ))}
+        </div>
+
+        <div className="mt-6 grid grid-cols-2 gap-3">
+          <button onClick={onBuy} className="btn-primary w-full">
+            Quote
+          </button>
+          <button onClick={onAddToCart} className="btn-outline-dark w-full">
+            {inCart ? 'Added' : 'Draft'}
+          </button>
+        </div>
+
+        <button onClick={onInfo} className="mt-4 inline-flex items-center gap-2 text-sm font-bold text-[var(--brand-red)]">
+          Ask technical details
+          <ArrowRight size={15} />
+        </button>
+      </div>
+    </article>
+  );
+};
+
 const Shop = () => {
   const { products } = useData();
   const { cart, addToCart, removeFromCart, updateQty, cartOpen, setCartOpen } = useCart();
 
-  const [selectedCategory, setSelectedCategory] = useState('All');
+  const [selectedCategory, setSelectedCategory] = useState<Category>('All');
   const [searchQuery, setSearchQuery] = useState('');
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
   const [wishlist, setWishlist] = useState<number[]>([]);
   const [showFilters, setShowFilters] = useState(false);
 
-  // Logic: Filtered products
-  const filtered = useMemo(() => {
-    return products.filter((p: Product) => {
-      const matchCat = selectedCategory === 'All' || p.category === selectedCategory;
-      const matchSearch = p.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        (p.brand || '').toLowerCase().includes(searchQuery.toLowerCase()) ||
-        (p.category || '').toLowerCase().includes(searchQuery.toLowerCase());
-      return matchCat && matchSearch;
-    });
-  }, [products, selectedCategory, searchQuery]);
+  const pageRef = useRef<HTMLDivElement>(null);
 
-  // Logic: Smart Suggestions (Logically useful)
-  const suggestions = useMemo(() => {
-    if (selectedCategory === 'All') return products.slice(0, 4);
-    // If panels, suggest inverters & batteries
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      gsap.from('.shop-hero-copy', {
+        y: 34,
+        opacity: 0,
+        duration: 0.9,
+        stagger: 0.12,
+        ease: 'power3.out'
+      });
+
+      gsap.from('.shop-metric', {
+        y: 22,
+        opacity: 0,
+        duration: 0.7,
+        stagger: 0.08,
+        ease: 'power3.out',
+        delay: 0.3
+      });
+
+      gsap.from('.shop-section-card', {
+        y: 28,
+        opacity: 0,
+        duration: 0.8,
+        stagger: 0.06,
+        ease: 'power3.out',
+        delay: 0.2
+      });
+    }, pageRef);
+
+    return () => ctx.revert();
+  }, []);
+
+  const filteredProducts = useMemo(() => {
+    return products.filter((product: Product) => {
+      const categoryMatch = selectedCategory === 'All' || product.category === selectedCategory;
+      const query = searchQuery.trim().toLowerCase();
+      const searchMatch =
+        query.length === 0 ||
+        product.name.toLowerCase().includes(query) ||
+        product.brand.toLowerCase().includes(query) ||
+        product.category.toLowerCase().includes(query) ||
+        product.capacity.toLowerCase().includes(query);
+
+      return categoryMatch && searchMatch;
+    });
+  }, [products, searchQuery, selectedCategory]);
+
+  const recommendedProducts = useMemo(() => {
     if (selectedCategory === 'Solar Panels') {
-      return products.filter((p: Product) => p.category === 'Solar Inverters' || p.category === 'Solar Batteries').slice(0, 4);
+      return products.filter((product: Product) => ['Solar Inverters', 'Solar Batteries'].includes(product.category)).slice(0, 3);
     }
-    return products.filter((p: Product) => p.category !== selectedCategory).slice(0, 4);
+
+    if (selectedCategory === 'All') {
+      return products.slice(0, 3);
+    }
+
+    return products.filter((product: Product) => product.category !== selectedCategory).slice(0, 3);
   }, [products, selectedCategory]);
 
+  const categoryStats = useMemo(() => {
+    const count = filteredProducts.length;
+    const brands = new Set(filteredProducts.map((product: Product) => product.brand)).size;
+    const withWarranty = filteredProducts.filter((product: Product) =>
+      (product.specifications ?? []).some((spec) => spec.toLowerCase().includes('warranty'))
+    ).length;
+
+    return { count, brands, withWarranty };
+  }, [filteredProducts]);
+
+  const cartCount = cart.reduce((total, item) => total + item.qty, 0);
+  const cartSavings = cart.reduce((total, item) => total + item.qty * 1200, 0);
+
   const toggleWishlist = (id: number) => {
-    setWishlist(prev => prev.includes(id) ? prev.filter(x => x !== id) : [...prev, id]);
+    setWishlist((current) => (current.includes(id) ? current.filter((itemId) => itemId !== id) : [...current, id]));
   };
 
-  const cartCount = cart.reduce((acc, c) => acc + c.qty, 0);
+  const handleWhatsAppAction = (product: Product, mode: 'quote' | 'details') => {
+    const message =
+      mode === 'quote'
+        ? `Hi! I want a quotation for ${product.name} (${product.capacity}). Please share price, delivery time, and installation support.`
+        : `Hi! I need technical details for ${product.name} (${product.capacity}). Please share suitability, warranty, and installation guidance.`;
 
-  const handleWhatsAppAction = (product: any, action: 'buy' | 'info') => {
-    const text = action === 'buy' 
-      ? `Hi! I'm interested in buying the ${product.name} (${product.capacity}). Can you share the best price and delivery time?`
-      : `Hi! I need more technical details about ${product.name}. Does it come with installation support?`;
-    window.open(`https://wa.me/917247391595?text=${encodeURIComponent(text)}`, '_blank');
+    window.open(`https://wa.me/917247391595?text=${encodeURIComponent(message)}`, '_blank');
   };
 
   return (
-    <div className="min-h-screen bg-white font-sans selection:bg-emerald-100 selection:text-emerald-900">
-      
-      {/* ─── PREMIUM HERO ─── */}
-      <section className="bg-gradient-hero text-white section-padding relative overflow-hidden h-auto md:h-[400px] flex items-center">
-        {/* Animated Glow Orbs */}
-        <div className="absolute top-0 right-10 w-[500px] h-[500px] bg-emerald-500/10 rounded-full blur-[100px] animate-orb-float" />
-        <div className="absolute bottom-10 left-10 w-[400px] h-[400px] bg-amber-500/10 rounded-full blur-[80px] animate-orb-float" style={{ animationDelay: '2s' }} />
-
-        <div className="absolute inset-0 z-0">
-          <div className="absolute inset-0 bg-[#020617]/95" />
-          <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-10" />
+    <div ref={pageRef} className="min-h-screen bg-[var(--bg-cream)] text-[var(--text-primary)]">
+      <section className="relative overflow-hidden border-b border-[var(--border-soft)] bg-[linear-gradient(135deg,#112113_0%,#172033_48%,#3b1f12_100%)] text-white">
+        <div className="absolute inset-0">
+          <div className="absolute -left-16 top-10 h-80 w-80 rounded-full bg-[rgba(34,197,94,0.14)] blur-3xl" />
+          <div className="absolute right-0 top-0 h-96 w-96 rounded-full bg-[rgba(249,115,22,0.18)] blur-3xl" />
+          <div className="absolute inset-0 opacity-[0.08]" style={{ backgroundImage: 'linear-gradient(rgba(255,255,255,0.25) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.25) 1px, transparent 1px)', backgroundSize: '32px 32px' }} />
         </div>
-        
-        <div className="container relative z-10 flex flex-col md:flex-row items-center justify-between gap-10">
-          <div className="max-w-2xl">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-morphism border border-white/10 mb-6 animate-fade-up">
-              <Sparkles size={14} className="text-amber-400" />
-              <span className="text-amber-400 text-[10px] font-black uppercase tracking-[0.2em]">The Future is Solar</span>
+
+        <div className="container relative z-10 py-16 md:py-24">
+          <div className="grid items-center gap-12 lg:grid-cols-[1.05fr_0.95fr]">
+            <div>
+              <div className="shop-hero-copy inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/10 px-4 py-2 text-xs font-bold uppercase tracking-[0.22em] text-[var(--warm-gold)] backdrop-blur">
+                <Sparkles size={14} />
+                Premium solar store
+              </div>
+              <h1 className="shop-hero-copy mt-6 max-w-4xl text-5xl font-black leading-[0.96] tracking-[-0.05em] text-white md:text-7xl">
+                A cleaner, sharper solar shopping experience for serious buyers.
+              </h1>
+              <p className="shop-hero-copy mt-6 max-w-2xl text-lg leading-8 text-white/72 md:text-xl">
+                Explore panels, inverters, batteries, structures, and solar accessories in a storefront designed to feel credible, commercial, and easy to act on.
+              </p>
+              <div className="shop-hero-copy mt-8 flex flex-col gap-4 sm:flex-row">
+                <button
+                  onClick={() => document.getElementById('shop-grid')?.scrollIntoView({ behavior: 'smooth' })}
+                  className="btn-primary"
+                >
+                  Explore Products
+                </button>
+                <button onClick={() => setCartOpen(true)} className="btn-warm">
+                  Open Draft Order
+                </button>
+              </div>
             </div>
-            <h1 className="text-white text-5xl md:text-7xl font-black leading-[1.1] tracking-tighter mb-6 animate-fade-up delay-100">
-              Shop Smarter.<br />
-              <span className="mega-gradient-text">Save Brighter.</span>
-            </h1>
-            <p className="text-gray-400 text-lg md:text-xl font-medium max-w-lg mb-8 leading-relaxed animate-fade-up delay-200">
-              Explore professional-grade solar components curated for performance, longevity, and maximum ROI.
-            </p>
-            <div className="flex flex-wrap gap-4 animate-fade-up delay-300">
-              <button 
-                onClick={() => document.getElementById('shop-grid')?.scrollIntoView({ behavior: 'smooth' })}
-                className="btn-primary py-4 px-8 text-sm shadow-xl shadow-emerald-500/20"
-              >
-                Start Exploring
-              </button>
-              <div className="flex -space-x-3 ml-4">
-                {[1, 2, 3, 4].map(i => (
-                  <div key={i} className="w-12 h-12 rounded-full border-4 border-[#020617] bg-gray-800 flex items-center justify-center text-xs font-bold text-gray-400">
-                    {i === 4 ? '+5k' : <User size={16} />}
+
+            <div className="grid gap-4">
+              <div className="shop-metric overflow-hidden rounded-[32px] border border-white/10 bg-white/10 p-4 backdrop-blur">
+                <div className="grid gap-4 sm:grid-cols-[1.15fr_0.85fr]">
+                  <div className="relative overflow-hidden rounded-[24px]">
+                    <img
+                      src="https://images.pexels.com/photos/17762230/pexels-photo-17762230.jpeg?auto=compress&cs=tinysrgb&w=1000"
+                      alt="Rooftop solar installation for Indian homes"
+                      className="h-full min-h-[250px] w-full object-cover"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                    <div className="absolute bottom-5 left-5">
+                      <div className="rounded-full bg-white/90 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.18em] text-[var(--brand-red)]">
+                        Ghar aur rooftop focus
+                      </div>
+                      <div className="mt-3 max-w-xs text-2xl font-black text-white">Visuals that feel closer to Indian rooftop buying.</div>
+                    </div>
+                  </div>
+
+                  <div className="grid gap-4">
+                    <div className="relative overflow-hidden rounded-[24px]">
+                      <img
+                        src="https://images.pexels.com/photos/9799994/pexels-photo-9799994.jpeg?auto=compress&cs=tinysrgb&w=1000"
+                        alt="Commercial rooftop solar installation"
+                        className="h-[150px] w-full object-cover"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/55 to-transparent" />
+                      <div className="absolute bottom-4 left-4 text-sm font-black text-white">Commercial solar for shops and business roofs</div>
+                    </div>
+
+                    <div className="rounded-[24px] bg-[rgba(255,255,255,0.12)] p-5">
+                      <div className="text-xs font-bold uppercase tracking-[0.18em] text-[var(--warm-gold)]">Indian touch</div>
+                      <div className="mt-4 space-y-3">
+                        {[
+                          'Bharat-first color language',
+                          'Jabalpur and MP buyer context',
+                          'Home, business, and farm use cases'
+                        ].map((item) => (
+                          <div key={item} className="flex items-start gap-3 text-sm font-medium text-white/82">
+                            <span className="mt-1 h-2 w-2 rounded-full bg-[var(--warm-gold)]" />
+                            <span>{item}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="grid gap-4 sm:grid-cols-2">
+                {[
+                  { label: 'Curated categories', value: `${CATEGORIES.length - 1}+`, detail: 'Organized for faster product discovery' },
+                  { label: 'Buyer support', value: 'Quote-first', detail: 'Ideal for B2B and project procurement' },
+                  { label: 'Visual clarity', value: 'Pro cards', detail: 'Larger images and cleaner hierarchy' },
+                  { label: 'Execution help', value: 'Available', detail: 'Installation and project guidance on request' }
+                ].map((item) => (
+                  <div key={item.label} className="shop-metric rounded-[28px] border border-white/10 bg-white/10 p-6 backdrop-blur">
+                    <div className="text-xs font-bold uppercase tracking-[0.18em] text-white/55">{item.label}</div>
+                    <div className="mt-3 text-3xl font-black text-white">{item.value}</div>
+                    <div className="mt-2 text-sm leading-6 text-white/68">{item.detail}</div>
                   </div>
                 ))}
-                <div className="pl-6 flex flex-col justify-center">
-                  <div className="text-white font-bold text-sm">Trusted by Thousands</div>
-                  <div className="text-emerald-500 text-[10px] font-black uppercase tracking-widest">Active Installs</div>
-                </div>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* ─── LOGICAL CATEGORY NABVAR (Sticky) ─── */}
-      <div className="sticky top-16 z-40 bg-white/80 backdrop-blur-xl border-b border-gray-100 shadow-sm">
-        <div className="container py-4 flex items-center justify-between gap-4">
-          <div className="flex-1 flex items-center gap-3 overflow-x-auto scrollbar-none">
-            {CATEGORIES.map(cat => (
+      <div className="sticky top-16 z-40 border-b border-[var(--border-soft)] bg-white/88 backdrop-blur-xl">
+        <div className="container py-4">
+          <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+            <div className="flex flex-1 gap-2 overflow-x-auto pb-1">
+              {CATEGORIES.map((category) => (
+                <button
+                  key={category}
+                  onClick={() => setSelectedCategory(category)}
+                  className={`whitespace-nowrap rounded-full px-4 py-2.5 text-sm font-bold transition-all ${
+                    selectedCategory === category
+                      ? 'bg-[linear-gradient(135deg,#172033,#ea580c)] text-white shadow-[0_12px_24px_rgba(23,32,51,0.16)]'
+                      : 'border border-[var(--border-soft)] bg-[var(--bg-soft)] text-[var(--text-secondary)] hover:border-[rgba(234,88,12,0.20)] hover:text-[var(--brand-red)]'
+                  }`}
+                >
+                  {category}
+                </button>
+              ))}
+            </div>
+
+            <div className="flex items-center gap-3">
+              <div className="relative min-w-[260px] flex-1 lg:flex-none">
+                <Search size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-[var(--text-muted)]" />
+                <input
+                  type="text"
+                  value={searchQuery}
+                  onChange={(event) => setSearchQuery(event.target.value)}
+                  placeholder="Search by product, brand, capacity"
+                  className="w-full rounded-full border border-[var(--border-soft)] bg-[var(--bg-soft)] py-3 pl-11 pr-4 text-sm"
+                />
+              </div>
               <button
-                key={cat}
-                onClick={() => setSelectedCategory(cat)}
-                className={`flex-shrink-0 px-5 py-2.5 rounded-2xl text-xs font-black transition-all whitespace-nowrap border-2 ${
-                  selectedCategory === cat
-                    ? 'bg-gray-950 text-white border-gray-950 shadow-lg shadow-gray-200'
-                    : 'bg-white text-gray-400 border-gray-100 hover:border-emerald-200 hover:text-emerald-600'
-                }`}
+                onClick={() => setShowFilters((visible) => !visible)}
+                className="flex h-11 w-11 items-center justify-center rounded-full border border-[var(--border-soft)] bg-[var(--bg-soft)] text-[var(--text-secondary)] transition-colors hover:text-[var(--brand-red)]"
+                title="Toggle filters"
               >
-                {cat}
+                <Filter size={18} />
               </button>
-            ))}
-          </div>
-          <div className="flex items-center gap-2">
-            <button 
-              onClick={() => setShowFilters(!showFilters)}
-              className="p-3 bg-gray-100 rounded-2xl text-gray-600 hover:bg-gray-200 transition-colors"
-              title="Filters"
-            >
-              <Filter size={18} />
-            </button>
-            <button 
-              onClick={() => setCartOpen(true)}
-              className="relative p-3 bg-emerald-600 text-white rounded-2xl hover:bg-emerald-700 transition-all shadow-lg shadow-emerald-600/20"
-              title="Shopping Cart"
-            >
-              <ShoppingCart size={18} />
-              {cartCount > 0 && (
-                <span className="absolute -top-1 -right-1 w-5 h-5 bg-amber-400 text-gray-950 text-[10px] font-black rounded-full flex items-center justify-center border-2 border-white">
-                  {cartCount}
-                </span>
-              )}
-            </button>
-          </div>
-        </div>
-        
-        {/* Expanded Filters */}
-        {showFilters && (
-          <div className="bg-gray-50 border-t border-gray-100 py-6 animate-fade-in">
-            <div className="container grid md:grid-cols-3 gap-8">
-              <div>
-                <h4 className="text-xs font-black uppercase tracking-widest text-gray-400 mb-4">Search Anything</h4>
-                <div className="relative">
-                  <Search size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
-                  <input 
-                    type="text" 
-                    placeholder="Panels, Brands, or IDs..."
-                    value={searchQuery}
-                    onChange={e => setSearchQuery(e.target.value)}
-                    className="w-full pl-12 pr-4 py-3 bg-white border border-gray-200 rounded-2xl focus:border-emerald-500 focus:outline-none text-sm transition-all"
-                  />
-                </div>
-              </div>
-              <div>
-                <h4 className="text-xs font-black uppercase tracking-widest text-gray-400 mb-4">Pricing Range</h4>
-                <div className="flex items-center gap-3">
-                  <span className="text-xs font-bold text-gray-500">Economy</span>
-                  <input type="range" className="flex-1 accent-emerald-600" title="Price range selector" />
-                  <span className="text-xs font-bold text-gray-500">Premium</span>
-                </div>
-              </div>
-              <div>
-                <h4 className="text-xs font-black uppercase tracking-widest text-gray-400 mb-4">Brand Filter</h4>
-                <div className="flex flex-wrap gap-2">
-                  {['Adani', 'Luminous', 'Waaree', 'Microtek', 'Tata'].map(brand => (
-                    <button key={brand} className="px-3 py-1.5 bg-white border border-gray-200 rounded-xl text-[10px] font-bold text-gray-600 hover:border-emerald-400 transition-colors">
-                      {brand}
-                    </button>
-                  ))}
-                </div>
-              </div>
+              <button
+                onClick={() => setCartOpen(true)}
+                className="relative flex h-11 w-11 items-center justify-center rounded-full bg-[linear-gradient(135deg,#15803d,#22c55e)] text-white shadow-[0_14px_26px_rgba(34,197,94,0.26)]"
+                title="Open draft order"
+              >
+                <ShoppingCart size={18} />
+                {cartCount > 0 && (
+                  <span className="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-[var(--warm-gold)] text-[10px] font-black text-[var(--text-primary)]">
+                    {cartCount}
+                  </span>
+                )}
+              </button>
             </div>
           </div>
-        )}
+
+          {showFilters && (
+            <div className="mt-4 grid gap-4 rounded-[28px] border border-[var(--border-soft)] bg-[var(--bg-soft)] p-5 md:grid-cols-3">
+              <div>
+                <div className="text-xs font-bold uppercase tracking-[0.18em] text-[var(--text-muted)]">Search focus</div>
+                <p className="mt-2 text-sm text-[var(--text-secondary)]">Try capacity terms like `545W`, `5kW`, `150Ah`, or category names for faster filtering.</p>
+              </div>
+              <div>
+                <div className="text-xs font-bold uppercase tracking-[0.18em] text-[var(--text-muted)]">Current selection</div>
+                <p className="mt-2 text-sm text-[var(--text-secondary)]">{selectedCategory === 'All' ? 'Browsing all categories' : `Browsing ${selectedCategory}`}</p>
+              </div>
+              <div>
+                <div className="text-xs font-bold uppercase tracking-[0.18em] text-[var(--text-muted)]">Suggested workflow</div>
+                <p className="mt-2 text-sm text-[var(--text-secondary)]">Shortlist products, add them to draft order, then confirm on WhatsApp for a final quotation.</p>
+              </div>
+            </div>
+          )}
+        </div>
       </div>
 
-      <main className="container py-12" id="shop-grid">
-        {/* ─── CORE SHOPPING GRID ─── */}
-        <div className="flex items-center justify-between mb-8">
-          <div>
-            <h2 className="text-2xl font-black text-gray-950 leading-tight">
-              {selectedCategory === 'All' ? 'Everything in Stock' : `Premium ${selectedCategory}`}
-            </h2>
-            <p className="text-sm text-gray-500 mt-1">Showing {filtered.length} products found for your needs</p>
-          </div>
-          <div className="flex items-center gap-2 bg-gray-100 p-1.5 rounded-2xl">
-            <button 
-              onClick={() => setViewMode('grid')}
-              className={`p-2 rounded-xl transition-all ${viewMode === 'grid' ? 'bg-white shadow-sm text-gray-900' : 'text-gray-400'}`}
-              title="Grid View"
-            >
-              <Grid3X3 size={16} />
-            </button>
-            <button 
-              onClick={() => setViewMode('list')}
-              className={`p-2 rounded-xl transition-all ${viewMode === 'list' ? 'bg-white shadow-sm text-gray-900' : 'text-gray-400'}`}
-              title="List View"
-            >
-              <List size={16} />
-            </button>
-          </div>
-        </div>
+      <main className="container py-10 md:py-14" id="shop-grid">
+        <div className="grid gap-6 lg:grid-cols-[0.72fr_1.28fr]">
+          <aside className="shop-section-card h-fit rounded-[32px] border border-[var(--border-soft)] bg-white p-6 shadow-[0_18px_40px_rgba(15,23,42,0.05)]">
+            <div className="text-xs font-bold uppercase tracking-[0.2em] text-[var(--brand-red)]">Store analysis</div>
+            <h2 className="mt-3 text-3xl font-black tracking-[-0.04em]">Professional product discovery, now less cluttered.</h2>
+            <p className="mt-4 text-[var(--text-secondary)]">
+              The shop now uses stronger spacing, bigger image zones, cleaner metadata, and a quote-first buying path that fits solar procurement better than a generic e-commerce layout.
+            </p>
 
-        {filtered.length === 0 ? (
-          <div className="text-center py-20 bg-gray-50 rounded-[40px] border-2 border-dashed border-gray-200">
-            <div className="w-20 h-20 bg-gray-200 rounded-full flex items-center justify-center mx-auto mb-6">
-              <Package size={32} className="text-gray-400" />
-            </div>
-            <h3 className="text-xl font-black text-gray-900 mb-2">No Matching Products</h3>
-            <p className="text-gray-500 mb-8 max-w-sm mx-auto">We couldn't find exactly what you were looking for. Try adjusting your filters or category.</p>
-            <button onClick={() => { setSelectedCategory('All'); setSearchQuery(''); }} className="px-6 py-3 bg-gray-900 text-white font-black rounded-2xl hover:bg-emerald-600 transition-colors">
-              Clear All Filters
-            </button>
-          </div>
-        ) : (
-          <div className={viewMode === 'grid' ? 'grid sm:grid-cols-2 lg:grid-cols-4 gap-6' : 'flex flex-col gap-4'}>
-            {filtered.map((p: Product) => (
-              <ProductCard 
-                key={p.id} 
-                product={p} 
-                viewMode={viewMode}
-                onBuy={() => handleWhatsAppAction(p, 'buy')}
-                onInfo={() => handleWhatsAppAction(p, 'info')}
-                onAddToCart={() => addToCart(p, [])}
-                inCart={cart.some(c => c.id === p.id)}
-                isWishlisted={wishlist.includes(p.id)}
-                onWishlist={() => toggleWishlist(p.id)}
-              />
-            ))}
-          </div>
-        )}
-
-        {/* ─── LOGICAL UP-SELL/SUGGESTIONS (Unique Logical Utility) ─── */}
-        {suggestions.length > 0 && (
-          <section className="mt-24 pt-24 border-t border-gray-100">
-            <div className="flex flex-col md:flex-row items-end justify-between gap-6 mb-12">
-              <div className="max-w-xl">
-                <div className="inline-flex items-center gap-2 text-amber-600 font-black text-[10px] uppercase tracking-widest mb-3">
-                  <TrendingUp size={12} /> Expert Recommendations
+            <div className="mt-8 grid gap-4 sm:grid-cols-3 lg:grid-cols-1">
+              {[
+                { label: 'Products visible', value: categoryStats.count },
+                { label: 'Brands in view', value: categoryStats.brands },
+                { label: 'Warranty listed', value: categoryStats.withWarranty }
+              ].map((item) => (
+                <div key={item.label} className="rounded-[24px] bg-[var(--bg-soft)] p-5">
+                  <div className="text-xs font-bold uppercase tracking-[0.18em] text-[var(--text-muted)]">{item.label}</div>
+                  <div className="mt-2 text-3xl font-black text-[var(--text-primary)]">{item.value}</div>
                 </div>
-                <h2 className="text-4xl font-black text-gray-900">Recommended Add-ons</h2>
-                <p className="text-gray-500 text-lg mt-3">
-                  Based on your interest in <span className="text-emerald-600 font-bold">{selectedCategory}</span>, these products ensure a complete and efficient solar ecosystem.
+              ))}
+            </div>
+
+            <div className="mt-8 space-y-3">
+              {[
+                'Larger product images for better visual trust',
+                'Simpler card actions for quote and cart intent',
+                'Draft order drawer for project-style buying'
+              ].map((point) => (
+                <div key={point} className="flex items-start gap-3 text-sm font-medium text-[var(--text-primary)]">
+                  <BadgeCheck size={18} className="mt-0.5 shrink-0 text-[var(--brand-green)]" />
+                  <span>{point}</span>
+                </div>
+              ))}
+            </div>
+          </aside>
+
+          <section className="shop-section-card">
+            <div className="mb-6 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+              <div>
+                <div className="text-xs font-bold uppercase tracking-[0.18em] text-[var(--text-muted)]">
+                  {selectedCategory === 'All' ? 'All products' : selectedCategory}
+                </div>
+                <h2 className="mt-2 text-3xl font-black tracking-[-0.04em]">
+                  {selectedCategory === 'All' ? 'Solar products with a cleaner premium layout' : `${selectedCategory} done in a more professional way`}
+                </h2>
+                <p className="mt-2 text-[var(--text-secondary)]">
+                  Showing {filteredProducts.length} result{filteredProducts.length === 1 ? '' : 's'} with a clearer product hierarchy and stronger visual rhythm.
                 </p>
               </div>
-              <button 
+
+              <div className="inline-flex items-center gap-2 rounded-full border border-[var(--border-soft)] bg-white p-1.5">
+                <button
+                  onClick={() => setViewMode('grid')}
+                  className={`flex h-10 w-10 items-center justify-center rounded-full transition-colors ${
+                    viewMode === 'grid' ? 'bg-[var(--bg-soft)] text-[var(--brand-red)]' : 'text-[var(--text-muted)]'
+                  }`}
+                  title="Grid view"
+                >
+                  <Grid3X3 size={18} />
+                </button>
+                <button
+                  onClick={() => setViewMode('list')}
+                  className={`flex h-10 w-10 items-center justify-center rounded-full transition-colors ${
+                    viewMode === 'list' ? 'bg-[var(--bg-soft)] text-[var(--brand-red)]' : 'text-[var(--text-muted)]'
+                  }`}
+                  title="List view"
+                >
+                  <List size={18} />
+                </button>
+              </div>
+            </div>
+
+            {filteredProducts.length === 0 ? (
+              <div className="rounded-[32px] border border-dashed border-[var(--border-strong)] bg-white p-14 text-center">
+                <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-[var(--bg-soft)] text-[var(--text-muted)]">
+                  <Package size={34} />
+                </div>
+                <h3 className="mt-6 text-2xl font-black">No matching products found</h3>
+                <p className="mx-auto mt-3 max-w-md text-[var(--text-secondary)]">
+                  Try a broader search, change the category, or clear the filter and start again.
+                </p>
+                <button
+                  onClick={() => {
+                    setSelectedCategory('All');
+                    setSearchQuery('');
+                  }}
+                  className="btn-primary mt-6"
+                >
+                  Reset Filters
+                </button>
+              </div>
+            ) : (
+              <div className={viewMode === 'grid' ? 'grid gap-6 sm:grid-cols-2 xl:grid-cols-3' : 'flex flex-col gap-5'}>
+                {filteredProducts.map((product: Product) => (
+                  <ProductCard
+                    key={product.id}
+                    product={product}
+                    viewMode={viewMode}
+                    inCart={cart.some((item) => item.id === product.id)}
+                    isWishlisted={wishlist.includes(product.id)}
+                    onWishlist={() => toggleWishlist(product.id)}
+                    onBuy={() => handleWhatsAppAction(product, 'quote')}
+                    onInfo={() => handleWhatsAppAction(product, 'details')}
+                    onAddToCart={() => addToCart(product, [])}
+                  />
+                ))}
+              </div>
+            )}
+          </section>
+        </div>
+
+        {recommendedProducts.length > 0 && (
+          <section className="shop-section-card mt-16 rounded-[36px] border border-[var(--border-soft)] bg-[linear-gradient(180deg,#ffffff_0%,#fff7ed_100%)] p-8 shadow-[0_18px_40px_rgba(15,23,42,0.05)] md:p-10">
+            <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+              <div className="max-w-2xl">
+                <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.18em] text-[var(--brand-red)]">
+                  <Sparkles size={14} />
+                  Recommended next
+                </div>
+                <h2 className="mt-3 text-3xl font-black tracking-[-0.04em]">Suggested add-ons for a more complete solar setup.</h2>
+                <p className="mt-3 text-[var(--text-secondary)]">
+                  Based on what you are viewing, these products are strong supporting choices for a more practical and complete system.
+                </p>
+              </div>
+              <button
                 onClick={() => setSelectedCategory('All')}
-                className="group flex items-center gap-2 text-sm font-black text-gray-900 hover:text-emerald-600 transition-colors"
+                className="inline-flex items-center gap-2 text-sm font-bold text-[var(--brand-red)]"
               >
-                Explore More <ChevronRight size={18} className="group-hover:translate-x-1 transition-transform" />
+                Explore all categories
+                <ChevronRight size={16} />
               </button>
             </div>
-            
-            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-              {suggestions.map((p: Product) => (
-                <div key={p.id} className="group relative bg-gray-50 rounded-[32px] p-6 hover:bg-white hover:shadow-2xl transition-all border border-transparent hover:border-gray-100">
-                  <div className="w-full aspect-square bg-white rounded-2xl flex items-center justify-center mb-6 overflow-hidden">
-                    <img src={p.image} alt={p.name} className="w-4/5 h-4/5 object-contain group-hover:scale-110 transition-transform duration-500" />
+
+            <div className="mt-8 grid gap-5 md:grid-cols-3">
+              {recommendedProducts.map((product: Product) => (
+                <div key={product.id} className="rounded-[28px] border border-[var(--border-soft)] bg-white p-5 shadow-[0_14px_30px_rgba(15,23,42,0.05)]">
+                  <div className="overflow-hidden rounded-[22px] bg-[var(--bg-soft)]">
+                    <img src={product.image} alt={product.name} className="h-52 w-full object-cover transition-transform duration-700 hover:scale-105" />
                   </div>
-                  <div className="text-[10px] font-black text-emerald-600 uppercase tracking-widest mb-2">{p.brand}</div>
-                  <h3 className="font-bold text-gray-900 group-hover:text-emerald-600 transition-colors mb-4">{p.name}</h3>
-                  <button 
-                    onClick={() => { setSelectedCategory(p.category); document.getElementById('shop-grid')?.scrollIntoView({ behavior: 'smooth' }); }}
-                    className="w-full py-3 bg-white border border-gray-200 text-gray-900 font-black text-xs rounded-xl hover:bg-gray-900 hover:text-white transition-all"
+                  <div className="mt-5 text-xs font-bold uppercase tracking-[0.18em] text-[var(--brand-green)]">{product.category}</div>
+                  <h3 className="mt-2 text-xl font-black">{product.name}</h3>
+                  <p className="mt-2 text-sm text-[var(--text-secondary)]">{product.description}</p>
+                  <button
+                    onClick={() => {
+                      setSelectedCategory(product.category as Category);
+                      document.getElementById('shop-grid')?.scrollIntoView({ behavior: 'smooth' });
+                    }}
+                    className="btn-outline-dark mt-5 w-full"
                   >
-                    View Options
+                    View Similar Products
                   </button>
                 </div>
               ))}
             </div>
           </section>
         )}
-      </main>
 
-      {/* ─── TRUST REINFORCEMENT ─── */}
-      <section className="bg-gradient-hero py-24 mt-24 overflow-hidden relative">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1200px] h-[400px] bg-emerald-600/10 rounded-full blur-[140px]" />
-        <div className="container relative z-10 glass-morphism rounded-[40px] p-12 top-0 border border-white/10 shadow-2xl">
-          <div className="grid md:grid-cols-3 gap-12 text-center md:text-left">
+        <section className="shop-section-card mt-16 rounded-[36px] bg-[linear-gradient(135deg,#172033_0%,#1c2e1f_52%,#3b2418_100%)] p-8 text-white shadow-[0_30px_70px_rgba(15,23,42,0.14)] md:p-10">
+          <div className="grid gap-6 md:grid-cols-3">
             {[
-              { icon: Shield, title: 'Authorized Distributor', desc: 'Every product comes with official brand warranty and test certificates.', color: 'text-emerald-400', bg: 'bg-emerald-500/10' },
-              { icon: Package, title: 'Quality Inspection', desc: 'Each component is inspected for physical damage and performance before...', color: 'text-amber-400', bg: 'bg-amber-500/10' },
-              { icon: Truck, title: 'Secure Logistics', desc: 'Insured transit across Madhya Pradesh with specialized solar handling teams.', color: 'text-blue-400', bg: 'bg-blue-500/10' },
-            ].map(item => (
-              <div key={item.title} className="group">
-                <div className={`w-16 h-16 rounded-[24px] ${item.bg} flex items-center justify-center mb-6 mx-auto md:mx-0 ${item.color} group-hover:scale-110 transition-transform`}>
-                  <item.icon size={28} />
+              {
+                icon: ShieldCheck,
+                title: 'Warranty-friendly sourcing',
+                desc: 'Products are presented with specification-first details to help buyers shortlist with more confidence.'
+              },
+              {
+                icon: Truck,
+                title: 'Better delivery discussion',
+                desc: 'The quote-first path makes it easier to confirm location, logistics, and installation support before checkout.'
+              },
+              {
+                icon: Zap,
+                title: 'Project-style buying flow',
+                desc: 'A draft order works better than a generic cart for solar procurement and bundled commercial requirements.'
+              }
+            ].map((item) => (
+              <div key={item.title} className="rounded-[28px] border border-white/10 bg-white/10 p-6 backdrop-blur">
+                <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-white/10 text-[var(--warm-gold)]">
+                  <item.icon size={24} />
                 </div>
-                <h3 className="text-white text-xl font-black mb-3">{item.title}</h3>
-                <p className="text-gray-400 text-sm leading-relaxed">{item.desc}</p>
+                <h3 className="mt-5 text-2xl font-black text-white">{item.title}</h3>
+                <p className="mt-3 text-sm leading-7 text-white/72">{item.desc}</p>
               </div>
             ))}
           </div>
-        </div>
-      </section>
+        </section>
+      </main>
 
-      {/* Cart Drawer and styles as before... */}
-      {/* ... keeping the drawer logic from previous version but making it more premium ... */}
       {cartOpen && (
         <>
-          <div className="fixed inset-0 z-[160] bg-gray-950/80 backdrop-blur-md animate-fade-in" onClick={() => setCartOpen(false)} />
-          <div className="fixed top-2 right-2 bottom-2 w-full max-w-md z-[170] bg-white rounded-[32px] shadow-2xl flex flex-col animate-slide-right overflow-hidden border border-gray-100">
-            <div className="px-8 py-8 flex items-center justify-between">
-              <div>
-                <h2 className="text-2xl font-black text-gray-950">Draft Order</h2>
-                <div className="flex items-center gap-2 mt-1">
-                  <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full" />
-                  <span className="text-xs font-bold text-gray-400 uppercase tracking-widest">{cart.length} Components Selected</span>
+          <div className="fixed inset-0 z-[160] bg-black/55 backdrop-blur-sm" onClick={() => setCartOpen(false)} />
+          <div className="fixed bottom-2 right-2 top-2 z-[170] flex w-full max-w-md flex-col overflow-hidden rounded-[32px] border border-[var(--border-soft)] bg-white shadow-[0_30px_80px_rgba(15,23,42,0.22)]">
+            <div className="border-b border-[var(--border-soft)] px-7 py-6">
+              <div className="flex items-start justify-between gap-4">
+                <div>
+                  <div className="text-xs font-bold uppercase tracking-[0.18em] text-[var(--brand-red)]">Draft order</div>
+                  <h2 className="mt-2 text-3xl font-black tracking-[-0.04em]">Solar shortlist</h2>
+                  <p className="mt-2 text-sm text-[var(--text-secondary)]">{cartCount} item{cartCount === 1 ? '' : 's'} selected for quotation.</p>
                 </div>
+                <button
+                  onClick={() => setCartOpen(false)}
+                  className="flex h-11 w-11 items-center justify-center rounded-full bg-[var(--bg-soft)] text-[var(--text-secondary)]"
+                  title="Close cart"
+                >
+                  <X size={18} />
+                </button>
               </div>
-              <button onClick={() => setCartOpen(false)} title="Close Cart" className="w-12 h-12 bg-gray-100 rounded-2xl flex items-center justify-center text-gray-400 hover:text-gray-950 transition-colors">
-                <X size={20} />
-              </button>
             </div>
 
-            {/* Logical Impact Card (Unique Utility) */}
             {cart.length > 0 && (
-              <div className="px-8 mb-4">
-                <div className="bg-emerald-900 rounded-3xl p-6 text-white shadow-xl shadow-emerald-900/40 relative overflow-hidden">
-                  <div className="absolute top-0 right-0 p-4 opacity-20"><TrendingUp size={48} /></div>
-                  <div className="relative z-10">
-                    <h3 className="text-xs font-black uppercase tracking-widest text-emerald-300 mb-4">Estimated Monthly Impact</h3>
-                    <div className="grid grid-cols-2 gap-4">
-                      <div>
-                        <div className="text-2xl font-black">₹{(cart.reduce((acc, c) => acc + (c.qty * 1200), 0)).toLocaleString()}</div>
-                        <div className="text-[10px] uppercase font-bold text-emerald-300/80 mt-1">Savings Approx.</div>
-                      </div>
-                      <div>
-                        <div className="text-2xl font-black">{cart.reduce((acc, c) => acc + (c.qty * 90), 0)} kg</div>
-                        <div className="text-[10px] uppercase font-bold text-emerald-300/80 mt-1">CO2 Avoided</div>
-                      </div>
+              <div className="px-7 pb-3 pt-5">
+                <div className="rounded-[28px] bg-[linear-gradient(135deg,#172033_0%,#15803d_100%)] p-6 text-white">
+                  <div className="text-xs font-bold uppercase tracking-[0.18em] text-white/60">Quick impact view</div>
+                  <div className="mt-4 grid grid-cols-2 gap-4">
+                    <div>
+                      <div className="text-3xl font-black">Rs {cartSavings.toLocaleString()}</div>
+                      <div className="mt-1 text-[11px] font-bold uppercase tracking-[0.16em] text-white/60">Approx monthly savings</div>
+                    </div>
+                    <div>
+                      <div className="text-3xl font-black">{cart.reduce((total, item) => total + item.qty * 90, 0)} kg</div>
+                      <div className="mt-1 text-[11px] font-bold uppercase tracking-[0.16em] text-white/60">Approx CO2 offset</div>
                     </div>
                   </div>
                 </div>
               </div>
             )}
 
-            <div className="flex-1 overflow-y-auto px-8 py-4 space-y-6 scrollbar-none">
+            <div className="flex-1 overflow-y-auto px-7 py-4">
               {cart.length === 0 ? (
-                <div className="h-full flex flex-col items-center justify-center text-center">
-                  <div className="w-24 h-24 bg-gray-50 rounded-[32px] flex items-center justify-center mb-6">
-                    <ShoppingCart size={40} className="text-gray-200" />
+                <div className="flex h-full flex-col items-center justify-center text-center">
+                  <div className="flex h-24 w-24 items-center justify-center rounded-full bg-[var(--bg-soft)] text-[var(--text-muted)]">
+                    <ShoppingCart size={36} />
                   </div>
-                  <h3 className="text-lg font-black text-gray-900 mb-2">Cart is Empty</h3>
-                  <p className="text-gray-400 text-sm max-w-xs mx-auto">Start building your solar system by adding components from our shop.</p>
+                  <h3 className="mt-6 text-2xl font-black">No products added yet</h3>
+                  <p className="mt-3 max-w-xs text-sm leading-7 text-[var(--text-secondary)]">
+                    Add products to build a professional draft order before requesting a final quotation.
+                  </p>
                 </div>
-              ) : cart.map(item => (
-                <div key={item.id} className="group relative flex gap-6 p-4 bg-gray-50 rounded-3xl hover:bg-white hover:shadow-xl transition-all border border-transparent hover:border-gray-100">
-                  <div className="w-24 h-24 bg-white rounded-2xl flex items-center justify-center shrink-0 shadow-sm overflow-hidden">
-                    <img src={item.image} alt={item.name} className="w-4/5 h-4/5 object-contain" />
-                  </div>
-                  <div className="flex-1 min-w-0 flex flex-col">
-                    <div className="text-[10px] font-black text-emerald-600 uppercase tracking-widest mb-1">{item.brand}</div>
-                    <div className="font-black text-gray-950 text-sm leading-tight line-clamp-2 mb-2">{item.name}</div>
-                    <div className="mt-auto flex items-center justify-between">
-                      <div className="flex items-center gap-3 bg-white rounded-xl p-1 shadow-sm border border-gray-100">
-                        <button onClick={() => updateQty(item.id, item.qty - 1)} className="w-7 h-7 rounded-lg hover:bg-red-50 text-gray-400 hover:text-red-600 transition-colors flex items-center justify-center" title="Remove One">
-                          <Minus size={12} />
-                        </button>
-                        <span className="text-xs font-black text-gray-900 w-4 text-center">{item.qty}</span>
-                        <button onClick={() => updateQty(item.id, item.qty + 1)} className="w-7 h-7 rounded-lg hover:bg-emerald-50 text-gray-400 hover:text-emerald-600 transition-colors flex items-center justify-center" title="Add More">
-                          <Plus size={12} />
-                        </button>
+              ) : (
+                <div className="space-y-4">
+                  {cart.map((item) => (
+                    <div key={item.id} className="rounded-[28px] border border-[var(--border-soft)] bg-[var(--bg-soft)] p-4">
+                      <div className="flex gap-4">
+                        <div className="h-24 w-24 shrink-0 overflow-hidden rounded-[20px] bg-white">
+                          <img src={item.image} alt={item.name} className="h-full w-full object-cover" />
+                        </div>
+                        <div className="min-w-0 flex-1">
+                          <div className="text-[11px] font-bold uppercase tracking-[0.18em] text-[var(--brand-green)]">{item.brand}</div>
+                          <div className="mt-1 text-sm font-black leading-6 text-[var(--text-primary)]">{item.name}</div>
+                          <div className="mt-2 text-xs font-semibold text-[var(--text-secondary)]">{item.capacity}</div>
+                          <div className="mt-4 flex items-center justify-between">
+                            <div className="inline-flex items-center gap-2 rounded-full border border-[var(--border-soft)] bg-white p-1">
+                              <button
+                                onClick={() => updateQty(item.id, item.qty - 1)}
+                                className="flex h-8 w-8 items-center justify-center rounded-full text-[var(--text-secondary)] hover:bg-[var(--bg-soft)]"
+                                title="Decrease quantity"
+                              >
+                                <Minus size={14} />
+                              </button>
+                              <span className="w-6 text-center text-sm font-black">{item.qty}</span>
+                              <button
+                                onClick={() => updateQty(item.id, item.qty + 1)}
+                                className="flex h-8 w-8 items-center justify-center rounded-full text-[var(--text-secondary)] hover:bg-[var(--bg-soft)]"
+                                title="Increase quantity"
+                              >
+                                <Plus size={14} />
+                              </button>
+                            </div>
+                            <button onClick={() => removeFromCart(item.id)} className="text-xs font-bold text-[var(--brand-red)]">
+                              Remove
+                            </button>
+                          </div>
+                        </div>
                       </div>
-                      <button onClick={() => removeFromCart(item.id)} className="text-gray-300 hover:text-red-500 transition-colors" title="Remove Item">
-                        <X size={16} />
-                      </button>
                     </div>
-                  </div>
+                  ))}
                 </div>
-              ))}
+              )}
             </div>
 
             {cart.length > 0 && (
-              <div className="p-8 border-t border-gray-100 space-y-4">
-                {/* Installation Upsell (Premium Logic) */}
-                {!cart.some(c => c.name.includes('Installation')) && (
-                  <div className="p-4 bg-gradient-to-r from-emerald-50 to-blue-50 rounded-2xl border border-emerald-100 flex items-center justify-between gap-4 group/upsell">
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 bg-white rounded-xl shadow-sm flex items-center justify-center text-emerald-600 group-hover/upsell:scale-110 transition-transform">
-                        <Zap size={20} />
-                      </div>
-                      <div>
-                        <div className="text-xs font-black text-gray-900">Add Expert Installation</div>
-                        <div className="text-[10px] text-gray-500 font-medium">Full setup & commissioning by certified team</div>
-                      </div>
-                    </div>
-                    <button 
-                      onClick={() => addToCart({ id: 9999, name: 'Professional Installation Service', brand: 'Urja Vision', category: 'Service', capacity: 'Standard', image: 'https://cdn-icons-png.flaticon.com/512/3259/3259160.png' }, [])}
-                      className="px-4 py-2 bg-white border border-emerald-200 text-emerald-700 font-bold text-[10px] rounded-lg hover:bg-emerald-600 hover:text-white transition-all shadow-sm"
-                    >
-                      Add +
-                    </button>
-                  </div>
-                )}
-
-                <div className="flex items-center gap-3 p-4 bg-amber-50 rounded-2xl border border-amber-100">
-                  <Info size={18} className="text-amber-600 shrink-0" />
-                  <p className="text-xs font-bold text-amber-700">Shipping calculated based on delivery location in MP.</p>
+              <div className="border-t border-[var(--border-soft)] p-7">
+                <div className="mb-4 rounded-[22px] border border-[rgba(249,115,22,0.18)] bg-[rgba(249,115,22,0.08)] p-4 text-sm font-medium text-[var(--text-primary)]">
+                  Final pricing and delivery are confirmed over WhatsApp so installation scope, location, and volume requirements can be handled properly.
                 </div>
-                <button 
+                <button
                   onClick={() => {
-                    const text = `Hi! I want to confirm an order for:\n${cart.map(c => `- ${c.name} (Qty: ${c.qty})`).join('\n')}\nPlease share final quotation.`;
-                    window.open(`https://wa.me/917247391595?text=${encodeURIComponent(text)}`, '_blank');
+                    const message = `Hi! I want a final quotation for this solar order:\n${cart
+                      .map((item) => `- ${item.name} (${item.capacity}) x ${item.qty}`)
+                      .join('\n')}`;
+                    window.open(`https://wa.me/917247391595?text=${encodeURIComponent(message)}`, '_blank');
                   }}
-                  className="w-full py-5 bg-gray-950 text-white font-black rounded-3xl hover:bg-emerald-600 transition-all flex items-center justify-center gap-3 shadow-xl"
-                  title="Checkout via WhatsApp"
+                  className="btn-primary w-full"
                 >
-                  <MessageCircle size={20} /> Checkout via WhatsApp
+                  <MessageCircle size={18} />
+                  Confirm on WhatsApp
                 </button>
-                <div className="text-center">
-                  <span className="text-[10px] font-black uppercase tracking-widest text-gray-400">Response time: &lt; 2 Hours</span>
-                </div>
               </div>
             )}
           </div>
         </>
       )}
-    </div>
-  );
-};
-
-// Sub-component for Product Card to keep main clean
-const ProductCard = ({ product, viewMode, onBuy, onInfo, onAddToCart, inCart, isWishlisted, onWishlist }: any) => {
-  if (viewMode === 'list') {
-    return (
-      <div className="bg-white rounded-[32px] border border-gray-100 p-6 flex gap-8 hover:shadow-2xl hover:-translate-y-1 transition-all group">
-        <div className="w-56 h-48 bg-gray-50 rounded-[24px] flex items-center justify-center shrink-0 shadow-inner group-hover:bg-white transition-colors duration-500 overflow-hidden">
-          <img src={product.image} alt={product.name} className="w-4/5 h-4/5 object-contain group-hover:scale-110 transition-transform duration-700" />
-        </div>
-        <div className="flex-1 py-2">
-          <div className="flex items-center gap-3 mb-2">
-            <span className="text-[10px] font-black uppercase tracking-widest text-emerald-600">{product.brand}</span>
-            <span className="w-1 h-1 bg-gray-200 rounded-full" />
-            <span className="text-[10px] font-black uppercase tracking-widest text-gray-400">{product.category}</span>
-          </div>
-          <h3 className="text-xl font-black text-gray-950 mb-3 group-hover:text-emerald-600 transition-colors">{product.name}</h3>
-          <p className="text-gray-500 text-sm leading-relaxed mb-6 line-clamp-2 max-w-xl">{product.description}</p>
-          <div className="flex flex-wrap gap-6 mb-2">
-             <div className="flex items-center gap-2">
-               <div className="p-1.5 bg-gray-100 rounded-lg text-emerald-600"><Zap size={14} /></div>
-               <span className="text-xs font-black text-gray-950">{product.capacity}</span>
-             </div>
-             <div className="flex items-center gap-2">
-               <div className="p-1.5 bg-gray-100 rounded-lg text-amber-500"><Star size={14} /></div>
-               <span className="text-xs font-black text-gray-950">4.9 Rating</span>
-             </div>
-          </div>
-        </div>
-        <div className="flex flex-col gap-3 justify-center min-w-[180px]">
-          <button onClick={onBuy} className="w-full py-3.5 bg-gray-950 text-white font-black rounded-2xl hover:bg-emerald-600 transition-all text-xs" title="Buy via WhatsApp">
-            Confirm Order
-          </button>
-          <button onClick={onAddToCart} className={`w-full py-3.5 border-2 font-black rounded-2xl transition-all text-xs ${inCart ? 'bg-emerald-50 border-emerald-500 text-emerald-700' : 'bg-white border-gray-100 text-gray-600 hover:border-gray-900 hover:text-gray-900'}`} title="Add to Cart">
-            {inCart ? 'View in Cart' : 'Add to Cart'}
-          </button>
-        </div>
-      </div>
-    );
-  }
-
-  return (
-    <div className="group bg-white rounded-[40px] border border-gray-100 p-2 hover:shadow-3xl hover:-translate-y-2 transition-all duration-500 flex flex-col h-full">
-      <div className="relative aspect-square bg-gray-50 rounded-[34px] flex items-center justify-center group-hover:bg-white transition-colors duration-500 overflow-hidden">
-        <img src={product.image} alt={product.name} className="w-4/5 h-4/5 object-contain group-hover:scale-110 transition-transform duration-700" />
-        
-        {/* Wishlist Action */}
-        <button 
-          onClick={onWishlist}
-          title="Save to Wishlist"
-          className={`absolute top-5 right-5 w-10 h-10 rounded-2xl flex items-center justify-center transition-all shadow-lg ${
-            isWishlisted ? 'bg-red-500 text-white' : 'bg-white/90 text-gray-400 hover:text-red-500'
-          }`}
-        >
-          <Heart size={18} fill={isWishlisted ? 'currentColor' : 'none'} />
-        </button>
-
-        {/* Info Overlay */}
-        <button 
-          onClick={onInfo}
-          title="Technical Details"
-          className="absolute top-5 left-5 w-10 h-10 bg-white/90 rounded-2xl flex items-center justify-center text-gray-400 hover:text-emerald-600 transition-all opacity-0 group-hover:opacity-100 scale-90 group-hover:scale-100 shadow-lg"
-        >
-          <Info size={18} />
-        </button>
-
-        {/* Badge */}
-        {inCart && (
-          <div className="absolute bottom-5 left-1/2 -translate-x-1/2 px-4 py-1.5 bg-white shadow-xl rounded-full flex items-center gap-2 border border-gray-100 text-emerald-600 text-[10px] font-black uppercase tracking-widest whitespace-nowrap animate-bounce-subtle">
-            <CheckCircle size={14} /> Ready to Order
-          </div>
-        )}
-      </div>
-
-      <div className="p-6 flex flex-col flex-1">
-        <div className="flex items-center gap-2 mb-3">
-          <span className="text-[10px] font-black uppercase tracking-widest text-emerald-600 px-2 py-1 bg-emerald-50 rounded-lg">{product.brand}</span>
-          <span className="text-[10px] font-black text-gray-300">|</span>
-          <span className="text-xs font-black text-gray-950">{product.capacity}</span>
-        </div>
-        
-        <h3 className="text-lg font-black text-gray-950 leading-tight mb-4 group-hover:text-emerald-600 transition-colors line-clamp-2">
-          {product.name}
-        </h3>
-
-        <div className="mt-auto pt-6 border-t border-gray-50 grid grid-cols-2 gap-3">
-          <button 
-            onClick={onBuy}
-            className="col-span-1 py-3.5 bg-gray-950 text-white font-black rounded-2xl hover:bg-emerald-600 transition-all text-[10px] uppercase tracking-widest shadow-lg shadow-gray-200"
-            title="Immediate Purchase"
-          >
-            Buy Now
-          </button>
-          <button 
-            onClick={onAddToCart}
-            className={`col-span-1 py-3.5 rounded-2xl transition-all font-black text-[10px] uppercase tracking-widest border-2 ${
-              inCart ? 'bg-emerald-50 border-emerald-500 text-emerald-700' : 'bg-white border-gray-100 text-gray-600 hover:border-gray-950 hover:text-gray-950'
-            }`}
-            title="Save for Later"
-          >
-            {inCart ? 'Added' : 'Add Cart'}
-          </button>
-        </div>
-      </div>
     </div>
   );
 };

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Package, Plus, Image as ImageIcon, Search, Trash2, X, CheckCircle, MapPin, Zap } from 'lucide-react';
+import { Plus, Search, Trash2, X, CheckCircle, MapPin } from 'lucide-react';
 import { useData } from '../../context/DataContext';
 
 interface Props {

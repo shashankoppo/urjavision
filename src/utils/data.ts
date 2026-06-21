@@ -7,7 +7,7 @@ export const solarProducts = [
     brand: 'Premium Quality',
     description: 'High-efficiency monocrystalline solar panel with 25-year warranty',
     specifications: ['545W Power Output', 'Mono PERC Technology', '21% Efficiency', '25 Year Warranty'],
-    image: 'https://images.pexels.com/photos/356036/pexels-photo-356036.jpeg?auto=compress&cs=tinysrgb&w=600'
+    image: 'https://images.pexels.com/photos/13223714/pexels-photo-13223714.jpeg?auto=compress&cs=tinysrgb&w=1000'
   },
   {
     id: 2,
@@ -17,7 +17,7 @@ export const solarProducts = [
     brand: 'Standard Quality',
     description: 'Cost-effective polycrystalline solar panel for residential use',
     specifications: ['450W Power Output', 'Poly Technology', '18% Efficiency', '25 Year Warranty'],
-    image: 'https://images.pexels.com/photos/356036/pexels-photo-356036.jpeg?auto=compress&cs=tinysrgb&w=600'
+    image: 'https://images.pexels.com/photos/8266685/pexels-photo-8266685.jpeg?auto=compress&cs=tinysrgb&w=1000'
   },
   {
     id: 3,
@@ -67,7 +67,7 @@ export const solarProducts = [
     brand: 'Durable',
     description: 'Corrosion-resistant aluminum mounting for rooftop installation',
     specifications: ['Aluminum Construction', 'Wind Load Tested', 'Easy Installation', '10 Year Warranty'],
-    image: 'https://images.pexels.com/photos/433308/pexels-photo-433308.jpeg?auto=compress&cs=tinysrgb&w=600'
+    image: 'https://images.pexels.com/photos/9799994/pexels-photo-9799994.jpeg?auto=compress&cs=tinysrgb&w=1000'
   },
   {
     id: 8,
@@ -77,7 +77,7 @@ export const solarProducts = [
     brand: 'Heavy Duty',
     description: 'Galvanized steel structure for ground-mounted solar plants',
     specifications: ['Galvanized Steel', 'Ground Mount', 'Industrial Grade', '15 Year Warranty'],
-    image: 'https://images.pexels.com/photos/433308/pexels-photo-433308.jpeg?auto=compress&cs=tinysrgb&w=600'
+    image: 'https://images.pexels.com/photos/9799994/pexels-photo-9799994.jpeg?auto=compress&cs=tinysrgb&w=1000'
   },
   {
     id: 9,
@@ -107,7 +107,7 @@ export const solarProducts = [
     brand: 'Agriculture',
     description: 'Solar-powered submersible pump for agricultural irrigation',
     specifications: ['5HP Power', 'Submersible', '100m Head', '5 Year Warranty'],
-    image: 'https://images.pexels.com/photos/2382894/pexels-photo-2382894.jpeg?auto=compress&cs=tinysrgb&w=600'
+    image: 'https://images.pexels.com/photos/20280066/pexels-photo-20280066.jpeg?auto=compress&cs=tinysrgb&w=1000'
   },
   {
     id: 12,
@@ -124,63 +124,33 @@ export const solarProducts = [
 export const solarProjects = [
   {
     id: 1,
-    title: '50kW Industrial Solar Plant',
-    location: 'Jabalpur Industrial Area',
-    capacity: '50 kW',
+    title: '400kW Solar EPC Project',
+    location: 'Maruti Suzuki, Bhawanrtal Garden Jabalpur',
+    capacity: '400 kW',
     type: 'Commercial',
-    description: 'Large-scale solar installation for manufacturing unit with annual savings of ₹8 lakhs',
-    image: 'https://images.pexels.com/photos/433308/pexels-photo-433308.jpeg?auto=compress&cs=tinysrgb&w=800',
+    description: 'High-capacity solar EPC installation for Maruti Suzuki, driving substantial commercial savings and reducing grid dependency.',
+    image: 'https://images.pexels.com/photos/9799994/pexels-photo-9799994.jpeg?auto=compress&cs=tinysrgb&w=1000',
     year: '2024'
   },
   {
     id: 2,
-    title: 'Residential Rooftop Solar',
-    location: 'Napier Town, Jabalpur',
-    capacity: '5 kW',
-    type: 'Residential',
-    description: 'Modern home with complete solar solution reducing electricity bills by 90%',
-    image: 'https://images.pexels.com/photos/159397/solar-panel-array-power-sun-electricity-159397.jpeg?auto=compress&cs=tinysrgb&w=800',
+    title: '70kW Solar EPC Project',
+    location: 'Yuvraj Hotel, Vijay Nagar',
+    capacity: '70 kW',
+    type: 'Hospitality',
+    description: 'Commercial rooftop solar installation for Yuvraj Hotel, optimizing energy usage for hospitality operations.',
+    image: 'https://images.pexels.com/photos/17762230/pexels-photo-17762230.jpeg?auto=compress&cs=tinysrgb&w=1000',
     year: '2024'
   },
   {
     id: 3,
-    title: 'School Solar Project',
-    location: 'Katni',
-    capacity: '20 kW',
-    type: 'Educational',
-    description: 'Solar installation for school building with subsidy assistance',
-    image: 'https://images.pexels.com/photos/356036/pexels-photo-356036.jpeg?auto=compress&cs=tinysrgb&w=800',
+    title: '110kW Solar EPC Project',
+    location: 'GCF Factory, Jabalpur',
+    capacity: '110 kW',
+    type: 'Industrial',
+    description: 'Industrial-grade rooftop solar installation at GCF Factory Jabalpur, supporting heavy manufacturing loads.',
+    image: 'https://images.pexels.com/photos/13223714/pexels-photo-13223714.jpeg?auto=compress&cs=tinysrgb&w=1000',
     year: '2023'
-  },
-  {
-    id: 4,
-    title: 'Agricultural Solar Pump',
-    location: 'Mandla District',
-    capacity: '10 HP',
-    type: 'Agriculture',
-    description: 'Solar pump installation under PM Kusum Yojana for irrigation',
-    image: 'https://images.pexels.com/photos/2382894/pexels-photo-2382894.jpeg?auto=compress&cs=tinysrgb&w=800',
-    year: '2023'
-  },
-  {
-    id: 5,
-    title: 'Hospital Solar System',
-    location: 'Jabalpur',
-    capacity: '30 kW',
-    type: 'Healthcare',
-    description: 'Reliable solar power solution for 24/7 hospital operations',
-    image: 'https://images.pexels.com/photos/433308/pexels-photo-433308.jpeg?auto=compress&cs=tinysrgb&w=800',
-    year: '2023'
-  },
-  {
-    id: 6,
-    title: 'Hotel Rooftop Solar',
-    location: 'Bhedaghat, Jabalpur',
-    capacity: '15 kW',
-    type: 'Hospitality',
-    description: 'Eco-friendly solar solution for tourist hotel',
-    image: 'https://images.pexels.com/photos/159397/solar-panel-array-power-sun-electricity-159397.jpeg?auto=compress&cs=tinysrgb&w=800',
-    year: '2024'
   }
 ];
 

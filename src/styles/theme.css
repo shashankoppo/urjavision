@@ -1,149 +1,122 @@
-/* =============================================
-   URJA VISION – HYPER-PREMIUM TRUST THEME
-   Crisp, clean, high-conversion design system
-   ============================================= */
-
 :root {
-  /* --- Brand Colors --- */
-  --color-primary: #0B1221; /* Deepest Executive Slate */
-  --color-primary-light: #2563EB; /* Vibrant Trust Blue */
-  --color-secondary: #10B981; /* Precise Engineering Green */
-  --color-accent: #6366F1; /* Modern Indigo */
-  
-  /* --- Neutrals --- */
-  --white: #FFFFFF;
-  --slate-50: #F8FAFC;
-  --slate-100: #F1F5F9;
-  --slate-200: #E2E8F0;
-  --slate-300: #CBD5E1;
-  --slate-400: #94A3B8;
-  --slate-500: #64748B;
-  --slate-600: #475569;
-  --slate-700: #334155;
-  --slate-800: #1E293B;
-  --slate-900: #0F172A;
-  --black: #020617;
+  --brand-red: #ea580c;
+  --accent-saffron: #f59e0b;
+  --brand-green: #15803d;
+  --warm-gold: #fbbf24;
+  --text-primary: #172033;
+  --text-secondary: #475569;
+  --text-muted: #7c889b;
+  --bg-cream: #fffaf3;
+  --bg-soft: #f8f4ec;
+  --white: #ffffff;
+  --border-soft: rgba(23, 32, 51, 0.08);
+  --border-strong: rgba(23, 32, 51, 0.16);
 
-  /* --- Spacing / Shape --- */
-  --radius-sm: 8px;
-  --radius: 12px;
-  --radius-lg: 20px;
+  --radius-sm: 10px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
   --radius-xl: 32px;
   --radius-full: 9999px;
 
-  /* --- Transitions --- */
-  --transition-fast: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-  --transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  --shadow-soft: 0 16px 40px rgba(15, 23, 42, 0.06);
+  --shadow-strong: 0 24px 60px rgba(15, 23, 42, 0.14);
 
-  /* --- Shadows with color --- */
-  --shadow-xs: 0 1px 2px rgba(15, 23, 42, 0.04);
-  --shadow-sm: 0 4px 6px -1px rgba(15, 23, 42, 0.05), 0 2px 4px -1px rgba(15, 23, 42, 0.03);
-  --shadow-md: 0 10px 25px -3px rgba(15, 23, 42, 0.06), 0 4px 10px -2px rgba(15, 23, 42, 0.03);
-  --shadow-lg: 0 20px 40px -5px rgba(15, 23, 42, 0.08), 0 10px 15px -3px rgba(15, 23, 42, 0.03);
-  --shadow-xl: 0 30px 60px -10px rgba(15, 23, 42, 0.12), 0 20px 25px -5px rgba(15, 23, 42, 0.05);
-  
-  --shadow-primary: 0 10px 25px -5px rgba(37, 99, 235, 0.3);
-  --shadow-secondary: 0 10px 25px -5px rgba(5, 150, 105, 0.25);
+  --transition-fast: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-base: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* =============================================
-   GLASSMORPHISM
-   ============================================= */
 .glass {
-  background: rgba(255, 255, 255, 0.85);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
-  backdrop-filter: blur(20px) saturate(180%);
-  border: 1px solid rgba(255, 255, 255, 0.6);
-  box-shadow: 0 4px 30px rgba(15, 23, 42, 0.03);
+  background: rgba(255, 255, 255, 0.78);
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.5);
 }
 
-.glass-dark {
-  background: rgba(15, 23, 42, 0.7);
-  -webkit-backdrop-filter: blur(20px) saturate(150%);
-  backdrop-filter: blur(20px) saturate(150%);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
-}
-
-/* =============================================
-   BUTTONS
-   ============================================= */
 .btn-primary {
-  background: var(--color-primary);
-  color: #ffffff;
-  padding: 1.125rem 2.75rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.7rem;
   border-radius: var(--radius-full);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: linear-gradient(135deg, #172033 0%, #0f172a 100%);
+  padding: 1rem 1.75rem;
+  font-size: 0.98rem;
   font-weight: 800;
-  font-size: 1rem;
-  letter-spacing: -0.02em;
-  transition: var(--transition);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 20px 40px -10px rgba(15, 23, 42, 0.3);
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.75rem;
-  position: relative;
-  overflow: hidden;
+  color: var(--white);
+  box-shadow: 0 18px 40px rgba(15, 23, 42, 0.18);
+  transition: var(--transition-base);
 }
+
 .btn-primary:hover {
-  background: #000000;
-  transform: translateY(-4px);
-  box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.5);
+  transform: translateY(-2px);
+  background: linear-gradient(135deg, #ea580c 0%, #f59e0b 100%);
+  box-shadow: 0 20px 48px rgba(234, 88, 12, 0.22);
 }
 
-.btn-secondary {
-  background: var(--color-secondary);
-  color: #ffffff;
-  padding: 0.875rem 2.25rem;
-  border-radius: var(--radius-full);
-  font-weight: 600;
-  font-size: 0.95rem;
-  letter-spacing: -0.01em;
-  transition: var(--transition-fast);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 2px 4px rgba(0, 0, 0, 0.1);
-  cursor: pointer;
+.btn-warm {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 0.5rem;
-}
-.btn-secondary:hover {
-  background: var(--color-secondary-dark);
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-secondary);
+  gap: 0.7rem;
+  border-radius: var(--radius-full);
+  border: 1px solid rgba(234, 88, 12, 0.12);
+  background: linear-gradient(135deg, #fff2df 0%, #ffe6c7 100%);
+  padding: 1rem 1.75rem;
+  font-size: 0.98rem;
+  font-weight: 800;
+  color: var(--brand-red);
+  box-shadow: 0 14px 32px rgba(249, 115, 22, 0.12);
+  transition: var(--transition-base);
 }
 
-.btn-outline {
+.btn-warm:hover {
+  transform: translateY(-2px);
+  background: linear-gradient(135deg, #ffe5c0 0%, #ffd39c 100%);
+}
+
+.btn-outline-dark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.7rem;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--border-strong);
   background: transparent;
-  color: var(--gray-900);
-  padding: 0.875rem 2rem;
-  border: 1px solid var(--gray-300);
-  border-radius: var(--radius-full);
-  font-weight: 600;
-  font-size: 0.95rem;
-  transition: var(--transition);
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-}
-.btn-outline:hover {
-  border-color: var(--gray-900);
-  background: var(--gray-50);
-  transform: translateY(-2px);
+  padding: 1rem 1.75rem;
+  font-size: 0.98rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  transition: var(--transition-base);
 }
 
-/* Scrollbar */
-::-webkit-scrollbar { width: 8px; }
-::-webkit-scrollbar-track { background: var(--gray-50); }
-::-webkit-scrollbar-thumb {
-  background: var(--gray-300);
-  border-radius: 4px;
+.btn-outline-dark:hover {
+  transform: translateY(-2px);
+  border-color: rgba(234, 88, 12, 0.3);
+  background: rgba(255, 255, 255, 0.9);
+  color: var(--brand-red);
 }
-::-webkit-scrollbar-thumb:hover { 
-  background: var(--gray-400);
+
+.section-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--brand-red);
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f5ede1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #f59e0b, #ea580c);
+  border-radius: 999px;
 }

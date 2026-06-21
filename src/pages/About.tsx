@@ -49,7 +49,7 @@ const About = () => {
               Powering <span className="mega-gradient-text">Madhya Pradesh</span> with Solar
             </h1>
             <p className="text-gray-400 text-lg leading-relaxed animate-fade-up delay-200">
-              We are Urja Vision Technologies Private Limited — a passionate team of solar energy experts dedicated to making clean, affordable solar power accessible to every home, farm, and business.
+              URJA VISIONTECHNOLOGIES PRIVATE LIMITED is a renewable energy company focused on delivering high-quality solar power solutions. We specialize in Solar EPC (Engineering, Procurement, and Construction) services.
             </p>
           </div>
         </div>
@@ -96,10 +96,10 @@ const About = () => {
 
               <div className="grid grid-cols-2 gap-4 mt-8">
                 {[
-                  'MNRE Registered',
-                  'ISO 9001 Certified',
-                  'Govt. Approved',
-                  'PM Kusum Empaneled',
+                  'Startup India Recognized',
+                  'GST Registered (23AAECU0778N1ZY)',
+                  '500+ kW Solar Projects Installed',
+                  'End-to-End EPC Solutions',
                 ].map((cert) => (
                   <div key={cert} className="flex items-center gap-2 text-sm font-bold text-gray-800">
                     <CheckCircle size={18} className="text-emerald-500 flex-shrink-0" /> {cert}
@@ -150,13 +150,13 @@ const About = () => {
                 icon: Target,
                 title: 'Our Mission',
                 gradient: 'from-emerald-50 to-green-100 text-emerald-600',
-                text: 'To make solar energy accessible, affordable, and understandable for every Indian — from urban homes to rural farms.',
+                text: 'To provide efficient, affordable, and reliable solar solutions to reduce electricity costs and carbon footprint.',
               },
               {
                 icon: Sun,
                 title: 'Our Vision',
                 gradient: 'from-amber-50 to-amber-100 text-amber-600',
-                text: 'A solar-powered Madhya Pradesh — where every rooftop generates clean energy and every farmer has free irrigation.',
+                text: 'To become a leading solar energy company contributing towards a sustainable and green future.',
               },
               {
                 icon: Heart,
